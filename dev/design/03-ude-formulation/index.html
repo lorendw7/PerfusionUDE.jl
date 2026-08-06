@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>03 — UDE Formulation · PerfusionUDE.jl</title><meta name="title" content="03 — UDE Formulation · PerfusionUDE.jl"/><meta property="og:title" content="03 — UDE Formulation · PerfusionUDE.jl"/><meta property="twitter:title" content="03 — UDE Formulation · PerfusionUDE.jl"/><meta name="description" content="Documentation for PerfusionUDE.jl."/><meta property="og:description" content="Documentation for PerfusionUDE.jl."/><meta property="twitter:description" content="Documentation for PerfusionUDE.jl."/><meta property="og:url" content="https://lorendw7.github.io/PerfusionUDE.jl/design/03-ude-formulation/"/><meta property="twitter:url" content="https://lorendw7.github.io/PerfusionUDE.jl/design/03-ude-formulation/"/><link rel="canonical" href="https://lorendw7.github.io/PerfusionUDE.jl/design/03-ude-formulation/"/><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../search_index.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">PerfusionUDE.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><span class="tocitem">Design &amp; methodology</span><ul><li><a class="tocitem" href="../00-glossary/">00 — Glossary / 术语表</a></li><li><a class="tocitem" href="../01-background/">01 — Background &amp; Motivation</a></li><li><a class="tocitem" href="../02-pbpk-forward-model/">02 — The PBPK Forward Model</a></li><li class="is-active"><a class="tocitem" href>03 — UDE Formulation</a><ul class="internal"><li><a class="tocitem" href="#3.1-The-general-form"><span>3.1 The general form</span></a></li><li><a class="tocitem" href="#3.4-Architecture"><span>3.4 Architecture</span></a></li><li><a class="tocitem" href="#3.5-Regularization"><span>3.5 Regularization</span></a></li><li><a class="tocitem" href="#3.6-Coverage:-the-network-is-only-valid-where-data-lives"><span>3.6 Coverage: the network is only valid where data lives</span></a></li><li><a class="tocitem" href="#3.7-Summary-of-the-Phase-1-UDE"><span>3.7 Summary of the Phase-1 UDE</span></a></li></ul></li><li><a class="tocitem" href="../04-population-inverse-problem/">04 — The Population Inverse Problem</a></li><li><a class="tocitem" href="../05-gpu-strategy/">05 — GPU Strategy</a></li><li><a class="tocitem" href="../06-identifiability/">06 — Identifiability</a></li><li><a class="tocitem" href="../07-validation-protocol/">07 — Validation Protocol</a></li><li><a class="tocitem" href="../08-cfd-correspondence/">08 — CFD Correspondence</a></li><li><a class="tocitem" href="../09-implementation-roadmap/">09 — Implementation Roadmap</a></li><li><a class="tocitem" href="../10-references/">10 — References &amp; Data Sources</a></li><li><a class="tocitem" href="../11-literature-landscape/">11 — Literature Landscape &amp; Repositioning (August 2026)</a></li><li><a class="tocitem" href="../12-package-design/">12 — Package Design: PerfusionUDE.jl</a></li><li><a class="tocitem" href="../13-publication-strategy/">13 — Publication Strategy: JOSS + PLOS Computational Biology</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Design &amp; methodology</a></li><li class="is-active"><a href>03 — UDE Formulation</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>03 — UDE Formulation</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/lorendw7/PerfusionUDE.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/lorendw7/PerfusionUDE.jl/blob/main/docs/src/design/03-ude-formulation.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="03-—-UDE-Formulation"><a class="docs-heading-anchor" href="#03-—-UDE-Formulation">03 — UDE Formulation</a><a id="03-—-UDE-Formulation-1"></a><a class="docs-heading-anchor-permalink" href="#03-—-UDE-Formulation" title="Permalink"></a></h1><p>Where the neural network goes, what it may and may not do, and how to keep it physical.</p><hr/><h2 id="3.1-The-general-form"><a class="docs-heading-anchor" href="#3.1-The-general-form">3.1 The general form</a><a id="3.1-The-general-form-1"></a><a class="docs-heading-anchor-permalink" href="#3.1-The-general-form" title="Permalink"></a></h2><p class="math-container">\[
+\frac{d\mathbf{u}}{dt} \;=\; f_{\mathrm{known}}(\mathbf{u}, \boldsymbol{\theta}_j, t) \;+\; \mathbf{S}\,\mathcal{N}_{\boldsymbol{\phi}}\!\big(\mathbf{z}(\mathbf{u}, \boldsymbol{\theta}_j, t)\big)
+$$
+
+Three objects must be specified, and each is a modelling decision with consequences:
+
+| Object | Meaning | Design question |
+|---|---|---|
+| $\mathbf{z}$ | Network **inputs** | What is the closure allowed to depend on? |
+| $\mathcal{N}_{\boldsymbol{\phi}}$ | The network itself | Architecture, output transform, size |
+| $\mathbf{S}$ | **Stoichiometry / placement matrix** | Where in the network does the term act, and with what sign? |
+
+$\mathbf{S}$ is where physics is enforced. It is a fixed, hand-written matrix, never
+learned.
+
+&gt; **中文讲解｜CN**
+&gt; 请把 UDE 的设计拆成三个独立的决策，不要混在一起想：
+&gt; 1. **$\mathbf{z}$：网络能看到什么？** 这决定了闭合项的&quot;因果范围&quot;。给得太多 → 不可辨识；
+&gt;    给得太少 → 学不到东西。
+&gt; 2. **$\mathcal{N}_{\boldsymbol{\phi}}$：网络本身。** 架构其实是三者中最不重要的。
+&gt; 3. **$\mathbf{S}$：网络的输出加到哪几个方程上、什么符号？** ——**这里是物理的入口。**
+&gt;
+&gt; $\mathbf{S}$ 是**手写的固定矩阵，绝不学习**。它编码了&quot;这个未知机制是一个从肝房室到消除池的
+&gt; 单向质量流&quot;这类结构性先验。这与 CFD 中&quot;雷诺应力必须以散度形式进入动量方程&quot;是同一类约束：
+&gt; 我们不知道闭合项的**大小**，但我们完全知道它在方程中的**位置和守恒角色**。
+
+---
+
+## 3.2 Candidate closure targets, in priority order
+
+### Target A — Hepatic elimination (Phase 1, the primary target)
+
+Replace $R_{\mathrm{hep}}$ entirely:
+
+$$
+R_{\mathrm{hep}} \;=\; V_{\mathrm{li}}\, C_{u,\mathrm{li}} \cdot \mathrm{softplus}\big(\mathcal{N}_{\boldsymbol{\phi}}(\log \tilde{C}_{u,\mathrm{li}})\big)
+$$
+
+Read this carefully — every factor is doing work:
+
+- **$\times\, C_{u,\mathrm{li}}$** enforces $R_{\mathrm{hep}}(0) = 0$ exactly. No drug, no
+  metabolism. Without this, the network can produce a nonzero elimination rate at zero
+  concentration, which destroys the terminal phase and violates the physics.
+- **$\mathrm{softplus}$** enforces $R_{\mathrm{hep}} \ge 0$. Elimination is a sink, never a
+  source.
+- **$\log \tilde{C}$ as input** matches the concentration range spanned by PK data
+  (typically 3–4 decades) to the network&#39;s effective input range.
+- The network therefore learns the **effective clearance as a function of concentration**,
+  $\mathrm{CL}_{\mathrm{eff}}(C)$, not the rate itself. The nominal Michaelis–Menten model
+  corresponds to $\mathrm{CL}_{\mathrm{eff}}(C) = V_{\max}/(K_m + C)$, which is a simple
+  monotone decreasing curve — easy to plot, easy to compare against.
+
+&gt; **中文讲解｜CN**
+&gt; **这个构造是全文档最重要的一段，请逐个因子理解。**
+&gt;
+&gt; 把 $R_{\mathrm{hep}}$ 写成 $C_u \times \mathrm{softplus}(\mathcal{N}(\log C_u))$ 而不是直接
+&gt; $\mathcal{N}(C_u)$，带来三个硬约束：
+&gt;
+&gt; | 因子 | 强制的物理性质 | 不加会怎样 |
+&gt; |---|---|---|
+&gt; | $\times C_u$ | $R(0)=0$，零浓度零代谢 | 网络可能在 $C=0$ 时给出非零消除率，终末相彻底崩坏 |
+&gt; | $\mathrm{softplus}$ | $R \ge 0$，消除只能是汇 | 网络可能&quot;制造&quot;药物，质量守恒被破坏 |
+&gt; | $\log$ 输入 | 匹配 PK 数据跨 3–4 个数量级的浓度范围 | 网络在低浓度区完全没有分辨率 |
+&gt;
+&gt; 结果是：**网络实际学的是&quot;有效清除率 $\mathrm{CL}_{\mathrm{eff}}(C)$&quot;这个一维函数。**
+&gt; 名义米氏模型对应 $\mathrm{CL}_{\mathrm{eff}}(C) = V_{\max}/(K_m+C)$，是一条简单的单调下降曲线。
+&gt; 所以最终验证时，你可以把&quot;学到的曲线&quot;和&quot;真实曲线&quot;画在同一张图上直接对比——
+&gt; 这就是本课题的核心结果图。
+&gt;
+&gt; 这套&quot;用乘法因子和输出变换把硬约束焊进网络结构&quot;的做法，与 CFD 中
+&gt; &quot;构造保证可实现性(realizability)的湍流模型&quot;是同一种思想。
+
+### Target B — Tissue distribution correction (Phase 3)
+
+$$
+V_i \frac{dC_i}{dt} = Q_i\left(C_{\mathrm{art}} - \frac{C_i}{K_{p,i}^{\mathrm{app}}}\right) + \underbrace{V_i\,\mathcal{N}^{(i)}_{\boldsymbol{\phi}}\!\left(\tilde{C}_{\mathrm{art}}, \tilde{C}_i\right)}_{\text{net transporter flux}}
+$$
+
+**Mandatory pairing:** the identical term must be subtracted from the arterial or venous
+pool, so the correction is a *transfer*, not a *creation*:
+
+$$
+V_{\mathrm{ven}} \frac{dC_{\mathrm{ven}}}{dt} = \dots - V_i\,\mathcal{N}^{(i)}_{\boldsymbol{\phi}}(\cdot) .
+$$
+
+Additionally impose the equilibrium condition $\mathcal{N}^{(i)}_{\boldsymbol{\phi}} = 0$
+whenever $C_{\mathrm{art}} = C_i / K_{p,i}^{\mathrm{app}}$, e.g. by the construction
+
+$$
+\mathcal{N}^{(i)}_{\boldsymbol{\phi}}(\cdot) = \left(C_{\mathrm{art}} - \frac{C_i}{K_{p,i}^{\mathrm{app}}}\right) \cdot g_{\boldsymbol{\phi}}(\cdot)
+$$
+
+which makes the network learn a *concentration-dependent effective permeability* $g$.
+
+&gt; **中文讲解｜CN**
+&gt; Target B 有两条不可妥协的约束：
+&gt; 1. **必须成对出现。** 加到组织房室上的项，必须原样从血池中减掉。
+&gt;    否则网络就在&quot;凭空创造药物&quot;，质量守恒立刻破坏。
+&gt;    实现上建议把这一项算一次、加一次、减一次，**绝不允许写两次同样的表达式**（会出现不一致的隐性 bug）。
+&gt; 2. **必须在平衡点为零。** 用因式分解 $(C_{\mathrm{art}} - C_i/K_p) \cdot g_{\boldsymbol{\phi}}$ 强制满足。
+&gt;    这样网络学的是&quot;浓度相关的有效渗透率&quot;，而不是一个可以随便漂移的加性项。
+&gt;
+&gt; 第 2 条同时解决了一个隐蔽的可辨识性问题：如果不做因式分解，网络可以通过在平衡点加一个常数
+&gt; 来伪装成 $K_p$ 的改变，于是 $\boldsymbol{\phi}$ 和 $K_p$ 完全混淆。
+
+### Target C — Time-dependent enzyme dynamics (stretch goal)
+
+Add an enzyme-amount state $E(t)$ with
+
+$$
+\frac{dE}{dt} = k_{\mathrm{syn}} - k_{\mathrm{deg}} E + \mathcal{N}_{\boldsymbol{\phi}}(E, C_{u,\mathrm{li}}),
+\qquad R_{\mathrm{hep}} \propto E \cdot \mathrm{CL}_{\mathrm{eff}}(C_{u,\mathrm{li}}) .
+$$
+
+This is only identifiable from **multiple-dose, long-duration** data. Do not attempt it
+with single-dose data.
+
+---
+
+## 3.3 What the network must *not* be allowed to do
+
+| Forbidden | Why | Enforcement |
+|---|---|---|
+| Create mass | Violates conservation | Paired $\pm$ terms; $\mathbf{S}$ has zero column sums for transfer terms |
+| Produce negative elimination | Elimination is a sink | `softplus` / `exp` output transform |
+| Be nonzero at $C=0$ | Destroys terminal phase | Multiplicative $C$ factor |
+| Depend on the individual&#39;s identity $j$ | Would memorize, not generalize | $\boldsymbol{\phi}$ shared; $\mathbf{z}$ contains no individual index |
+| Depend on $t$ directly (Phase 1) | Time-dependence is unfalsifiable from single-dose data | Exclude $t$ from $\mathbf{z}$ |
+| Take absolute concentrations across many decades | Float32 + optimizer conditioning | Nondimensionalize, then $\log$ |
+
+The fourth row deserves emphasis. **$\boldsymbol{\phi}$ is global.** If the network were
+allowed per-individual weights, it would absorb all inter-individual variability and the
+physiological parameters would become unidentifiable. The whole scientific premise is that
+the *mechanism* is shared and the *physiology* varies.
+
+&gt; **中文讲解｜CN**
+&gt; 第四行是**本项目的科学前提，不是技术细节**：
+&gt;
+&gt; $$\text{机制（}\boldsymbol{\phi}\text{）是全人群共享的；生理（}\boldsymbol{\eta}_j\text{）是因人而异的。}\]</p><blockquote><p>一旦允许网络有个体专属权重，它就会把所有个体间差异都吸收进去， 生理参数随即完全不可辨识，模型退化成&quot;每人一个黑箱&quot;，毫无外推能力和科学价值。</p><p>相反地，正因为 <span>$\boldsymbol{\phi}$</span> 被 <span>$N$</span> 个个体共享，<strong>群体规模越大，闭合项的估计反而越稳</strong>—— 这是本方法相对于&quot;逐个体拟合&quot;的根本优势，也是为什么要做群体反演而不是单体反演。</p><p>第五行也值得注意：Phase 1 阶段<strong>不要把 <span>$t$</span> 喂给网络</strong>。单剂量数据无法区分 &quot;浓度依赖的非线性&quot;和&quot;时间依赖的酶变化&quot;——两者在数据上完全等价。 允许 <span>$t$</span> 作输入等于主动引入一个不可辨识方向。</p></blockquote><hr/><h2 id="3.4-Architecture"><a class="docs-heading-anchor" href="#3.4-Architecture">3.4 Architecture</a><a id="3.4-Architecture-1"></a><a class="docs-heading-anchor-permalink" href="#3.4-Architecture" title="Permalink"></a></h2><p>Deliberately small:</p><ul><li>2 hidden layers, 16–32 units, <code>tanh</code> or <code>gelu</code> activation.</li><li>Input dimension 1–3 (Phase 1: <strong>one</strong> input, <span>$\log \tilde{C}_{u,\mathrm{li}}$</span>).</li><li>Output dimension 1.</li><li>Total parameter count <span>$|\boldsymbol{\phi}| \approx 10^2$</span>–<span>$10^3$</span>.</li><li>Use <code>Lux.jl</code> (explicit, immutable parameter handling) rather than implicit-parameter frameworks — this matters for GPU kernels and for <code>Enzyme</code> compatibility.</li><li>Store <span>$\boldsymbol{\phi}$</span> in a <code>ComponentArray</code> so the joint parameter vector <span>$(\boldsymbol{\phi}, \{\boldsymbol{\eta}_j\}, \boldsymbol{\theta}_{\mathrm{pop}})$</span> is a flat differentiable array with named views.</li></ul><p><strong>Initialization matters more than architecture.</strong> Initialize such that <span>$\mathcal{N}_{\boldsymbol{\phi}_0} \approx$</span> the nominal mechanistic law (e.g. linear clearance). Two workable ways:</p><ol><li>Pre-train <span>$\boldsymbol{\phi}$</span> by regression against the nominal law before touching the ODE (cheap, no ODE solves).</li><li>Use a residual form <span>$R = R_{\mathrm{nominal}} \cdot \big(1 + \varepsilon\, \mathcal{N}_{\boldsymbol{\phi}}\big)$</span> with small-initialized final layer, so <span>$\boldsymbol{\phi}_0 = \mathbf{0}$</span> recovers the mechanistic model exactly.</li></ol><blockquote><p><strong>中文讲解｜CN</strong> <strong>初始化比架构重要得多，这是 SciML 与常规深度学习最不同的一点。</strong></p><p>原因：随机初始化的网络会给出一个物理上荒谬的闭合项，ODE 求解器可能直接发散或者 变得极度刚性、步长塌缩，训练第一步就失败。而且这类失败常常表现为&quot;梯度是 NaN&quot;， 极难调试。</p><p>两种可靠做法（推荐第 2 种）：</p><ol><li>先用名义米氏/线性清除律做一次纯回归预训练网络（不涉及 ODE，几秒钟的事）；</li><li><strong>残差形式</strong>：<span>$R = R_{\text{nominal}}(1 + \varepsilon\mathcal{N}_{\boldsymbol{\phi}})$</span>， 最后一层权重初始化为 0 → <span>$\boldsymbol{\phi}_0 = \mathbf{0}$</span> 时<strong>精确退化为机理模型</strong>。</li></ol><p>第 2 种有额外好处：它把问题变成&quot;机理模型 + 学习到的修正&quot;， 正则项 <span>$\lambda\|\boldsymbol{\phi}\|^2$</span> 于是有了明确物理含义——<strong>向机理模型收缩</strong>。 这正是 CFD 里 data-driven 湍流模型常用的&quot;基线模型 + 修正场&quot;框架。</p></blockquote><hr/><h2 id="3.5-Regularization"><a class="docs-heading-anchor" href="#3.5-Regularization">3.5 Regularization</a><a id="3.5-Regularization-1"></a><a class="docs-heading-anchor-permalink" href="#3.5-Regularization" title="Permalink"></a></h2><p>The objective (see <a href="../04-population-inverse-problem/">04</a>) carries three penalties on <span>$\boldsymbol{\phi}$</span>, each with a distinct purpose:</p><p>$</p><p>\mathcal{R}(\boldsymbol{\phi}) = \underbrace{\lambda<em>2 \|\boldsymbol{\phi}\|</em>2^2}<em>{\text{shrink toward mechanism}} + \underbrace{\lambda</em>1 \|\boldsymbol{\phi}\|<em>1}</em>{\text{sparsity, aids symbolic recovery}} + \underbrace{\lambda<em>s \int \left|\frac{\partial^2 \mathcal{N}}{\partial z^2}\right|^2 dz}</em>{\text{smoothness in }z} $</p><p>The third term is the important and often-omitted one. PK data are sparse; without a smoothness penalty the learned <span>$\mathrm{CL}_{\mathrm{eff}}(C)$</span> curve will oscillate wildly in concentration regions that are poorly sampled. Evaluate the integral by finite differences on a fixed grid of <span>$z$</span> values spanning the observed concentration range — cheap, and it does not require any extra ODE solves.</p><p>Select <span>$(\lambda_1, \lambda_2, \lambda_s)$</span> by held-out-individual cross-validation, not by training loss.</p><blockquote><p><strong>中文讲解｜CN</strong> 三个正则项各司其职，不要只用 L2：</p><ul><li><p class="math-container">\[\lambda_2\|\boldsymbol{\phi}\|_2^2\]</p>：向机理模型收缩（配合残差形式初始化时含义最清楚）；</li><li><p class="math-container">\[\lambda_1\|\boldsymbol{\phi}\|_1\]</p>：稀疏化，有利于后续符号回归还原公式；</li><li><p class="math-container">\[\lambda_s \int |\partial^2\mathcal{N}/\partial z^2|^2\]</p>：<strong>平滑性惩罚，最重要也最常被忽略。</strong></li></ul><p>为什么平滑性关键：PK 数据非常稀疏，某些浓度区间几乎没有数据点。 没有平滑约束，网络在这些&quot;数据真空区&quot;会剧烈震荡——拟合损失照样很低， 但学到的 <span>$\mathrm{CL}_{\mathrm{eff}}(C)$</span> 曲线画出来是锯齿状的，物理上毫无意义。</p><p>实现上很便宜：在观测浓度范围内取固定网格，用有限差分算二阶导的平方和即可， <strong>不需要额外求解任何 ODE</strong>。</p><p>超参数一律用<strong>留出个体交叉验证</strong>选，绝不能看训练损失—— 训练损失永远是 <span>$\lambda \to 0$</span> 最好。</p></blockquote><hr/><h2 id="3.6-Coverage:-the-network-is-only-valid-where-data-lives"><a class="docs-heading-anchor" href="#3.6-Coverage:-the-network-is-only-valid-where-data-lives">3.6 Coverage: the network is only valid where data lives</a><a id="3.6-Coverage:-the-network-is-only-valid-where-data-lives-1"></a><a class="docs-heading-anchor-permalink" href="#3.6-Coverage:-the-network-is-only-valid-where-data-lives" title="Permalink"></a></h2><p>A learned closure is meaningful only on the region of input space actually visited by the training trajectories. Define the <strong>empirical support</strong></p><p>$</p><p>\mathcal{Z} = \left{ z : \rho(z) &gt; \epsilon \right}, \qquad \rho(z) \propto \sum<em>{j=1}^{N} \sum</em>{k} w<em>{jk} \,\delta</em>h!\big(z - z(t_{jk})\big) $</p><p>weighted by observation density, not merely by simulation time.</p><p><strong>Every plot of the learned closure must show <span>$\rho(z)$</span> underneath it, and every extrapolation claim must be checked against <span>$\mathcal{Z}$</span>.</strong></p><blockquote><p><strong>中文讲解｜CN</strong> 这是一条必须写进论文、也必须写进绘图代码里的纪律：</p><p><strong>神经闭合项只在&quot;训练轨迹实际访问过的输入区间&quot;上有意义。</strong></p><p>做法：统计所有个体、所有观测时刻对应的网络输入 <span>$z$</span> 的分布 <span>$\rho(z)$</span>， 每次画&quot;学到的 <span>$\mathrm{CL}_{\mathrm{eff}}(C)$</span> 曲线&quot;时，<strong>在下方画一条 <span>$\rho(z)$</span> 的直方图或密度带</strong>。 曲线在 <span>$\rho$</span> 很低的区间必须画成虚线或灰色，明确标注&quot;外推区，不可信&quot;。</p><p>注意权重要按<strong>观测密度</strong>而不是按仿真时间加权：药物大部分时间处在低浓度终末相， 按时间加权会严重高估低浓度区的信息量。</p><p>这与 CFD 中&quot;数据驱动湍流模型只在训练流动的参数空间内可信&quot;是完全一样的问题， 也是这类方法最常被批评的地方。<strong>主动地、显式地处理它，会成为加分项而不是被攻击的软肋。</strong></p></blockquote><hr/><h2 id="3.7-Summary-of-the-Phase-1-UDE"><a class="docs-heading-anchor" href="#3.7-Summary-of-the-Phase-1-UDE">3.7 Summary of the Phase-1 UDE</a><a id="3.7-Summary-of-the-Phase-1-UDE-1"></a><a class="docs-heading-anchor-permalink" href="#3.7-Summary-of-the-Phase-1-UDE" title="Permalink"></a></h2><p>$</p><p>\boxed{ \begin{aligned} &amp;\text{States: } \mathbf{u} \in \mathbb{R}^{16}, \text{ perfusion-limited PBPK, single IV bolus} \
+&amp;\text{Closure: } R<em>{\mathrm{hep}} = R</em>{\mathrm{hep}}^{\mathrm{nom}}(C<em>{u,\mathrm{li}}) \cdot \big(1 + \varepsilon\, \mathcal{N}</em>{\boldsymbol{\phi}}(\log \tilde{C}<em>{u,\mathrm{li}})\big) \
+&amp;\text{Network: MLP } 1 \to 16 \to 16 \to 1, \; \tanh, \; \text{zero-init final layer} \
+&amp;\text{Per-individual: } \boldsymbol{\eta}</em>j \in \mathbb{R}^{3}, \; (\log \mathrm{CL}, \log Q<em>{\mathrm{CO}}, \log K</em>p^{\mathrm{scale}}) \
+&amp;\text{Shared: } \boldsymbol{\phi} \in \mathbb{R}^{\sim 300}, \; \boldsymbol{\theta}_{\mathrm{pop}} \in \mathbb{R}^{3}, \; \boldsymbol{\Omega} \in \mathbb{R}^{3\times 3} \end{aligned} } $</p><p>Everything else is deferred to later phases.</p><hr/><p><strong>Next:</strong> <a href="../04-population-inverse-problem/">04 — Population Inverse Problem</a></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../02-pbpk-forward-model/">« 02 — The PBPK Forward Model</a><a class="docs-footer-nextpage" href="../04-population-inverse-problem/">04 — The Population Inverse Problem »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.17.0 on <span class="colophon-date" title="Thursday 6 August 2026 16:07">Thursday 6 August 2026</span>. Using Julia version 1.12.6.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
