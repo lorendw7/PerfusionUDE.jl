@@ -1,0 +1,53 @@
+# NOTE: the dependency UUIDs below were written by hand and MUST be verified.
+# The reliable way: delete the [deps]/[weakdeps] entries you are unsure of, then run
+#   pkg> activate .
+#   pkg> add ComponentArrays Lux OrdinaryDiffEq SciMLSensitivity StaticArrays ...
+# and let Pkg write the correct UUIDs. Do this before the first commit.
+
+name = "PerfusionUDE"
+uuid = "1350a4dd-378a-47d8-b371-9fe714054064"
+authors = ["TODO Your Name <lorendw7@gmail.com>"]
+version = "0.1.0-DEV"
+
+[deps]
+ComponentArrays = "b0b7db55-cfe3-40fc-9ded-d10e2dbeff66"
+DiffEqCallbacks = "459566f4-90b8-5000-8ac3-15dfb0a30def"
+Distributions = "31c24e10-a181-7473-b8eb-7969acd0382f"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Lux = "b2108857-7c20-44ae-9111-449ecde12c47"
+OrdinaryDiffEq = "1dea7af3-3e70-54e6-95c3-0bf5283fa5ed"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+SciMLBase = "0bca4576-84f4-4d90-8ffe-ffa030f20462"
+SciMLSensitivity = "1ed8b502-d754-442c-8d5d-10ac956f44a1"
+StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+
+# Heavy / optional functionality lives behind package extensions so that the base
+# package installs, loads and tests on a CPU-only machine.  See docs/src/design/12.
+[weakdeps]
+CUDA = "052768ef-5323-5732-b1bb-66c8b64840ba"
+DiffEqGPU = "071ae1c0-96b5-11e9-1965-c90190d839ea"
+StructuralIdentifiability = "220ca800-aa68-49bb-acd8-6037fa93a544"
+SymbolicRegression = "8254be44-1308-4c1a-9b4a-1f4b0b0b8b3f"
+
+[extensions]
+PerfusionUDECUDAExt = ["CUDA", "DiffEqGPU"]
+PerfusionUDEIdentifiabilityExt = "StructuralIdentifiability"
+PerfusionUDESymbolicExt = "SymbolicRegression"
+
+[compat]
+ComponentArrays = "0.15"
+DiffEqCallbacks = "3, 4"
+Distributions = "0.25"
+Lux = "1"
+OrdinaryDiffEq = "6"
+SciMLBase = "2"
+SciMLSensitivity = "7"
+StaticArrays = "1"
+julia = "1.10"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]

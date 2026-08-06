@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+title: "PerfusionUDE.jl: GPU-parallel universal differential equations for population PBPK inverse problems"
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - given-names: "TODO"
+    family-names: "TODO"
+    email: "lorendw7@gmail.com"
+    orcid: "https://orcid.org/0000-0000-0000-0000"
+    affiliation: "TODO"
+repository-code: "https://github.com/lorendw7/PerfusionUDE.jl"
+url: "https://lorendw7.github.io/PerfusionUDE.jl"
+abstract: >-
+  PerfusionUDE.jl provides a composable, differentiable, GPU-parallel layer for
+  physiologically-based pharmacokinetic (PBPK) transport networks in Julia. It
+  supports replacing uncertain constitutive terms (metabolic clearance, tissue
+  uptake) with structurally-constrained neural closures inside the ODE
+  right-hand side, and estimating them jointly with per-individual physiological
+  parameters across populations of thousands of virtual or real subjects. It
+  additionally provides tooling for parametric and functional identifiability
+  analysis, including recoverability phase diagrams and a mechanistic-content
+  test that distinguishes a genuine hybrid model from a disguised neural ODE.
+keywords:
+  - pharmacokinetics
+  - PBPK
+  - universal differential equations
+  - scientific machine learning
+  - inverse problems
+  - GPU computing
+  - identifiability
+  - Julia
+license: MIT
+version: "0.1.0"
+date-released: "2026-08-06"
+# After JOSS acceptance, add:
+# preferred-citation:
+#   type: article
+#   doi: "10.21105/joss.XXXXX"
+#   journal: "Journal of Open Source Software"

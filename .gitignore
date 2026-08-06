@@ -1,0 +1,20 @@
+# Library packages do not pin a root Manifest, but the docs and experiment
+# environments DO commit theirs — that is what makes results reproducible
+# (see docs/src/design/09-implementation-roadmap.md, "Version Pinning").
+/Manifest.toml
+!/docs/Manifest.toml
+!/experiments/**/Manifest.toml
+/docs/build/
+/docs/site/
+*.jl.cov
+*.jl.*.cov
+*.jl.mem
+.DS_Store
+.vscode/
+.idea/
+/experiments/**/results/
+/experiments/**/*.jld2
+/experiments/**/*.arrow
+/paper/paper.pdf
+/paper/jats/
+*.log
