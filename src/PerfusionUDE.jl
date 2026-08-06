@@ -30,7 +30,7 @@ module PerfusionUDE
 # ─────────────────────────────────────────────────────────────────────────────
 
 # --- L1 Domain ---------------------------------------------------------------
-# include("physiology/reference.jl")
+include("physiology/reference.jl")
 # include("physiology/allometry.jl")
 # include("physiology/populations.jl")
 # include("model/topology.jl")
@@ -58,7 +58,11 @@ module PerfusionUDE
 # include("analysis/symbolic.jl")
 # include("analysis/diagnostics.jl")
 
-# export ReferenceIndividual, PBPKTopology, PBPKModel, VirtualPopulation,
+export OrganReference, ReferenceIndividual, reference_individual,
+       tissue, blood_flow, liver_inflow,
+       flow_continuity_residual, total_volume
+
+# export PBPKTopology, PBPKModel, VirtualPopulation,
 #        DosingRegimen, simulate,
 #        NeuralClosure, attach,
 #        PopulationData, JointMAP, fit,

@@ -16,11 +16,11 @@ const TEST_GPU = get(ENV, "PERFUSIONUDE_TEST_GPU", "0") == "1"
 
 @testset "PerfusionUDE.jl" begin
     @testset "Unit" begin
-        # include("unit/topology.jl")       # Σqᵢ = 1; graph well-formedness
+        include("unit/reference.jl")      # Σqᵢ = 1; provenance present
+        # include("unit/topology.jl")       # graph well-formedness
         # include("unit/allometry.jl")      # BW scaling, covariate maps
         # include("unit/nondim.jl")         # round-trip identity
         # include("unit/observables.jl")    # plasma vs blood, R_b
-        @test true  # placeholder
     end
 
     @testset "Physics" begin
