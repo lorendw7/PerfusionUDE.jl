@@ -24,13 +24,13 @@ jobs:
       matrix:
         version: ['1.10', '1']
         os: [ubuntu-latest, windows-latest, macOS-latest]
-        arch: [x64]
     steps:
       - uses: actions/checkout@v4
+      # `arch` is left unset on purpose: macOS-latest is Apple Silicon, and
+      # pinning x64 there would test an emulated build rather than the native one.
       - uses: julia-actions/setup-julia@v2
         with:
           version: ${{ matrix.version }}
-          arch: ${{ matrix.arch }}
       - uses: julia-actions/cache@v2
       - uses: julia-actions/julia-buildpkg@v1
       - uses: julia-actions/julia-runtest@v1

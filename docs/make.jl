@@ -12,19 +12,22 @@ makedocs(;
         mathengine = Documenter.KaTeX(),
         assets = String[],
     ),
+    # Documenter errors out if `pages` names a file that does not exist, and
+    # `warnonly` does not cover it — the nav tree is built before those checks
+    # run.  So a page joins this list only once its file is written.
     pages = [
         "Home" => "index.md",
-        "Tutorials" => [
-            "tutorials/01-first-pbpk.md",
-            "tutorials/02-virtual-population.md",
-            "tutorials/03-fit-a-closure.md",
-            "tutorials/04-gpu-scaling.md",
-        ],
-        "How-to guides" => [
-            "howto/custom-topology.md",
-            "howto/identifiability-workflow.md",
-            "howto/interop-nolimits.md",
-        ],
+        # "Tutorials" => [
+        #     "tutorials/01-first-pbpk.md",
+        #     "tutorials/02-virtual-population.md",
+        #     "tutorials/03-fit-a-closure.md",
+        #     "tutorials/04-gpu-scaling.md",
+        # ],
+        # "How-to guides" => [
+        #     "howto/custom-topology.md",
+        #     "howto/identifiability-workflow.md",
+        #     "howto/interop-nolimits.md",
+        # ],
         "Design & methodology" => [
             "design/00-glossary.md",
             "design/01-background.md",
@@ -41,9 +44,10 @@ makedocs(;
             "design/12-package-design.md",
             "design/13-publication-strategy.md",
         ],
-        "API reference" => "api.md",
+        # "API reference" => "api.md",
     ],
-    # Flip to `true` once the tutorials and API pages exist.
+    # Flip to `false` once the docstrings are written, so that missing
+    # cross-references and undocumented exports fail the build.
     warnonly = true,
 )
 
