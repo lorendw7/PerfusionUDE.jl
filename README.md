@@ -97,12 +97,18 @@ in English with bilingual (EN/中文) teaching annotations:
 | 12 | [Package design](docs/src/design/12-package-design.md) | Module layout, API, test strategy, JOSS checklist |
 | 13 | [Publication strategy](docs/src/design/13-publication-strategy.md) | JOSS + PLOS Comp Biol targeting and timeline |
 
-## Contributing
+## Contributing and support
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md).
 Bug reports, physiological reference data with provenance, and correctness issues are all
 welcome. Correctness issues (wrong gradients, broken conservation, biased estimates) are
 treated as highest priority.
+
+- **Bugs / feature requests:** [Issues](https://github.com/lorendw7/PerfusionUDE.jl/issues)
+- **Questions / modelling discussion:** [Discussions](https://github.com/lorendw7/PerfusionUDE.jl/discussions)
+- **Maintenance status, response times and governance:**
+  [CONTRIBUTING.md § Maintenance and support](CONTRIBUTING.md#maintenance-and-support)
+- **What has changed:** [CHANGELOG.md](CHANGELOG.md)
 
 ## Citing
 

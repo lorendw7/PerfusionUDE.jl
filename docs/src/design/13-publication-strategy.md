@@ -5,6 +5,14 @@ before submitting; journal policies change.
 
 ---
 
+> **Revised 2026-08-07 — track selection.** For a single developer without a
+> pharmacometrics collaborator, **only Paper 1 (JOSS) is realistically achievable**; Paper 2
+> requires real clinical data, a classical-NLME comparison, and domain review. See
+> [09 §T.1](09-implementation-roadmap.md). Paper 2 stays documented here as the option to
+> take up if the project attracts a collaborator — it should not drive the schedule.
+
+---
+
 ## 13.1 The core recommendation: two papers, not one
 
 The software contribution and the scientific contribution have different audiences,
@@ -44,6 +52,13 @@ DOI-bearing software artifact to reference.
 ## 13.2 JOSS — requirements and how to satisfy them
 
 ### Hard requirements (confirmed 2026-08-06)
+
+**Cost and eligibility.** JOSS is diamond open access: **no article processing charges, no
+submission fees, no subscription**. It is run by volunteers and published by Open Journals
+under NumFOCUS fiscal sponsorship. There is **no institutional-affiliation requirement and
+no minimum number of authors** — the only authorship rule is that the submitting author be
+a major contributor to the software. See [12 §12.6](12-package-design.md) for the extra
+maturity indicators applied to single-author submissions.
 
 | Requirement | Status / action |
 |---|---|

@@ -12,18 +12,154 @@ the next begins.
 
 ---
 
-## Phase −1 — Go public (do this first, this week)
+# Two tracks
+
+This document describes two versions of the same programme. **Read §T first and pick one
+before reading anything else.** The phases further down are the full programme; the solo
+track is a strict subset of them.
+
+## §T.1 Which track
+
+| | **Solo track (default)** | **Full programme** |
+|---|---|---|
+| Assumes | one part-time developer, self-study, no domain co-author | dedicated time, supervision, a pharmacometrics collaborator |
+| Target | **JOSS** — a real, well-tested, well-documented package | JOSS **and** PLOS Comp Biol |
+| Horizon | ~6–7 months part-time | 15–18 months |
+| Model | minimal 5-compartment PBPK | full 13-compartment PBPK |
+| Real clinical data | **no** | yes |
+| Ends with | a package, the closure-recovery figure, Test D, a small phase diagram, a JOSS paper | all of that plus a validated real-data case study |
+
+**The solo track is not a reduced-ambition version of the science — it is the version whose
+bottleneck is engineering, which is where a software engineer has the advantage.** The
+scientific claims it can support are narrower and correspondingly easier to defend.
+
+> **中文讲解｜CN**
+> **在读下面任何内容之前，先确定你走哪条轨道。**
+>
+> 完整版是按"有导师、有整块时间、有药代方向合作者"写的。作为一个人的自学侧项目，
+> 按完整版走大概率会在中途停掉——不是能力问题，是这类项目的常见结局。
+>
+> **单人轨道不是"降低科学野心"，而是把瓶颈从领域知识挪到工程实现上**——
+> 后者恰好是软件工程背景的优势区。它能支撑的科学主张更窄，但也因此更容易站得住。
+>
+> 真实临床数据研究需要：数据获取（周期长、可能要签数据使用协议）、
+> 会用 nlmixr2/NONMEM 做对比、有药代同行审读。这几项靠个人努力补不上，需要合作者。
+> **所以把它留给"如果项目做起来了、并且找到合作者"的将来**，不要让它驱动现在的排期。
+
+## §T.2 What the solo track cuts
+
+Everything below is deferred, not abandoned. Each cut removes a specific, identified risk.
+
+| Full programme | Solo track | Why the cut is safe |
+|---|---|---|
+| 13-compartment PBPK | **5-compartment minimal PBPK** (blood, liver, kidney, rapidly perfused, slowly perfused) | Already justified as information-driven model reduction in [07 §7.7 R1](07-validation-protocol.md). Cuts the physiology-sourcing burden by ~70% |
+| Closure targets A, B, C | **A only** (hepatic clearance) | B and C are extensions; A is the one that carries the argument |
+| IV + infusion + oral + multiple dosing | **single IV bolus** (an initial condition) | Avoids GPU callbacks entirely — see [05 §5.6](05-gpu-strategy.md) |
+| Ensemble layouts A and B | **Layout B only** | Removes kernel-compatibility and mixed-mode differentiation, the two hardest engineering items |
+| Estimation strategies S1–S4 | **S1 joint MAP only** | S2/S3/S4 are statistical upgrades, not prerequisites |
+| Baselines B0–B4 | **B0, B1, B3** | B3 is retained because Test D needs it. B2 needs R/nlmixr2; B4 is a comparison, not a gate |
+| Hidden mechanisms H1, H2, H3 | **H1 only** | H1 (two parallel MM terms) already breaks the single-MM model |
+| 3-D sweep $(N, n_\mathrm{obs}, \sigma)$ | **2-D sweep** $(N, \sigma)$, sampling density fixed | Runs drop from several hundred to a few dozen |
+| Real-data case study | **deferred** | Needs a collaborator |
+
+What survives is still a complete piece of work: a package, the learned-vs-true closure
+figure with support density, the mechanistic-content test, a small recoverability phase
+diagram, and a JOSS paper.
+
+> **中文讲解｜CN**
+> 注意每一条砍的都是**一个已识别的具体风险**，不是随便减量：
+> - 砍到 5 房室 → 砍掉大量生理学查证工作（而且 [07 §7.7](07-validation-protocol.md) 已论证这是正当降阶）
+> - 只做单次 IV bolus → **完全绕开 GPU callback**，这是 [05 §5.6](05-gpu-strategy.md) 里明确列出的坑
+> - 只做布局 B → 砍掉 kernel 兼容性和混合模式微分，两个最难的工程项
+> - 只做 S1 → 砍掉 FOCE/VEM/HMC 三套统计方法
+>
+> **保留 B3（纯黑箱 neural ODE）是刻意的**：Test D 需要它做对照，而 Test D 是
+> [06 §6.0](06-identifiability.md) 里的及格线，不能省。
+
+## §T.3 Solo-track schedule
+
+Relative to $T_0$ = the day the repository went public (**2026-08-06**). Assumes part-time.
+
+| Month | Work | Deliverable |
+|---|---|---|
+| 0–1 | Julia basics; Phase −1 complete; `physiology/` and `topology.jl` | reference data structures with provenance; continuity assertions |
+| 1–2 | Phase 0 on the 5-compartment model | six numerical tests green; RHS allocation-free |
+| 2–3 | Closure layer + twin generator (H1) | constrained closure with declarative options |
+| 3–4 | Phase 1: joint MAP on CPU, $N=50$ | **finite-difference gradient check green; Test D passes** |
+| 4–5 | Phase 2: GPU Layout B | GPU matches CPU; breakeven $N$ measured |
+| 5–6 | 2-D sweep; tutorials; API docs; CHANGELOG | the closure-recovery figure; a small phase diagram |
+| 6–7 | Register the package; draft `paper.md`; verify all references | **JOSS submission (earliest 2027-02-06)** |
+
+Two rules that matter more than the schedule:
+
+1. **Commit at least once a week, every week.** For a single-author submission JOSS looks
+   for a meaningful commit history spanning the public period, precisely because there is
+   no pull-request record to demonstrate process. This cannot be reconstructed afterwards.
+2. **Tag a release whenever something works.** `v0.2.0` when the mechanistic model passes
+   its tests, `v0.3.0` when the closure fits, and so on. Tagged releases plus a changelog
+   are among the maturity indicators for solo projects.
+
+> **中文讲解｜CN**
+> **下面两条比时间表本身重要得多：**
+>
+> 1. **每周至少一次有意义的提交，一周都不要断。**
+>    单作者投稿时，JOSS 会特别看"公开期内是否有跨时间的持续提交历史"——
+>    因为独作者没有 PR 记录可以证明开发流程是规范的。
+>    **这一项事后无法补救**：攒三个月一次性推上去，历史上看得清清楚楚。
+>
+> 2. **每当有东西能跑就打个 tag。**
+>    机理模型测试全绿 → `v0.2.0`；闭合项能拟合了 → `v0.3.0`。
+>    "有 tag 的发布 + CHANGELOG"是 JOSS 评估单人项目成熟度的指标之一。
+>
+> 时间表本身可以滑，这两条不能。
+
+## §T.4 The two things the solo track must not skimp on
+
+JOSS's most common rejection reason is that a submission is a thin wrapper around existing
+packages. For this project, two components carry the "substantial scholarly effort"
+argument, and neither can be a stub at submission time:
+
+1. **The declarative constrained-closure layer** — requesting
+   `(:nonnegative, :zero_at_origin, :residual)` and getting a provably mass-conserving,
+   correctly-initialised closure is genuine design work, not glue.
+2. **`recoverability_curve` and `mechanistic_content_test`** — capabilities no other
+   package offers.
+
+Documentation quality will not compensate for these being empty.
+
+> **中文讲解｜CN**
+> 这两件是 **JOSS 论文的立身之本**，必须实现到位：
+> 1. **声明式的约束闭合层**——用户写 `(:nonnegative, :zero_at_origin, :residual)`，
+>    拿到的是一个可证明质量守恒、初始化正确的闭合项。这是真正的设计工作。
+> 2. **`recoverability_curve` 和 `mechanistic_content_test`**——别的包没有的能力。
+>
+> **文档写得再好也补不上这两块是空的。** 排期时优先保证它们，其他都可以让。
+
+---
+
+# The full programme
+
+The phases below are the complete plan. On the solo track, execute the same phases with the
+scope of §T.2 and skip Phase 4 onward.
+
+---
+
+## Phase −1 — Go public ✅ done 2026-08-06
 
 Not a research phase, but it gates the JOSS submission and costs almost nothing.
 
-1. Push the repository to GitHub **as public**, with `LICENSE`, `README.md`,
-   `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `CITATION.cff`, CI, and the design docs.
-2. Enable Issues and Discussions.
-3. Verify all dependency UUIDs by letting `Pkg` resolve them (see the note at the top of
-   `Project.toml`).
-4. Tag `v0.1.0`; commit regularly from then on.
+- [x] Repository public at https://github.com/lorendw7/PerfusionUDE.jl with `LICENSE`,
+      `README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `CITATION.cff`, CI and the
+      design docs
+- [x] Issues and Discussions enabled
+- [x] Dependency UUIDs resolved by `Pkg` (two hand-written ones were wrong)
+- [x] `v0.1.0` tagged and released
+- [ ] `CHANGELOG.md` and a stated maintenance/support commitment — solo-submission
+      maturity indicators
+- [ ] Weekly commit cadence established
 
-**Exit criteria:** repository public, CI green, docs building.
+**The JOSS six-month public-development clock started 2026-08-06. Earliest submission:
+2027-02-06.**
 
 > **中文讲解｜CN**
 > **这是本路线图里唯一一个"今天就该做"的阶段。**
@@ -41,6 +177,8 @@ Not a research phase, but it gates the JOSS submission and costs almost nothing.
 ---
 
 ## Phase 0 — Mechanistic forward model (CPU only)
+
+*Solo track: yes, on the 5-compartment model.*
 
 **Goal:** a correct, tested, Float64 CPU PBPK model. No GPU. No neural network.
 
@@ -69,6 +207,8 @@ Tasks:
 ---
 
 ## Phase 1 — CPU UDE, small population
+
+*Solo track: yes. This is the phase that decides whether the project works.*
 
 **Goal:** the whole method working end-to-end on CPU with $N = 50$.
 
@@ -109,6 +249,8 @@ Gradient check passes.
 
 ## Phase 2 — GPU, Layout B
 
+*Solo track: yes, Layout B only.*
+
 **Goal:** the same result, on GPU, at $N = 10^3$–$10^4$.
 
 Tasks:
@@ -137,6 +279,8 @@ gradient check passes on GPU; measured speedup and breakeven $N$ reported.
 
 ## Phase 3 — Full twin study
 
+*Solo track: reduced — 2-D sweep $(N,\sigma)$, mechanism H1, baselines B0/B1/B3.*
+
 **Goal:** the phase diagram of [07 §7.4](07-validation-protocol.md).
 
 Tasks:
@@ -162,6 +306,8 @@ Tasks:
 ---
 
 ## Phase 4 — Real data + methodological upgrades
+
+*Solo track: **deferred**. Needs a pharmacometrics collaborator — see §T.1.*
 
 Tasks:
 1. Dataset acquisition and license verification (**start this in Phase 1** — it has the
@@ -189,6 +335,8 @@ Tasks:
 ---
 
 ## Phase 5 — Optional extensions
+
+*Solo track: **deferred**.*
 
 Only if Phases 0–4 are complete:
 - Layout A (`EnsembleGPUKernel`) with mixed-mode differentiation ([05 §5.3](05-gpu-strategy.md)) as a performance study.

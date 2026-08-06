@@ -249,7 +249,9 @@ Requirements confirmed from the JOSS documentation during the 2026-08-06 sweep:
 - [ ] Installation instructions with automated dependency management (`Project.toml`)
 - [ ] Example usage demonstrating real functionality
 - [ ] API documentation
-- [ ] Community guidelines: `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, support channel
+- [x] Community guidelines: `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, support channel
+- [x] `CHANGELOG.md` and a stated maintenance/support commitment — **extra weight for
+      single-author submissions**, see below
 - [ ] Automated tests + continuous integration
 - [ ] Evidence of iterative improvement (commit history, releases, code review)
 - [ ] Archived release with a DOI (Zenodo) at acceptance
@@ -259,6 +261,40 @@ Requirements confirmed from the JOSS documentation during the 2026-08-06 sweep:
 Two JOSS scope notes worth knowing: **pre-trained ML models and notebooks are explicitly
 out of scope**, and purely financial or organizational contributions do not merit
 authorship.
+
+### Single-author submissions
+
+JOSS charges no fees (diamond open access, run by volunteers under Open Journals /
+NumFOCUS), imposes no institutional-affiliation requirement, and accepts solo submissions —
+`Independent researcher` is an acceptable affiliation. The only authorship requirement is
+that the submitting author be a major contributor.
+
+But a single-author project is assessed on extra maturity indicators, because there is no
+pull-request record to demonstrate process:
+
+| Indicator | Status |
+|---|---|
+| Meaningful public commit history spanning the public period | ⚠️ **the six-month clock; cannot be reconstructed afterwards** |
+| Tagged releases and a changelog | `v0.1.0` + `CHANGELOG.md` |
+| Tests and CI | scaffolded; must become real |
+| Clear documentation | strong |
+| `CONTRIBUTING.md` | present |
+| Stated support / governance expectations | `CONTRIBUTING.md § Maintenance and support` |
+
+A solo project that is otherwise open and well-maintained is **not** rejected merely for
+lacking a PR workflow.
+
+> **中文讲解｜CN**
+> **JOSS 完全免费**（diamond open access，志愿者运营，Open Journals / NumFOCUS），
+> **不要求任何机构隶属**，单人投稿完全正常，没有单位就写 `Independent researcher`。
+> 唯一的作者要求是投稿人必须是软件的主要贡献者。
+>
+> 但独作者会被额外看上表这几项——因为**没有 PR 记录可以证明开发流程是规范的**。
+> 其中第一行是唯一无法事后补救的：commit 历史必须是真的跨越了公开期，
+> 攒起来一次性推上去在历史上看得清清楚楚。
+>
+> 好消息是：**单人项目不会仅仅因为没有 PR 流程被拒。**
+> 只要项目本身开放、维护良好、指标齐全就行。
 
 > **中文讲解｜CN**
 > ⚠️ **加粗那条是全项目最紧迫的时间约束：仓库必须公开满 6 个月、且这期间有持续开发活动。**

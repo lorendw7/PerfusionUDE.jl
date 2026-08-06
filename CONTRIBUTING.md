@@ -3,6 +3,29 @@
 Thanks for your interest. This document covers how to report problems, how to propose
 changes, and how to run the test suite — including the parts that need a GPU.
 
+## Maintenance and support
+
+This project is currently maintained by a single developer. So that you know what to
+expect:
+
+- **Response time.** Issues and discussions are normally answered within one week.
+  Correctness issues — wrong gradients, broken conservation, biased estimates — are looked
+  at first.
+- **Development cadence.** Active development, with commits at least weekly and a tagged
+  release whenever a component becomes usable. See [CHANGELOG.md](CHANGELOG.md) for what
+  has landed and [the roadmap](docs/src/design/09-implementation-roadmap.md) for what is
+  planned.
+- **Versioning.** Semantic versioning. While the version is `0.x`, minor bumps may break
+  the API; breaking changes are listed in the changelog.
+- **Scope.** Contributions are welcome, but please read
+  [the scope statement](README.md#not-in-scope) first — some things are deliberately out
+  of scope and are better served by other packages.
+- **Governance.** Decisions are currently made by the maintainer. If the project attracts
+  regular contributors, this section will be replaced by a written governance model.
+- **If maintenance lapses.** The package is MIT licensed and the design documentation is
+  complete enough to hand over. If you need it maintained and it has gone quiet, open an
+  issue — transferring or co-maintaining is preferable to a fork.
+
 ## Getting help / reporting a problem
 
 - **Bug reports and feature requests:** open a
