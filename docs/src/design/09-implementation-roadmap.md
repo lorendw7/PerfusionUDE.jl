@@ -57,7 +57,7 @@ Everything below is deferred, not abandoned. Each cut removes a specific, identi
 | IV + infusion + oral + multiple dosing | **single IV bolus** (an initial condition) | Avoids GPU callbacks entirely — see [05 §5.6](05-gpu-strategy.md) |
 | Ensemble layouts A and B | **Layout B only** | Removes kernel-compatibility and mixed-mode differentiation, the two hardest engineering items |
 | Estimation strategies S1–S4 | **S1 joint MAP only** | S2/S3/S4 are statistical upgrades, not prerequisites |
-| Baselines B0–B4 | **B0, B1, B3** | B3 is retained because Test D needs it. B2 needs R/nlmixr2; B4 is a comparison, not a gate |
+| Baselines B0–B4 | **B0, B1, B3, B4** | B3 is retained because Test D needs it. B2 needs R/nlmixr2. **B4 was cut here until 2026-08-07; it is now mandatory** — see [11 §11.6.2(c)](11-literature-landscape.md), a hierarchical deep compartment model in Julia is published, so "why not put the network on the covariate map instead?" is no longer a hypothetical question |
 | Hidden mechanisms H1, H2, H3 | **H1 only** | H1 (two parallel MM terms) already breaks the single-MM model |
 | 3-D sweep $(N, n_\mathrm{obs}, \sigma)$ | **2-D sweep** $(N, \sigma)$, sampling density fixed | Runs drop from several hundred to a few dozen |
 | Real-data case study | **deferred** | Needs a collaborator |
@@ -82,7 +82,7 @@ Relative to $T_0$ = the day the repository went public (**2026-08-06**). Assumes
 
 | Month | Work | Deliverable |
 |---|---|---|
-| 0–1 | Julia basics; Phase −1 complete; `physiology/` and `topology.jl` | reference data structures with provenance; continuity assertions |
+| 0–1 | Julia basics; Phase −1 complete; `physiology/` and `topology.jl`; **Phase −0.5 (blocking)** | reference data structures with provenance; continuity assertions; **every reference value verified against a primary source** |
 | 1–2 | Phase 0 on the 5-compartment model | six numerical tests green; RHS allocation-free |
 | 2–3 | Closure layer + twin generator (H1) | constrained closure with declarative options |
 | 3–4 | Phase 1: joint MAP on CPU, $N=50$ | **finite-difference gradient check green; Test D passes** |
