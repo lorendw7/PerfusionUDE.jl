@@ -111,9 +111,9 @@ This is the table that makes the project legible to a CFD supervisor.
 
 The single most important structural fact of the whole project:
 
-$$
+```math
 \boxed{\;\boldsymbol{\eta}_j \text{ is per-individual and low-dimensional; } \boldsymbol{\phi} \text{ is global and high-dimensional.}\;}
-$$
+```
 
 Every algorithmic decision — parallel layout, choice of AD mode, regularization — follows
 from this asymmetry.

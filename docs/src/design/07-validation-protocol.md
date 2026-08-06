@@ -148,9 +148,9 @@ both fit and held-out-dose prediction, the mechanistic skeleton is contributing 
 
 Vary and report recovery quality as a function of:
 
-$$
+```math
 N \in \{50, 200, 10^3, 5\times10^3\} \;\times\; n_{\mathrm{obs}/j} \in \{4, 8, 12\} \;\times\; \sigma_{\mathrm{prop}} \in \{5\%, 15\%, 30\%\}
-$$
+```
 
 The deliverable is a **phase diagram**: regions of $(N, n_{\mathrm{obs}}, \sigma)$ space
 where the hidden mechanism is recovered, partially recovered, or not recovered.
@@ -172,9 +172,9 @@ where the hidden mechanism is recovered, partially recovered, or not recovered.
 
 **Mechanism recovery (the point of the study):**
 
-$$
+```math
 \mathrm{E}_{\mathrm{mech}} = \left(\frac{\int_{\mathcal{Z}} \big|\widehat{\mathrm{CL}}_{\mathrm{eff}}(z) - \mathrm{CL}^{\mathrm{true}}_{\mathrm{eff}}(z)\big|^2 \rho(z)\,dz}{\int_{\mathcal{Z}} \big|\mathrm{CL}^{\mathrm{true}}_{\mathrm{eff}}(z)\big|^2 \rho(z)\,dz}\right)^{1/2}
-$$
+```
 
 Weighted by the empirical support density $\rho$ — **never** report an unweighted error over
 a range the data never visited.

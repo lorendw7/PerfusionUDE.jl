@@ -108,9 +108,9 @@ Do not guess. Measure, in this order:
 
 Recall the asymmetry from [00 §4](00-glossary.md):
 
-$$
+```math
 \underbrace{\boldsymbol{\eta}_j \in \mathbb{R}^{3\text{–}6}}_{\text{per-individual, few}} \qquad \underbrace{\boldsymbol{\phi} \in \mathbb{R}^{10^2\text{–}10^3}}_{\text{global, many}}
-$$
+```
 
 Naive choices are both wasteful:
 
@@ -122,18 +122,18 @@ Naive choices are both wasteful:
 
 **Mixed strategy.** For each individual $j$, the local sensitivity system is
 
-$$
+```math
 \frac{d}{dt}\frac{\partial \mathbf{u}_j}{\partial \boldsymbol{\eta}_j} = \mathbf{J}_j \frac{\partial \mathbf{u}_j}{\partial \boldsymbol{\eta}_j} + \frac{\partial f}{\partial \boldsymbol{\eta}_j}
-$$
+```
 
 which is $d_\eta$ extra ODE systems — cheap, embarrassingly parallel per individual,
 computed by forward mode inside the individual's own thread/column. Meanwhile
 $\boldsymbol{\phi}$'s gradient is accumulated by a **single reverse pass whose adjoint
 state is shared across the batch**:
 
-$$
+```math
 \nabla_{\boldsymbol{\phi}} J = \sum_{j=1}^N \int_{T}^{0} \boldsymbol{\lambda}_j(t)^\top \frac{\partial f_j}{\partial \boldsymbol{\phi}} \, dt .
-$$
+```
 
 The adjoint ODEs $\boldsymbol{\lambda}_j$ are themselves an $N$-way ensemble — again a
 perfect GPU workload — and the $\boldsymbol{\phi}$-gradient is a reduction over $j$.
@@ -143,7 +143,9 @@ perfect GPU workload — and the $\boldsymbol{\phi}$-gradient is a reduction ove
 >
 > 核心观察：两类参数的维度结构完全不同，所以应该用**不同的微分模式**：
 >
-> $$\boldsymbol{\eta}_j:\ \text{每人 3–6 维} \Rightarrow \textbf{前向模式}\quad\quad \boldsymbol{\phi}:\ \text{全局 } 10^2\text{–}10^3 \text{ 维} \Rightarrow \textbf{反向模式（伴随）}$$
+> ```math
+> \boldsymbol{\eta}_j:\ \text{每人 3–6 维} \Rightarrow \textbf{前向模式}\quad\quad \boldsymbol{\phi}:\ \text{全局 } 10^2\text{–}10^3 \text{ 维} \Rightarrow \textbf{反向模式（伴随）}
+> ```
 >
 > - 全用前向：代价正比于 $N d_\eta + |\boldsymbol{\phi}|$，被 $|\boldsymbol{\phi}|$ 拖死；
 > - 全用反向：为了拿 $\boldsymbol{\eta}$ 的梯度要给全部 $N$ 条轨迹建磁带，
@@ -203,18 +205,18 @@ every change to the RHS.
 
 Rough sizing for the forward solve:
 
-$$
+```math
 M_{\mathrm{fwd}} \approx N \times n \times n_{\mathrm{save}} \times 4\ \text{bytes}
-$$
+```
 
 With $N = 10^4$, $n = 16$, $n_{\mathrm{save}} = 200$: $\approx 128$ MB. Trivial.
 
 The adjoint is the problem. `InterpolatingAdjoint` with a stored dense forward solution
 needs $n_{\mathrm{steps}}$ (not $n_{\mathrm{save}}$) time points, which can be $10^3$–$10^4$:
 
-$$
+```math
 M_{\mathrm{adj}} \approx N \times n \times n_{\mathrm{steps}} \times 4 \approx 0.6\text{–}6\ \text{GB}
-$$
+```
 
 Mitigations, in order of preference:
 
@@ -265,7 +267,9 @@ Build it before the optimizer.
 > > **在写优化器之前，先写有限差分梯度检验。**
 >
 > 具体做法：取 $N=4$ 个个体、极小的网络，用中心差分
-> $$\frac{\partial J}{\partial \phi_i} \approx \frac{J(\phi_i + h) - J(\phi_i - h)}{2h}$$
+> ```math
+> \frac{\partial J}{\partial \phi_i} \approx \frac{J(\phi_i + h) - J(\phi_i - h)}{2h}
+> ```
 > 逐个分量与 AD 给出的梯度对比，要求相对误差 $< 10^{-4}$（用 Float64 做这个检验）。
 >
 > 为什么这条最重要：**梯度错误是本项目最危险的失败模式，因为它不报错。**

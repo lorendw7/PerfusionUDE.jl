@@ -17,9 +17,9 @@ field.
 
 A 0D lumped-parameter transport network:
 
-$$
+```math
 V_i \frac{dc_i}{dt} = \sum_{k \in \mathcal{E}_{\mathrm{in}}(i)} Q_k c_{u(k)} - \sum_{k \in \mathcal{E}_{\mathrm{out}}(i)} Q_k c_i + V_i s_i(c_i)
-$$
+```
 
 subject to network continuity $\sum_{\mathcal{E}_{\mathrm{in}}(i)} Q_k = \sum_{\mathcal{E}_{\mathrm{out}}(i)} Q_k$.
 
@@ -92,11 +92,11 @@ playing the role of the local feature.
 **Adjoint gradients.** For a functional $J = \int_0^T g(\mathbf{u}, \boldsymbol{\phi})\,dt$
 subject to $\dot{\mathbf{u}} = f(\mathbf{u},\boldsymbol{\phi})$:
 
-$$
+```math
 -\dot{\boldsymbol{\lambda}} = \left(\frac{\partial f}{\partial \mathbf{u}}\right)^\top \boldsymbol{\lambda} + \frac{\partial g}{\partial \mathbf{u}}, \quad \boldsymbol{\lambda}(T) = 0,
 \qquad
 \nabla_{\boldsymbol{\phi}} J = \int_0^T \left[\boldsymbol{\lambda}^\top \frac{\partial f}{\partial \boldsymbol{\phi}} + \frac{\partial g}{\partial \boldsymbol{\phi}}\right] dt .
-$$
+```
 
 This is the same continuous adjoint used for unsteady aerodynamic shape optimization. The
 same issues arise and the same remedies apply:
@@ -118,7 +118,9 @@ background-error covariance.**
 > **中文讲解｜CN**
 > **这一节包含一个很漂亮的对应，值得在论文里专门写一段：**
 >
-> $$\underbrace{\tfrac{1}{2}\boldsymbol{\eta}_j^\top\boldsymbol{\Omega}^{-1}\boldsymbol{\eta}_j}_{\text{NLME 里的随机效应先验}} \;\equiv\; \underbrace{\tfrac{1}{2}(\mathbf{x}-\mathbf{x}_b)^\top\mathbf{B}^{-1}(\mathbf{x}-\mathbf{x}_b)}_{\text{4D-Var 里的背景误差项}}$$
+> ```math
+> \underbrace{\tfrac{1}{2}\boldsymbol{\eta}_j^\top\boldsymbol{\Omega}^{-1}\boldsymbol{\eta}_j}_{\text{NLME 里的随机效应先验}} \;\equiv\; \underbrace{\tfrac{1}{2}(\mathbf{x}-\mathbf{x}_b)^\top\mathbf{B}^{-1}(\mathbf{x}-\mathbf{x}_b)}_{\text{4D-Var 里的背景误差项}}
+> ```
 >
 > 也就是说：**群体药代动力学里的"个体间变异协方差 $\boldsymbol{\Omega}$"，
 > 在数据同化里就是"背景误差协方差 $\mathbf{B}$"。**
@@ -159,7 +161,9 @@ CFD is also actively pursuing (e.g. ensemble-based field inversion).
 > 并且要穿过整个 ensemble 求梯度。**
 >
 > 所以本项目的方法学定位可以精确表述为：
-> $$\textbf{UQ 集成} + \textbf{伴随反演} + \textbf{数据驱动闭合} \text{ 三者的结合}$$
+> ```math
+> \textbf{UQ 集成} + \textbf{伴随反演} + \textbf{数据驱动闭合} \text{ 三者的结合}
+> ```
 >
 > 这个组合在 CFD 领域本身也是活跃的前沿（例如基于集成的场反演），
 > 所以它不是"从 CFD 借了个工具"，而是"在一个新场景里做 CFD 也在做的事"。
@@ -190,7 +194,9 @@ axial-dispersion models). Lumping compartments is a second reduction on top of t
 > 这一节的要点：**"简化模型"不是妥协，是方法论上正当的一步，而且有名字——降阶（ROM）。**
 >
 > 特别注意这个层次结构：
-> $$\text{3D 组织输运 PDE} \xrightarrow{\ \text{Pe}\to 0\ } \text{全 PBPK（13 房室）} \xrightarrow{\ \text{可观测性}\ } \text{最小 PBPK（5–6 房室）}$$
+> ```math
+> \text{3D 组织输运 PDE} \xrightarrow{\ \text{Pe}\to 0\ } \text{全 PBPK（13 房室）} \xrightarrow{\ \text{可观测性}\ } \text{最小 PBPK（5–6 房室）}
+> ```
 >
 > 第一步降阶（3D PDE → 房室）的依据是**物理**：良搅拌假设是零 Péclet 数极限，
 > 更精细的版本是 Krogh 圆柱模型、轴向弥散模型。

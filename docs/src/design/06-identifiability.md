@@ -187,9 +187,9 @@ Run these on every fit. They are cheap relative to the fit itself.
 For a scalar parameter $\theta_m$, fix it at values on a grid and re-optimize everything
 else:
 
-$$
+```math
 \mathrm{PL}(\theta_m^*) = \min_{\boldsymbol{\Theta}_{-m}} J(\theta_m^*, \boldsymbol{\Theta}_{-m})
-$$
+```
 
 - Sharp parabola → identifiable.
 - Flat valley → practically non-identifiable.
@@ -201,9 +201,9 @@ a few representative $\eta$s, not on everything.
 
 ### (b) Fisher information / correlation matrix
 
-$$
+```math
 \mathbf{F} = \frac{1}{\sigma^2}\sum_{j,k} \left(\frac{\partial h_{jk}}{\partial \boldsymbol{\Theta}}\right)\left(\frac{\partial h_{jk}}{\partial \boldsymbol{\Theta}}\right)^\top
-$$
+```
 
 The sensitivities are already computed for the gradient — $\mathbf{F}$ is nearly free.
 Report the condition number and the parameter-correlation matrix
@@ -211,9 +211,9 @@ $\mathrm{corr}(\mathbf{F}^{-1})$. Any $|\rho| > 0.95$ pair is a confounding warn
 
 ### (c) $\eta$-shrinkage
 
-$$
+```math
 \mathrm{sh}_m = 1 - \frac{\mathrm{sd}(\hat{\eta}_{m,j})_j}{\sqrt{\Omega_{mm}}}
-$$
+```
 
 Shrinkage > 30% means the data do not inform that individual parameter; individual
 estimates are being pulled to the population mean. High shrinkage invalidates any

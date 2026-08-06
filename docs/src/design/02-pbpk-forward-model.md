@@ -10,15 +10,15 @@ $f_{\mathrm{known}}$ of the UDE.
 
 Let $\mathcal{T}$ be the set of tissue compartments. The default configuration:
 
-$$
+```math
 \mathcal{T} = \{\text{lung, brain, heart, muscle, adipose, skin, bone, gut, spleen, liver, kidney, rest}\}
-$$
+```
 
 plus two blood pools. The state vector is
 
-$$
+```math
 \mathbf{u} = \big(C_{\mathrm{ven}},\, C_{\mathrm{art}},\, \{C_i\}_{i \in \mathcal{T}},\, A_{\mathrm{gut lumen}},\, A_{\mathrm{elim}}\big) \in \mathbb{R}^{n}, \quad n \approx 16 .
-$$
+```
 
 $A_{\mathrm{elim}}$ is a cumulative-eliminated-amount accumulator. It carries no feedback
 but is invaluable for verifying mass conservation — **include it from day one.**
@@ -26,7 +26,9 @@ but is invaluable for verifying mass conservation — **include it from day one.
 > **中文讲解｜CN**
 > 强烈建议把 $A_{\mathrm{elim}}$（累计消除量）作为一个状态变量加进去，虽然它不参与任何反馈。
 > 理由：有了它，就可以在任意时刻检查
-> $$\sum_i V_i C_i + V_{\mathrm{ven}}C_{\mathrm{ven}} + V_{\mathrm{art}}C_{\mathrm{art}} + A_{\mathrm{gut}} + A_{\mathrm{elim}} = A_{\mathrm{dose,cumulative}}$$
+> ```math
+> \sum_i V_i C_i + V_{\mathrm{ven}}C_{\mathrm{ven}} + V_{\mathrm{art}}C_{\mathrm{art}} + A_{\mathrm{gut}} + A_{\mathrm{elim}} = A_{\mathrm{dose,cumulative}}
+> ```
 > 是否成立。这是**离散守恒检验**，和你在 CFD 里检查全局质量守恒是完全一样的做法。
 > 在引入神经网络之后，这个检验会成为"网络有没有偷偷制造/销毁质量"的唯一可靠探针，
 > 到时候再加就晚了。
@@ -43,11 +45,11 @@ Topology rules:
 
 Flow continuity (must be asserted in code as a test):
 
-$$
+```math
 Q_{\mathrm{CO}} = \sum_{i \in \mathcal{T} \setminus \{\text{lung, liver}\}} Q_i \;+\; Q_{\mathrm{ha}},
 \qquad
 Q_{\mathrm{liver,in}} = Q_{\mathrm{ha}} + Q_{\mathrm{gut}} + Q_{\mathrm{spleen}} .
-$$
+```
 
 ---
 
@@ -55,11 +57,11 @@ $$
 
 For a well-stirred, flow-limited tissue $i$ with no elimination:
 
-$$
+```math
 V_i \frac{dC_i}{dt} \;=\; Q_i\left(C_{\mathrm{art}} - \frac{C_i}{K_{p,i}^{\mathrm{app}}}\right),
 \qquad
 K_{p,i}^{\mathrm{app}} \equiv \frac{K_{p,i}}{R_b}
-$$
+```
 
 where $C_i$ is the *total* concentration in tissue $i$ and $C_{\mathrm{art}}$ is the
 arterial **blood** concentration. The emergent venous concentration leaving the tissue is
@@ -67,9 +69,9 @@ $C_{v,i} = C_i / K_{p,i}^{\mathrm{app}}$.
 
 The characteristic equilibration time of the compartment is
 
-$$
+```math
 \tau_i = \frac{V_i K_{p,i}^{\mathrm{app}}}{Q_i} .
-$$
+```
 
 These time constants span roughly three orders of magnitude across organs (lung and
 kidney: minutes; adipose with a lipophilic drug: many hours). **This is the origin of the
@@ -90,56 +92,56 @@ stiffness** of the system and it drives all solver choices later.
 
 ### Liver
 
-$$
+```math
 V_{\mathrm{li}} \frac{dC_{\mathrm{li}}}{dt}
 = Q_{\mathrm{ha}} C_{\mathrm{art}}
 + Q_{\mathrm{gut}} \frac{C_{\mathrm{gut}}}{K_{p,\mathrm{gut}}^{\mathrm{app}}}
 + Q_{\mathrm{sp}} \frac{C_{\mathrm{sp}}}{K_{p,\mathrm{sp}}^{\mathrm{app}}}
 - Q_{\mathrm{li,in}} \frac{C_{\mathrm{li}}}{K_{p,\mathrm{li}}^{\mathrm{app}}}
 - R_{\mathrm{hep}}
-$$
+```
 
 with the nominal (to-be-replaced) hepatic elimination rate
 
-$$
+```math
 R_{\mathrm{hep}} = \mathrm{CL}_{\mathrm{int}} \cdot f_{u,\mathrm{li}} \cdot \frac{C_{\mathrm{li}}}{K_{p,\mathrm{li}}^{\mathrm{app}}}
 \quad\text{(linear)}
 \qquad\text{or}\qquad
 R_{\mathrm{hep}} = \frac{V_{\max} C_{u,\mathrm{li}}}{K_m + C_{u,\mathrm{li}}}
 \quad\text{(Michaelis–Menten)} .
-$$
+```
 
 ### Kidney
 
-$$
+```math
 V_{\mathrm{ki}} \frac{dC_{\mathrm{ki}}}{dt}
 = Q_{\mathrm{ki}}\left(C_{\mathrm{art}} - \frac{C_{\mathrm{ki}}}{K_{p,\mathrm{ki}}^{\mathrm{app}}}\right)
 - \mathrm{CL}_R \, f_u \, C_{\mathrm{art}},
 \qquad
 \mathrm{CL}_R = \mathrm{GFR} \cdot f_u \;+\; \mathrm{CL}_{\mathrm{secr}} - \mathrm{CL}_{\mathrm{reabs}} .
-$$
+```
 
 Renal secretion and reabsorption are both transporter-mediated and both are prime
 candidates for neural closure.
 
 ### Blood pools
 
-$$
+```math
 V_{\mathrm{ven}} \frac{dC_{\mathrm{ven}}}{dt}
 = \sum_{i \in \mathcal{D}} Q_i \frac{C_i}{K_{p,i}^{\mathrm{app}}} \;-\; Q_{\mathrm{CO}} C_{\mathrm{ven}},
 \qquad
 V_{\mathrm{art}} \frac{dC_{\mathrm{art}}}{dt}
 = Q_{\mathrm{CO}}\left(\frac{C_{\mathrm{lu}}}{K_{p,\mathrm{lu}}^{\mathrm{app}}} - C_{\mathrm{art}}\right)
-$$
+```
 
 where $\mathcal{D}$ is the set of tissues draining directly into the venous pool
 (everything except lung, gut, spleen — the latter two drain via the liver).
 
 **The observable** is nearly always plasma concentration:
 
-$$
+```math
 C_{\mathrm{plasma}} = \frac{C_{\mathrm{ven}}}{R_b} .
-$$
+```
 
 Sampling is venous, not arterial. Getting this wrong is a classic silent bug.
 
@@ -159,18 +161,18 @@ Sampling is venous, not arterial. Getting this wrong is a classic silent bug.
 When membrane transfer is rate-limiting, split tissue $i$ into vascular ($\mathrm{vas}$)
 and extravascular ($\mathrm{ev}$) sub-compartments:
 
-$$
+```math
 \begin{aligned}
 V_i^{\mathrm{vas}} \frac{dC_i^{\mathrm{vas}}}{dt} &= Q_i\left(C_{\mathrm{art}} - C_i^{\mathrm{vas}}\right) - \mathrm{PS}_i\left(f_{u,b} C_i^{\mathrm{vas}} - \frac{f_{u,t} C_i^{\mathrm{ev}}}{K_{p,i}}\right) \\[4pt]
 V_i^{\mathrm{ev}} \frac{dC_i^{\mathrm{ev}}}{dt} &= \phantom{Q_i\left(C_{\mathrm{art}} - C_i^{\mathrm{vas}}\right)} \; + \mathrm{PS}_i\left(f_{u,b} C_i^{\mathrm{vas}} - \frac{f_{u,t} C_i^{\mathrm{ev}}}{K_{p,i}}\right)
 \end{aligned}
-$$
+```
 
 $\mathrm{PS}_i$ is the permeability–surface-area product. The ratio
 
-$$
+```math
 \mathrm{Pe}_i \;=\; \frac{Q_i}{\mathrm{PS}_i}
-$$
+```
 
 decides the regime: $\mathrm{Pe}_i \ll 1$ recovers the perfusion-limited model,
 $\mathrm{Pe}_i \gg 1$ gives permeability control.
@@ -189,19 +191,19 @@ $\mathrm{Pe}_i \gg 1$ gives permeability control.
 
 **IV bolus** — set as an initial condition or a discrete callback:
 
-$$
+```math
 C_{\mathrm{ven}}(t_d^+) = C_{\mathrm{ven}}(t_d^-) + \frac{D}{V_{\mathrm{ven}}} .
-$$
+```
 
 **IV infusion** — a rectangular source term on the venous pool over $[t_d, t_d + T_{\mathrm{inf}}]$.
 
 **Oral** — first-order absorption from a gut-lumen amount compartment into the gut tissue
 compartment:
 
-$$
+```math
 \frac{dA_{\mathrm{lumen}}}{dt} = -k_a A_{\mathrm{lumen}}, \qquad
 V_{\mathrm{gut}} \frac{dC_{\mathrm{gut}}}{dt} = \dots + F_a\, k_a A_{\mathrm{lumen}} .
-$$
+```
 
 Implementation note: prefer **discrete callbacks with `tstops`** over smoothed
 approximations of dosing events. Smoothing a bolus into a narrow Gaussian corrupts the
@@ -227,31 +229,31 @@ sex, serum creatinine, genotype). Parameters are generated as:
 
 **Anatomy — deterministic allometry plus variability:**
 
-$$
+```math
 V_{i,j} = V_i^{\mathrm{ref}} \cdot \frac{\mathrm{BW}_j}{\mathrm{BW}^{\mathrm{ref}}} \cdot e^{\eta_{V_i,j}},
 \qquad
 Q_{\mathrm{CO},j} = Q_{\mathrm{CO}}^{\mathrm{ref}} \left(\frac{\mathrm{BW}_j}{\mathrm{BW}^{\mathrm{ref}}}\right)^{3/4} e^{\eta_{Q,j}}
-$$
+```
 
 Blood flows are then $Q_{i,j} = q_i \, Q_{\mathrm{CO},j}$ with fixed fractions $q_i$, which
 automatically preserves the continuity constraint.
 
 **Physiology — the actually-estimated random effects:**
 
-$$
+```math
 \mathrm{CL}_{\mathrm{int},j} = \mathrm{CL}_{\mathrm{int}}^{\mathrm{pop}} \left(\frac{\mathrm{BW}_j}{70}\right)^{3/4} \cdot \mathrm{AF}(\text{genotype}_j) \cdot e^{\eta_{\mathrm{CL},j}},
 \qquad
 \boldsymbol{\eta}_j \sim \mathcal{N}(\mathbf{0}, \boldsymbol{\Omega}) .
-$$
+```
 
 **Critical design decision.** Do *not* attempt to estimate all $\eta_{V_i}$ and $\eta_Q$
 from plasma data. Organ volumes are not identifiable from a plasma concentration curve.
 Fix them at their allometric values (or give them tight informative priors) and estimate
 only a small vector, typically:
 
-$$
+```math
 \boldsymbol{\eta}_j = \big(\eta_{\mathrm{CL}}, \eta_{Q_{\mathrm{CO}}}, \eta_{K_p,\mathrm{scale}}, \eta_{\mathrm{CL}_R}, \eta_{k_a}\big)_j \in \mathbb{R}^{3\text{–}6}.
-$$
+```
 
 > **中文讲解｜CN**
 > **这是全项目最容易致命的设计决策，请务必认真对待。**
@@ -305,11 +307,11 @@ $$
 Raw PBPK states span many orders of magnitude in concentration, and time constants span
 three. Both hurt Float32 GPU arithmetic and hurt the optimizer's conditioning. Define
 
-$$
+```math
 \tilde{C} = \frac{C}{C_{\mathrm{ref}}}, \quad C_{\mathrm{ref}} = \frac{D}{V_{\mathrm{ss}}};
 \qquad
 \tilde{t} = \frac{t}{t_{\mathrm{ref}}}, \quad t_{\mathrm{ref}} = \frac{V_{\mathrm{ss}}}{\mathrm{CL}^{\mathrm{pop}}} .
-$$
+```
 
 In these variables, all states are $O(1)$ over most of the trajectory and the dominant
 elimination time constant is $O(1)$.

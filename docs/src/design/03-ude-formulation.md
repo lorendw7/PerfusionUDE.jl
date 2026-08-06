@@ -6,9 +6,9 @@ Where the neural network goes, what it may and may not do, and how to keep it ph
 
 ## 3.1 The general form
 
-$$
+```math
 \frac{d\mathbf{u}}{dt} \;=\; f_{\mathrm{known}}(\mathbf{u}, \boldsymbol{\theta}_j, t) \;+\; \mathbf{S}\,\mathcal{N}_{\boldsymbol{\phi}}\!\big(\mathbf{z}(\mathbf{u}, \boldsymbol{\theta}_j, t)\big)
-$$
+```
 
 Three objects must be specified, and each is a modelling decision with consequences:
 
@@ -40,9 +40,9 @@ learned.
 
 Replace $R_{\mathrm{hep}}$ entirely:
 
-$$
+```math
 R_{\mathrm{hep}} \;=\; V_{\mathrm{li}}\, C_{u,\mathrm{li}} \cdot \mathrm{softplus}\big(\mathcal{N}_{\boldsymbol{\phi}}(\log \tilde{C}_{u,\mathrm{li}})\big)
-$$
+```
 
 Read this carefully — every factor is doing work:
 
@@ -80,23 +80,23 @@ Read this carefully — every factor is doing work:
 
 ### Target B — Tissue distribution correction (Phase 3)
 
-$$
+```math
 V_i \frac{dC_i}{dt} = Q_i\left(C_{\mathrm{art}} - \frac{C_i}{K_{p,i}^{\mathrm{app}}}\right) + \underbrace{V_i\,\mathcal{N}^{(i)}_{\boldsymbol{\phi}}\!\left(\tilde{C}_{\mathrm{art}}, \tilde{C}_i\right)}_{\text{net transporter flux}}
-$$
+```
 
 **Mandatory pairing:** the identical term must be subtracted from the arterial or venous
 pool, so the correction is a *transfer*, not a *creation*:
 
-$$
+```math
 V_{\mathrm{ven}} \frac{dC_{\mathrm{ven}}}{dt} = \dots - V_i\,\mathcal{N}^{(i)}_{\boldsymbol{\phi}}(\cdot) .
-$$
+```
 
 Additionally impose the equilibrium condition $\mathcal{N}^{(i)}_{\boldsymbol{\phi}} = 0$
 whenever $C_{\mathrm{art}} = C_i / K_{p,i}^{\mathrm{app}}$, e.g. by the construction
 
-$$
+```math
 \mathcal{N}^{(i)}_{\boldsymbol{\phi}}(\cdot) = \left(C_{\mathrm{art}} - \frac{C_i}{K_{p,i}^{\mathrm{app}}}\right) \cdot g_{\boldsymbol{\phi}}(\cdot)
-$$
+```
 
 which makes the network learn a *concentration-dependent effective permeability* $g$.
 
@@ -115,10 +115,10 @@ which makes the network learn a *concentration-dependent effective permeability*
 
 Add an enzyme-amount state $E(t)$ with
 
-$$
+```math
 \frac{dE}{dt} = k_{\mathrm{syn}} - k_{\mathrm{deg}} E + \mathcal{N}_{\boldsymbol{\phi}}(E, C_{u,\mathrm{li}}),
 \qquad R_{\mathrm{hep}} \propto E \cdot \mathrm{CL}_{\mathrm{eff}}(C_{u,\mathrm{li}}) .
-$$
+```
 
 This is only identifiable from **multiple-dose, long-duration** data. Do not attempt it
 with single-dose data.
@@ -144,7 +144,9 @@ the *mechanism* is shared and the *physiology* varies.
 > **中文讲解｜CN**
 > 第四行是**本项目的科学前提，不是技术细节**：
 >
-> $$\text{机制（}\boldsymbol{\phi}\text{）是全人群共享的；生理（}\boldsymbol{\eta}_j\text{）是因人而异的。}$$
+> ```math
+> \text{机制（}\boldsymbol{\phi}\text{）是全人群共享的；生理（}\boldsymbol{\eta}_j\text{）是因人而异的。}
+> ```
 >
 > 一旦允许网络有个体专属权重，它就会把所有个体间差异都吸收进去，
 > 生理参数随即完全不可辨识，模型退化成"每人一个黑箱"，毫无外推能力和科学价值。
@@ -205,9 +207,9 @@ clearance). Two workable ways:
 The objective (see [04](04-population-inverse-problem.md)) carries three penalties on
 $\boldsymbol{\phi}$, each with a distinct purpose:
 
-$$
+```math
 \mathcal{R}(\boldsymbol{\phi}) = \underbrace{\lambda_2 \|\boldsymbol{\phi}\|_2^2}_{\text{shrink toward mechanism}} + \underbrace{\lambda_1 \|\boldsymbol{\phi}\|_1}_{\text{sparsity, aids symbolic recovery}} + \underbrace{\lambda_s \int \left|\frac{\partial^2 \mathcal{N}}{\partial z^2}\right|^2 dz}_{\text{smoothness in }z}
-$$
+```
 
 The third term is the important and often-omitted one. PK data are sparse; without a
 smoothness penalty the learned $\mathrm{CL}_{\mathrm{eff}}(C)$ curve will oscillate wildly
@@ -241,10 +243,10 @@ training loss.
 A learned closure is meaningful only on the region of input space actually visited by the
 training trajectories. Define the **empirical support**
 
-$$
+```math
 \mathcal{Z} = \left\{ z : \rho(z) > \epsilon \right\}, \qquad
 \rho(z) \propto \sum_{j=1}^{N} \sum_{k} w_{jk} \,\delta_h\!\big(z - z(t_{jk})\big)
-$$
+```
 
 weighted by observation density, not merely by simulation time.
 
@@ -270,7 +272,7 @@ extrapolation claim must be checked against $\mathcal{Z}$.**
 
 ## 3.7 Summary of the Phase-1 UDE
 
-$$
+```math
 \boxed{
 \begin{aligned}
 &\text{States: } \mathbf{u} \in \mathbb{R}^{16}, \text{ perfusion-limited PBPK, single IV bolus} \\
@@ -280,7 +282,7 @@ $$
 &\text{Shared: } \boldsymbol{\phi} \in \mathbb{R}^{\sim 300}, \; \boldsymbol{\theta}_{\mathrm{pop}} \in \mathbb{R}^{3}, \; \boldsymbol{\Omega} \in \mathbb{R}^{3\times 3}
 \end{aligned}
 }
-$$
+```
 
 Everything else is deferred to later phases.
 

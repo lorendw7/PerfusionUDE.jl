@@ -90,9 +90,9 @@ The first three rows are the "known physics". The last four are the closure prob
 
 Take hepatic elimination. The textbook closure is Michaelis–Menten:
 
-$$
+```math
 R_{\mathrm{elim}} = \frac{V_{\max}\, C_u}{K_m + C_u}
-$$
+```
 
 This is derived under assumptions that are routinely violated in vivo:
 
@@ -108,9 +108,9 @@ This is derived under assumptions that are routinely violated in vivo:
 
 Similarly, the perfusion-limited distribution closure
 
-$$
+```math
 \text{flux into tissue } i \;=\; Q_i\!\left(C_{\mathrm{art}} - \frac{C_i}{K_{p,i}/R_b}\right)
-$$
+```
 
 assumes instantaneous intra-tissue equilibrium with a *constant, concentration-independent*
 partition coefficient. That fails for drugs with saturable tissue binding, for
@@ -139,9 +139,9 @@ exactly the failure mode of over-tuned algebraic turbulence models.
 
 Instead of guessing a functional form, write
 
-$$
+```math
 \frac{d\mathbf{u}}{dt} \;=\; \underbrace{f_{\mathrm{known}}(\mathbf{u}, \boldsymbol{\theta})}_{\text{mass balance + perfusion: trusted}} \;+\; \underbrace{\mathcal{N}_{\boldsymbol{\phi}}(\mathbf{u}, \boldsymbol{\theta}, t)}_{\text{unknown mechanism: learned}}
-$$
+```
 
 and estimate $\boldsymbol{\phi}$ from data.
 

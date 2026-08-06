@@ -7,29 +7,29 @@ Three levels.
 **Level 1 — Observation (residual error).** For individual $j$, observation $k$ at time
 $t_{jk}$:
 
-$$
+```math
 y_{jk} \;=\; h\big(\mathbf{u}_j(t_{jk})\big)\,(1 + \varepsilon^{\mathrm{prop}}_{jk}) + \varepsilon^{\mathrm{add}}_{jk},
 \qquad \varepsilon^{\mathrm{prop}} \sim \mathcal{N}(0,\sigma_p^2), \; \varepsilon^{\mathrm{add}} \sim \mathcal{N}(0,\sigma_a^2)
-$$
+```
 
 with $h(\mathbf{u}) = C_{\mathrm{ven}}/R_b$ the plasma concentration. In practice fit on
 the log scale, which turns the combined error into approximately additive:
 
-$$
+```math
 \log y_{jk} = \log h(\mathbf{u}_j(t_{jk})) + \epsilon_{jk}, \qquad \epsilon_{jk} \sim \mathcal{N}(0, \sigma^2).
-$$
+```
 
 **Level 2 — Individual dynamics.**
 
-$$
+```math
 \frac{d\mathbf{u}_j}{dt} = f_{\mathrm{known}}(\mathbf{u}_j, \boldsymbol{\theta}_j, t) + \mathbf{S}\,\mathcal{N}_{\boldsymbol{\phi}}(\mathbf{z}), \qquad \mathbf{u}_j(0) = \mathbf{u}_0(D_j)
-$$
+```
 
 **Level 3 — Population.**
 
-$$
+```math
 \boldsymbol{\theta}_j = g(\boldsymbol{\theta}_{\mathrm{pop}}, \mathbf{x}_j)\odot \exp(\boldsymbol{\eta}_j), \qquad \boldsymbol{\eta}_j \sim \mathcal{N}(\mathbf{0}, \boldsymbol{\Omega}) .
-$$
+```
 
 Unknowns: $\boldsymbol{\Theta} = \big(\boldsymbol{\phi},\, \boldsymbol{\theta}_{\mathrm{pop}},\, \boldsymbol{\Omega},\, \sigma\big)$
 plus the latent $\{\boldsymbol{\eta}_j\}_{j=1}^N$.
@@ -55,9 +55,9 @@ plus the latent $\{\boldsymbol{\eta}_j\}_{j=1}^N$.
 The statistically correct objective is the marginal likelihood, integrating out
 $\boldsymbol{\eta}_j$:
 
-$$
+```math
 \mathcal{L}(\boldsymbol{\Theta}) = \prod_{j=1}^{N} \int p\big(\mathbf{y}_j \mid \boldsymbol{\eta}_j, \boldsymbol{\Theta}\big)\, p(\boldsymbol{\eta}_j \mid \boldsymbol{\Omega})\, d\boldsymbol{\eta}_j
-$$
+```
 
 Each integral is over $\mathbb{R}^{d_\eta}$ ($d_\eta \approx 3$–$6$) and has no closed
 form, because $\mathbf{y}_j$ depends on $\boldsymbol{\eta}_j$ through an ODE solve. This
@@ -73,10 +73,10 @@ Choose deliberately; each has a different GPU profile.
 
 Treat $\{\boldsymbol{\eta}_j\}$ as parameters and add their prior as a penalty:
 
-$$
+```math
 \min_{\boldsymbol{\phi},\,\boldsymbol{\theta}_{\mathrm{pop}},\,\{\boldsymbol{\eta}_j\}}
 \; \sum_{j=1}^{N} \left[ \underbrace{\frac{1}{2\sigma^2}\sum_k \big(\log y_{jk} - \log h(\mathbf{u}_j(t_{jk}))\big)^2}_{\text{data misfit}} + \underbrace{\tfrac{1}{2}\boldsymbol{\eta}_j^\top \boldsymbol{\Omega}^{-1} \boldsymbol{\eta}_j}_{\text{Tikhonov toward population mean}} \right] + \mathcal{R}(\boldsymbol{\phi})
-$$
+```
 
 - **Pros:** one flat, fully differentiable objective; a single gradient step touches all
   $N$ individuals; maps perfectly onto GPU ensemble + AD. This is the whole reason the
@@ -108,9 +108,9 @@ $$
 Approximate each integral by a Laplace expansion around
 $\hat{\boldsymbol{\eta}}_j = \arg\max$:
 
-$$
+```math
 -\log \mathcal{L} \approx \sum_j \left[ \ell_j(\hat{\boldsymbol{\eta}}_j) + \tfrac{1}{2}\log\det \mathbf{H}_j \right], \qquad \mathbf{H}_j = \nabla^2_{\boldsymbol{\eta}} \ell_j \big|_{\hat{\boldsymbol{\eta}}_j}
-$$
+```
 
 This is essentially FOCE. It removes most of the $\boldsymbol{\Omega}$ bias, at the cost of
 an inner optimization per individual and a $\log\det$ of a $d_\eta \times d_\eta$ Hessian
@@ -188,9 +188,9 @@ on a small subset ($N \le 30$)** to validate the uncertainty estimates produced 
 
 Phase-1 concrete objective (all in log-space, nondimensionalized):
 
-$$
+```math
 J(\boldsymbol{\phi}, \boldsymbol{\theta}_{\mathrm{pop}}, \mathbf{H}) = \frac{1}{N}\sum_{j=1}^{N}\Big[ \underbrace{\tfrac{1}{2\sigma^2}\|\mathbf{r}_j\|^2}_{\text{misfit}} + \tfrac{1}{2}\boldsymbol{\eta}_j^\top \boldsymbol{\Omega}^{-1}\boldsymbol{\eta}_j \Big] + \lambda_2\|\boldsymbol{\phi}\|_2^2 + \lambda_1\|\boldsymbol{\phi}\|_1 + \lambda_s \mathcal{S}(\boldsymbol{\phi})
-$$
+```
 
 where $\mathbf{H} = [\boldsymbol{\eta}_1, \dots, \boldsymbol{\eta}_N] \in \mathbb{R}^{d_\eta \times N}$
 is stored as a single dense matrix (a `CuMatrix` — column $j$ is individual $j$).
@@ -265,9 +265,9 @@ $\hat{\boldsymbol{\Omega}} \leftarrow \frac{1}{N}\sum_j \hat{\boldsymbol{\eta}}_
 
 Because $\boldsymbol{\phi}$'s gradient is a sum over individuals,
 
-$$
+```math
 \nabla_{\boldsymbol{\phi}} J = \frac{1}{N}\sum_{j=1}^{N} \nabla_{\boldsymbol{\phi}} J_j,
-$$
+```
 
 it can be estimated from a mini-batch $\mathcal{B} \subset \{1,\dots,N\}$. But
 $\nabla_{\boldsymbol{\eta}_j} J$ is **not** a sum — it involves only individual $j$.
@@ -306,9 +306,9 @@ nonlinearity. Discarding them biases clearance estimates.
 The standard treatment (Beal's "M3") replaces the Gaussian density with the censoring
 probability for those points:
 
-$$
+```math
 \ell_{jk} = \log \Phi\!\left(\frac{\log \mathrm{LOQ} - \log h(\mathbf{u}_j(t_{jk}))}{\sigma}\right) \quad \text{if } y_{jk} \text{ is BLQ.}
-$$
+```
 
 This is smooth and differentiable — it costs nothing to include, and omitting it is a
 known source of bias. Include it from the start in the real-data study; include it as a
