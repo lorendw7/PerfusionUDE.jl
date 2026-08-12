@@ -8,8 +8,37 @@ version is `0.x`, minor version bumps may contain breaking changes.
 
 ## [Unreleased]
 
+### Added
+- `ReferenceIndividual` and `OrganReference`: reference physiology in which every value
+  carries a mandatory `source` string, with accessors `tissue`, `blood_flow`,
+  `liver_inflow`, `flow_continuity_residual` and `total_volume`. Unit tests assert
+  Σq = 1 over perfused tissues, ΣV ≈ body weight, and that no `source` is empty.
+  **The values themselves are the illustrative table from design doc §2.7 and are not yet
+  verified against ICRP 89 / Brown et al. (1997)** — each `source` says so.
+- Second literature sweep (design doc §11.6): five works the first sweep missed, five
+  citations upgraded from pointer to verified, and three plan defects recorded.
+
+### Changed
+- Baseline **B4** (neural network on the covariate → parameter map) is no longer cut from
+  the solo track — a hierarchical Julia implementation is now published, so the comparison
+  is mandatory rather than optional.
+- The statement of need narrows claim (ii) from GPU-parallel ensembles generally to the
+  ensemble layout and mixed forward/adjoint gradient policy, and now names the prior art
+  it sits on top of.
+- Author metadata in `Project.toml`, `CITATION.cff`, `paper/paper.md` and `docs/make.jl`
+  changed from `TODO` to the maintainer's GitHub handle; the placeholder ORCID
+  `0000-0000-0000-0000` was commented out rather than left to resolve as a real identifier.
+
+### Fixed
+- Display equations in the design docs used `$$…$$`, which Documenter does not parse as
+  math; all 60 converted to ```math fences. The docs build failed before this.
+- The documentation CI job listed eight pages that do not exist yet, which is a hard error
+  in Documenter regardless of `warnonly`.
+- Dropped the `x64` architecture pin from the CI matrix: `macOS-latest` is Apple Silicon,
+  so the pin tested an emulated build.
+
 ### Planned for v0.2.0
-- Reference physiology with provenance for every value (`ReferenceIndividual`)
+- Phase −0.5 (blocking): verify every reference physiology value against a primary source
 - Minimal 5-compartment PBPK topology with flow-continuity assertions
 - Allocation-free `StaticArrays` right-hand side
 - Nondimensionalization layer

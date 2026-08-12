@@ -9,8 +9,12 @@
 *Data-driven closure of lumped-parameter transport networks, and large-scale parallel
 parameter inversion.*
 
-> **Status: pre-release.** The design documentation is complete and authoritative; the
-> implementation is in progress. See the [roadmap](docs/src/design/09-implementation-roadmap.md).
+> **Status: pre-release, not yet usable.** The design documentation is complete and
+> authoritative; the implementation has just begun. The reference-physiology layer exists
+> and its invariants are tested; **its numerical values are the illustrative table from the
+> design docs and have not yet been verified against ICRP 89 / Brown et al. (1997)** — every
+> `source` field says so. Nothing else in the API is implemented. See the
+> [roadmap](docs/src/design/09-implementation-roadmap.md).
 
 ---
 
@@ -32,23 +36,36 @@ Three capabilities are simultaneously missing from the open-source ecosystem:
 
 1. **A differentiable PBPK layer.** No Julia package provides composable, tested
    transport-network construction with sourced reference physiology. What exists
-   (`bioPBPK`, `BayesPBPK-tutorial`) are model collections and tutorials.
-2. **GPU-parallel population ensembles with gradients.** Population inversion needs
-   $10^3$–$10^4$ structurally identical ODE solves *and their gradients* per optimizer
-   iteration. Ideal GPU work, but the ensemble layout, precision policy and
-   forward/adjoint mixing are re-engineered from scratch in every project.
+   (`bioPBPK`, `BayesPBPK-tutorial`) are model collections and tutorials; the closest
+   packaged work — hierarchical deep compartment modelling
+   ([Elmokadem et al. 2024](https://doi.org/10.1111/cts.70045)) — attaches the network to
+   the covariate → parameter map rather than to the transport equations, and represents no
+   organ physiology.
+2. **A population-ensemble layer with usable gradients.** Differentiable GPU ODE solving
+   already exists ([DiffEqGPU.jl](https://doi.org/10.1016/j.cma.2023.116591); also
+   [arXiv:2411.19882](https://arxiv.org/abs/2411.19882), benchmarked on PK compartment
+   models). What is re-engineered from scratch in every project is the layer *above* it:
+   the ensemble memory layout, the precision policy, and the mixed forward/adjoint gradient
+   policy required when $10^3$–$10^4$ individuals share one global closure while each
+   carries a handful of private physiological parameters.
 3. **Identifiability tooling for hybrid models.** A neural closure can silently absorb
-   misspecified physiology; recent work shows some hybrid models are equivalent to plain
-   neural ODEs and contribute no mechanistic knowledge at all. Routine tests for this are
-   not packaged anywhere.
+   misspecified physiology; [Loman & Baker (2025)](https://arxiv.org/abs/2510.14140) show
+   that some universal differential equations are fitting-equivalent to plain neural ODEs
+   and contribute no mechanistic knowledge at all. Routine tests for this are not packaged
+   anywhere.
 
-`PerfusionUDE.jl` addresses all three.
+Neural closures inside PK ODEs are not new — see
+[Valderrama et al. 2024](https://doi.org/10.1002/psp4.13054) for the nearest published
+precedent, and [Janssen et al. 2022](https://doi.org/10.1002/psp4.12808) for the
+covariate-map alternative. What `PerfusionUDE.jl` adds is the organ-level transport
+network, the population scale, and the identifiability machinery to tell a genuine hybrid
+model from a disguised black box.
 
 ## What it provides
 
 | Layer | Contents |
 |---|---|
-| **Domain** | PBPK topologies (full and minimal), sourced reference physiology with provenance, allometric scaling, dosing, nondimensionalization |
+| **Domain** | PBPK topologies (full and minimal), reference physiology in which every value carries a mandatory provenance string, allometric scaling, dosing, nondimensionalization |
 | **Closure** | Declarative structural constraints on neural terms: nonnegativity, $R(0)=0$, paired ± mass transfer, residual form with exact mechanistic initialisation |
 | **Inference** | Joint-MAP estimator, GPU population ensembles, mixed forward/adjoint gradients, BLQ (M3) likelihood; interop with NoLimits.jl / Pumas backends |
 | **Analysis** | Empirical support density, profile likelihood, Fisher information, $\eta$-shrinkage, ablation test, **mechanistic-content test**, symbolic recovery with refit verification, recoverability phase diagrams, VPC |

@@ -10,11 +10,12 @@ tags:
   - GPU computing
   - identifiability
 authors:
-  - name: TODO Your Name
-    orcid: 0000-0000-0000-0000
+  # TODO before submission: JOSS requires a real name, and an ORCID is expected.
+  # `lorendw7` is a GitHub handle standing in until then.
+  - name: lorendw7
     affiliation: 1
 affiliations:
-  - name: TODO Institution, Country
+  - name: TODO Institution, Country  # "Independent researcher" is acceptable to JOSS
     index: 1
 date: TODO
 bibliography: paper.bib

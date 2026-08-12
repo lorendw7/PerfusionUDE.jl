@@ -1,6 +1,6 @@
 name = "PerfusionUDE"
 uuid = "1350a4dd-378a-47d8-b371-9fe714054064"
-authors = ["TODO Your Name <lorendw7@gmail.com>"]
+authors = ["lorendw7 <lorendw7@gmail.com>"]
 version = "0.1.0-DEV"
 
 [deps]

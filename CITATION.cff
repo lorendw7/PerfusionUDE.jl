@@ -2,12 +2,15 @@ cff-version: 1.2.0
 title: "PerfusionUDE.jl: GPU-parallel universal differential equations for population PBPK inverse problems"
 message: "If you use this software, please cite it as below."
 type: software
+# NOTE: the author entry below is a GitHub handle, not a legal name, and carries no
+# ORCID or affiliation. JOSS requires an identifiable author — replace `given-names`
+# with a real name and add `orcid:` and `affiliation:` before submitting.
+# A fake ORCID is worse than none: resolvers treat 0000-0000-0000-0000 as real and fail.
 authors:
-  - given-names: "TODO"
-    family-names: "TODO"
+  - given-names: "lorendw7"
     email: "lorendw7@gmail.com"
-    orcid: "https://orcid.org/0000-0000-0000-0000"
-    affiliation: "TODO"
+    # orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"
+    # affiliation: ""
 repository-code: "https://github.com/lorendw7/PerfusionUDE.jl"
 url: "https://lorendw7.github.io/PerfusionUDE.jl"
 abstract: >-

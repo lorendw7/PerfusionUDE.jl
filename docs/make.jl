@@ -6,7 +6,7 @@ DocMeta.setdocmeta!(PerfusionUDE, :DocTestSetup, :(using PerfusionUDE); recursiv
 makedocs(;
     modules = [PerfusionUDE],
     sitename = "PerfusionUDE.jl",
-    authors = "TODO Your Name",
+    authors = "lorendw7",
     format = Documenter.HTML(;
         canonical = "https://lorendw7.github.io/PerfusionUDE.jl",
         mathengine = Documenter.KaTeX(),
