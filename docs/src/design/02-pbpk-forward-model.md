@@ -272,33 +272,62 @@ only a small vector, typically:
 
 ---
 
-## 2.7 Illustrative reference-individual values
+## 2.7 Reference-individual values
 
-70 kg adult male, cardiac output ≈ 390 L/h.
+**ICRP Publication 89 reference adult male: body mass 73 kg, cardiac output 6.5 l/min
+= 390 L/h.** Verified against the primary document on 2026-08-16 and implemented in
+`src/physiology/reference.jl`, where each row carries its own table citation.
 
-| Compartment | $V_i$ (L) | $q_i = Q_i/Q_{\mathrm{CO}}$ |
-|---|---|---|
-| Lung | 0.5 | 1.00 (series) |
-| Adipose | 14.3 | 0.05 |
-| Muscle | 29.0 | 0.17 |
-| Skin | 3.4 | 0.05 |
-| Bone | 10.5 | 0.05 |
-| Brain | 1.45 | 0.12 |
-| Heart | 0.33 | 0.04 |
-| Kidney | 0.31 | 0.19 |
-| Liver | 1.8 | 0.065 (hepatic artery) |
-| Gut | 1.65 | 0.19 (→ portal) |
-| Spleen | 0.19 | 0.03 (→ portal) |
-| Venous blood | 3.9 | — |
-| Arterial blood | 1.7 | — |
+Volumes are masses at an assumed tissue density of 1.00 kg/L, taken from ICRP 89
+Table 2.8 (adult male column); blood is the exception, being a volume already
+(Table 2.12). Flow fractions are ICRP 89 Table 2.40, male column.
+
+| Compartment | $V_i$ (L) | $q_i = Q_i/Q_{\mathrm{CO}}$ | ICRP 89 source |
+|---|---|---|---|
+| Lung | 0.5 | 1.00 (series) | T2.8 "Lung — tissue only"; bronchial 2.5% is in *Rest* |
+| Adipose | 14.5 | 0.05 | T2.8 "Separable adipose tissue, excluding yellow marrow"; T2.40 "Fat" |
+| Muscle | 29.0 | 0.17 | T2.8; T2.40 "Skeletal muscle" |
+| Skin | 3.3 | 0.05 | T2.8 (itemised in T2.27); T2.40 |
+| Bone | 10.5 | 0.05 | T2.8 "Total skeleton"; T2.40 "Skeleton" |
+| Brain | 1.45 | 0.12 | T2.8; T2.40 |
+| Heart | 0.33 | 0.04 | T2.8 "Heart — tissue only"; T2.40 "Coronary tissue" |
+| Kidney | 0.31 | 0.19 | T2.8 "Kidneys (2)"; T2.40 |
+| Liver | 1.8 | 0.065 (hepatic artery) | T2.8; T2.40 "6.5 (arterial)" |
+| Gut | 1.35 | 0.16 (→ portal) | T2.8 walls of oesophagus/stomach/intestines + pancreas; T2.40 same four rows |
+| Spleen | 0.15 | 0.03 (→ portal) | T2.8; T2.40 |
+| Rest | 4.51 | 0.075 | residual; see below |
+| Venous blood | 3.82 | — | T2.12 total 5.3 L; 72% split derived from T2.13 |
+| Arterial blood | 1.48 | — | T2.12 total 5.3 L; 28% split derived from T2.13 |
+
+Two identities make the table checkable rather than merely cited, and both are
+asserted in the test suite:
+
+- $\sum_i q_i = 1$ over the perfused tissues. This works out because the male column
+  of Table 2.40 sums to exactly 100% when the liver is counted by its *arterial*
+  share alone, and the 7.5% left over for *Rest* is exactly that table's bronchial
+  2.5 + thyroid 1.5 + lymph nodes 1.7 + gonads 0.05 + adrenals 0.3 + urinary bladder
+  0.06 + all other 1.39.
+- **Total hepatic inflow = 0.065 + 0.16 + 0.03 = 25.5% of cardiac output**, which is
+  the figure Table 2.40 states independently on its liver row. Reproducing it from
+  the model's own portal topology is a genuine check on the splanchnic bed.
 
 > **中文讲解｜CN**
-> ⚠️ **上表仅为量级示意，正式使用前必须从 ICRP 89 / Brown et al. (1997) 等原始文献核对并注明出处。**
-> 不同文献的数值有差异（尤其是脂肪和"其余组织"房室的定义），论文里必须写清楚用的是哪一套。
+> ⚠️ **这张表在 2026-08-16 已逐条对照 ICRP 89 原文核实，不再是示意值。**
+> 核实过程改掉了四个错误，其中一个是实质性的：
 >
-> 实现建议：把这张表做成一个带出处字段的数据结构（`ReferenceIndividual`），
-> 每个数值都带 `source::String`。将来审稿人问"你的肝血流量哪来的"，你能立刻回答。
-> 同时写一个测试断言 $\sum q_i = 1$（肺除外）——这是网格守恒检验的 0D 版本。
+> - **原表把肠道流量写成 0.19，同时又单列脾 0.03**——0.19 其实是 ICRP 的**门静脉总量**
+>   （已含脾 3% 与胰 1%）。这样一来肝总入血流变成 28.5% 而非 25.5%，**高估约 12%**。
+>   肝血流恰恰是肝清除率、也就是本项目闭合项目标 A 最敏感的那一个量。
+>   正确做法是肠道取 16%（胃食管 1.0 + 小肠 10 + 大肠 4.0 + 胰 1.0），脾另计 3%。
+> - 体重 70 kg → **73 kg**（ICRP 参考男性）；脾 0.19 → 0.15 L；皮肤 3.4 → 3.3 L；
+>   脂肪 14.3 → 14.5 L（用"可分离脂肪、不含黄骨髓"那一行，否则与骨骼重复计算）。
+>
+> **这类错误不会让程序崩溃，只会让曲线看起来仍然合理。** 所以 `ReferenceIndividual`
+> 的每个数值都带 `source::String`，测试里断言 $\sum q_i = 1$（肺除外）和
+> 肝总入 = 25.5%——后者是从拓扑重新算出来的，与 ICRP 独立给出的数字对上才算通过。
+>
+> 另外注意：Brown et al. (1997) 与 ICRP 89 的数值**并不一致**（如肝 22.7% vs 25.5%、
+> 肾 17.5% vs 19%），**两套不能混用**。本项目全程使用 ICRP 89。
 
 ---
 
