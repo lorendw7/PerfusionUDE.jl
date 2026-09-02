@@ -34,6 +34,26 @@ version is `0.x`, minor version bumps may contain breaking changes.
   have a shelf life, and the reader should know when they were last checked.
 
 ### Changed
+- **The research plan is repaired to match the third sweep, not merely annotated with it.**
+  - **Test D has a decision rule** (design doc §6.0), closing the methodological hole open
+    since §11.6.3(b): $R = 10$ seeds for UDE and B3 alike; the unit is the UDE's own
+    seed-to-seed scatter $\sigma_{\mathrm{run}}$, fixed before B3 is examined; a pass
+    requires comparable in-sample fit *and* a held-out-dose advantage of at least
+    $2\sigma_{\mathrm{run}}$; an in-sample mismatch is *inconclusive*, not a pass; and the
+    failure response is an ordered list (shrink $\mathbf{z}$ → tighten $\mathbf{S}$ →
+    bounded multiplicative correction → report degeneracy as a result). The rule is to be
+    frozen in code as `TestDRule` before the first Phase-1 fit.
+  - **§06 gains a prior-art section (§6.7)** recording the decisions iNODE, Takeishi and
+    Bisht & Agarwal force before §6.4 is implemented, and a new diagnostic (e): a parameter
+    converging to its bound is a non-identifiability signature.
+  - **§07** now says why a generative virtual population cannot replace the twin study
+    (nothing to score recovery against), maps B2/B3 onto the PopPK/ML arms of Valderrama
+    2025, and states in advance that the UDE should approach B0, not beat it.
+  - **§09 opens with "Where the project stands, and what to do next"**, rewritten at every
+    sweep: done, not done, and a week-by-week order of next actions starting with one
+    commit of `topology.jl` this week. The §T.3 schedule and the §13.4 timeline are
+    re-based on JOSS gate 2: a preprint that uses and cites the package is a month-4
+    milestone and a submission prerequisite; `v0.2.0` closes gate 3.
 - **The binding constraint on the JOSS submission is no longer the six-month clock.** §13.4
   said *"the 6-month rule is the binding constraint… nothing else you do can compress it"*;
   that is now false. The clock expires on 2027-02-06 and runs by itself, whereas **gate 2 —

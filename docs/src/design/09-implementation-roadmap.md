@@ -12,6 +12,70 @@ the next begins.
 
 ---
 
+# Where the project stands, and what to do next — 2026-09-02
+
+This section is rewritten at every validity sweep. It is the only part of the roadmap
+that is meant to go stale, and it says so.
+
+## Done
+
+- **Phase −1** — public since 2026-08-06, `v0.1.0`, changelog, `CONTRIBUTING`, CI, docs.
+- **Phase −0.5** — every reference-physiology value verified against ICRP 89 (2026-08-16).
+- **Three literature sweeps** and a plan reconciled with the JOSS rules as they are, not
+  as they were in July ([11 §11.7](11-literature-landscape.md)).
+- **Test D has a decision rule** ([06 §6.0](06-identifiability.md)) — the last item
+  §T.4 below said could not be a stub.
+
+## Not done
+
+- **No model code exists.** `src/` contains the physiology layer and nothing else. The
+  first line of Phase 0 has not been written.
+- **The commit cadence broke once** (2026-08-16 → 09-02). JOSS gates 1 and 4 check commit
+  distribution automatically.
+- **No tagged release beyond `v0.1.0`** — the one gate-3 indicator still missing.
+- **No evidence of research use** — gate 2, the binding constraint, and it cannot be
+  satisfied by anything in this repository alone.
+
+## Next actions, in order
+
+| When | Do | Why this and not something else |
+|---|---|---|
+| **This week** | `topology.jl`: the 5-compartment minimal topology with flow continuity asserted at construction, plus its unit test. **One commit.** | Restarts the cadence with real code. Smallest Phase-0 unit that stands alone. |
+| Weeks 2–5 | Rest of Phase 0: `StaticArrays` out-of-place RHS, nondimensionalization, the six numerical tests of [02 §2.9](02-pbpk-forward-model.md), stiffness characterization. **Tag `v0.2.0`.** | `v0.2.0` closes gate 3. Everything downstream depends on a forward model that conserves mass. |
+| Weeks 6–9 | Closure layer with declarative constraints; twin generator H1. **`TestDRule` frozen in code before any fit is run.** | §T.4 item 1. Pre-registration only counts if it is committed before the results. |
+| Weeks 10–16 | Phase 1: joint MAP at $N = 50$, finite-difference gradient check *first*, baselines B0/B1/B3/B4 with $R = 10$ seeds, **Test D**. **Tag `v0.3.0`.** | Decides whether the project works. Nothing GPU until this passes. |
+| **Immediately after Phase 1** | **arXiv preprint v1**, using and citing the package — closure-recovery figure, Test D verdict, $N = 50$. Small is fine. | **This is the gate-2 evidence.** It also establishes priority; iNODE appeared during the last gap. |
+| Then | Phase 2 (GPU), Phase 3 (sweep) → preprint v2 with the phase diagram. Package registration. | Gate 2 gets stronger; the JOSS paper gets its research-impact section. |
+| **After 2027-02-06** *and* preprint public | Submit to JOSS. | Both conditions, not either. |
+
+**Standing rules while doing the above:** commit every week; re-run the sweep and the
+compat-bound check before every tag and every submission; log AI-tool versions as they are
+used ([13 §13.5](13-publication-strategy.md)); read iNODE before writing §6.4 code
+([06 §6.7](06-identifiability.md)).
+
+> **中文讲解｜CN**
+> **这一节每次有效性扫描都重写，是路线图里唯一"应该过时"的部分。**
+>
+> **已完成**：公开、`v0.1.0`、生理参数核对、三次文献扫描、Test D 判定规则。
+> **未完成**：**一行模型代码都没有**；提交节奏断过一次；`v0.1.0` 之后没有 tag；
+> 没有任何"被用于研究"的证据——而这是 JOSS 现在真正卡人的那道门。
+>
+> **下一步的顺序不是随便排的：**
+> 1. **本周一个提交**：`topology.jl`（5 房室拓扑 + 构造时断言流量连续）。
+>    这是 Phase 0 里最小的、能独立成立的单元，用真代码把节奏接上。
+> 2. 五周内做完 Phase 0，**打 `v0.2.0`**——这一个 tag 就把门槛 3 关上了。
+> 3. 闭合层 + 孪生生成器，**Test D 的规则先冻进代码再跑任何拟合**——事先登记的意思就是提交在结果之前。
+> 4. Phase 1 在 CPU、$N=50$ 上把整套方法跑通，**打 `v0.3.0`**。
+> 5. **Phase 1 一结束就挂 arXiv 预印本**，用这个包、引这个包。**小结果也行**——
+>    它是门槛 2 的证据，不是论文的终稿。上次停更的十七天里冒出了 iNODE，这个领域不等人。
+> 6. 之后 GPU、相图、预印本 v2、注册包。
+> 7. **2027-02-06 之后 且 预印本已公开**，两个条件都满足才投 JOSS。
+>
+> 四条常备规则：每周提交；每次打 tag 或投稿前重跑扫描和兼容性边界检查；
+> 边用边记 AI 工具版本；写 §6.4 代码前先读 iNODE。
+
+---
+
 # Two tracks
 
 This document describes two versions of the same programme. **Read §T first and pick one
@@ -83,12 +147,18 @@ Relative to $T_0$ = the day the repository went public (**2026-08-06**). Assumes
 | Month | Work | Deliverable |
 |---|---|---|
 | 0–1 | Julia basics; Phase −1 complete; `physiology/` and `topology.jl`; ~~**Phase −0.5 (blocking)**~~ **✅ done 2026-08-16** | reference data structures with provenance ✅; **every reference value verified against ICRP 89** ✅; continuity assertions — `liver_inflow` and `flow_continuity_residual` tested ✅ |
-| 1–2 | Phase 0 on the 5-compartment model | six numerical tests green; RHS allocation-free |
-| 2–3 | Closure layer + twin generator (H1) | constrained closure with declarative options |
-| 3–4 | Phase 1: joint MAP on CPU, $N=50$ | **finite-difference gradient check green; Test D passes** |
+| 1–2 | Phase 0 on the 5-compartment model | six numerical tests green; RHS allocation-free; **tag `v0.2.0`** (closes JOSS gate 3) |
+| 2–3 | Closure layer + twin generator (H1); `TestDRule` frozen in code | constrained closure with declarative options |
+| 3–4 | Phase 1: joint MAP on CPU, $N=50$; baselines with $R=10$ seeds | **finite-difference gradient check green; Test D passes under the §6.0 rule; tag `v0.3.0`** |
+| 4 | **arXiv preprint v1** — uses and cites the package | **JOSS gate-2 evidence begins**; priority established |
 | 4–5 | Phase 2: GPU Layout B | GPU matches CPU; breakeven $N$ measured |
-| 5–6 | 2-D sweep; tutorials; API docs; CHANGELOG | the closure-recovery figure; a small phase diagram |
-| 6–7 | Register the package; draft `paper.md`; verify all references | **JOSS submission (earliest 2027-02-06)** |
+| 5–6 | 2-D sweep; tutorials; API docs; CHANGELOG | the closure-recovery figure; a small phase diagram; **preprint v2** |
+| 6–7 | Register the package; draft `paper.md`; re-verify every **[S]**/**[U]** reference | **JOSS submission — after 2027-02-06 *and* with the preprint public; neither alone suffices** |
+
+The month-4 row is the change from the previous version of this table. The preprint was
+an optional priority-securing move; since the JOSS gates of 2026-03-15 it is the evidence
+that satisfies gate 2, and it is the only item in this schedule that no amount of work
+inside the repository can substitute for. Pull it forward, not back.
 
 Two rules that matter more than the schedule:
 
@@ -259,7 +329,10 @@ Tasks:
 5. Optimization schedule Stages 0–3 ([04 §4.5](04-population-inverse-problem.md)).
 6. Twin data generator with mechanism H1, including all corruptions ([07 §7.2](07-validation-protocol.md)).
 7. Baselines B0, B1, B3, B4.
-8. **Test D — mechanistic-content test** ([06 §6.0](06-identifiability.md)).
+8. **Test D — mechanistic-content test** under the pre-registered rule of
+   [06 §6.0](06-identifiability.md): $R = 10$ seeds for UDE and B3 alike, $2\sigma_{\mathrm{run}}$
+   threshold, in-sample precondition, and the ordered failure response. `TestDRule` must be
+   committed before the first Phase-1 fit.
 
 **Exit criteria:** on $N=50$, rich sampling, 5% noise, the UDE recovers H1 with
 $\mathrm{E}_{\mathrm{mech}} < 20\%$, beats B1 on held-out dose, and **passes Test D**.

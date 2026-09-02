@@ -43,6 +43,90 @@ Loman & Baker report two findings that bear directly on this project:
 This is a stronger statement than baseline B3 in [07 §7.3](07-validation-protocol.md): B3
 compares performance, Test D decides whether the hybrid model is a hybrid model at all.
 
+#### The decision rule (pre-registered 2026-09-02)
+
+The paragraph above is the *intent*. As [11 §11.6.3(b)](11-literature-landscape.md)
+pointed out, "coincide" is not a decision: two fits never coincide exactly, so a test with
+no threshold never fails. The rule below is fixed **before any Phase-1 fit is run**, and
+its constants are frozen in code (`TestDRule`) so they cannot drift after results are seen.
+
+**Setup.** Same twin data (H1; the Phase-1 setting of [09](09-implementation-roadmap.md)),
+same held-out dose group — train on {low, high}, predict {middle}, as in
+[07 §7.5](07-validation-protocol.md). Fit the UDE and B3 each from $R = 10$ seeds (network
+initialisation and optimiser schedule), giving per-seed held-out-dose RMSEs
+$r^{\mathrm{UDE}}_k$ and $r^{\mathrm{B3}}_k$, and the corresponding in-sample RMSEs
+$s^{\mathrm{UDE}}_k$, $s^{\mathrm{B3}}_k$.
+
+**Unit.** Run-to-run variability is the UDE's own seed-to-seed scatter,
+$\sigma_{\mathrm{run}} = \mathrm{SD}_k\big(r^{\mathrm{UDE}}_k\big)$. It is computed from
+the UDE replicates alone, so the threshold is fixed without reference to B3.
+
+**Statistic.**
+
+```math
+\Delta \;=\; \operatorname{median}_k r^{\mathrm{B3}}_k \;-\; \operatorname{median}_k r^{\mathrm{UDE}}_k,
+\qquad
+\Delta_{\mathrm{in}} \;=\; \operatorname{median}_k s^{\mathrm{B3}}_k \;-\; \operatorname{median}_k s^{\mathrm{UDE}}_k .
+```
+
+**Verdict.**
+
+| Condition | Verdict | Meaning |
+|---|---|---|
+| $\lvert\Delta_{\mathrm{in}}\rvert > 2\sigma_{\mathrm{run}}$ | **Inconclusive** | The two models did not reach comparable in-sample fits, so any extrapolation gap says nothing about the skeleton. Fix B3 first (capacity, schedule, longer run); Test D has not been run yet. |
+| $\lvert\Delta_{\mathrm{in}}\rvert \le 2\sigma_{\mathrm{run}}$ and $\Delta \ge 2\sigma_{\mathrm{run}}$ | **Pass** | Same in-sample fit, UDE extrapolates better by more than its own scatter: the skeleton carries information the network alone does not. |
+| $\lvert\Delta_{\mathrm{in}}\rvert \le 2\sigma_{\mathrm{run}}$ and $\lvert\Delta\rvert < 2\sigma_{\mathrm{run}}$ | **Fail — degenerate** | Fitting-equivalent in the Loman–Baker sense. Apply the failure response below. |
+| $\lvert\Delta_{\mathrm{in}}\rvert \le 2\sigma_{\mathrm{run}}$ and $\Delta \le -2\sigma_{\mathrm{run}}$ | **Fail — skeleton harmful** | Not degeneracy: the mechanistic part is *wrong* and the network cannot compensate. This is a misspecification result (R4 in [09](09-implementation-roadmap.md)), reported as such; check the anchoring of §6.3 before anything else. |
+
+Why $2\sigma_{\mathrm{run}}$: it is the conventional "beyond noise" margin, it is
+computed from the UDE's own replicates before B3 is examined, and at $N = 50$ the scatter
+is large, so the Phase-1 test is *conservative* — passing there is meaningful, failing
+there is a reason to look, not a verdict on the method. The same rule re-runs at every
+point of the Phase-3 sweep with the sweep's own $\sigma_{\mathrm{run}}$.
+
+**Failure response — degenerate case, applied in this order, one step at a time, re-running
+Test D after each:**
+
+1. **Shrink $\mathbf{z}$.** Remove every input except the local free concentration of the
+   compartment the closure acts in ([03 §3.2](03-ude-formulation.md) already excludes $j$
+   and $t$; this removes the remaining optional inputs).
+2. **Tighten $\mathbf{S}$.** Restrict the closure to the single hepatic elimination entry;
+   any other compartment it was permitted to act in is closed.
+3. **Bound the closure to a correction of the mechanistic term.** Replace the additive
+   residual by
+   $\mathrm{CL}_{\mathrm{eff}}(C) = \mathrm{CL}_{\mathrm{MM}}(C)\,\exp\!\big(\tanh g_{\boldsymbol{\phi}}(\mathbf{z})\big)$
+   with $g$ zero-initialised, so the network can scale the Michaelis–Menten term by at
+   most $e^{\pm 1}$ and cannot replace it. *(New to the plan as of 2026-09-02; [03 §3.4](03-ude-formulation.md) defines
+   only the additive residual.)*
+4. **Report degeneracy as a result.** If all three fail, H1 is not recoverable from the
+   concentration-only observable under this closure family, and that is a finding for the
+   phase diagram, not a failure of the project — the same stance as R4.
+
+**What the pass verdict does not license.** Passing Test D means the skeleton contributes
+information; it does not mean the closure is *identifiable*. Those are the diagnostics of
+§6.4, run afterwards.
+
+> **中文讲解｜CN**
+> **上面的判定规则是 2026-09-02 补上的，补的是 [11 §11.6.3(b)](11-literature-landscape.md)
+> 指出的漏洞：原文说"两者一致就判定骨架无贡献"，但"一致"不可操作，所以这个检验永远不会失败。**
+>
+> 规则的三个部件：
+>
+> 1. **单位**：用 UDE 自己 10 个种子之间的散布 $\sigma_{\mathrm{run}}$ 当尺子。
+>    它只用 UDE 的重复实验算出来，**看到 B3 的结果之前阈值就定死了**——这就是"事先登记"的含义。
+> 2. **统计量**：留出剂量上的 RMSE 中位数之差 $\Delta$，再加一个样本内的 $\Delta_{\mathrm{in}}$。
+>    后者是**前提检查**：如果两个模型连样本内都没拟合到一个水平，外推差异说明不了任何事——
+>    那是 B3 没调好，不是 Test D 的结论。
+> 3. **判定**：样本内一致 + UDE 外推好 $2\sigma$ 以上 → 通过；
+>    样本内一致 + 外推也一致 → **退化**（就是 Loman & Baker 说的那种"穿着机理外衣的 neural ODE"）；
+>    样本内一致 + B3 反而更好 → **不是退化，是机理部分错了**，按 R4 当结果报。
+>
+> **失败后先收紧哪一条也写死了**：先缩 $\mathbf{z}$，再收 $\mathbf{S}$，
+> 再把闭合项改成对 MM 项的有界修正因子（$e^{\pm1}$ 之内），三步都不行就**作为结果报告**。
+> 顺序不能临场改——临场改就等于事后挑选。
+>
+> 最后一句很重要：**通过 Test D 只说明骨架有贡献，不说明闭合项可辨识。** 后者是 §6.4 的事。
+
 > **中文讲解｜CN**
 > **先理解这个拆分，它比原来的表述精确得多：**
 >
@@ -334,6 +418,35 @@ closure-recovery error as functions of $N$.
 > 而且它是**可以定量验证的**：在孪生实验里画出
 > "闭合项恢复误差 vs 群体规模 $N$" 和 "支撑集覆盖度 vs $N$" 两条曲线即可。
 > **建议把这张图作为论文的主结果图之一。**
+
+---
+
+## 6.7 Prior art to reconcile before implementing this document (2026-09-02)
+
+Three papers surfaced in the third sweep ([11 §11.7](11-literature-landscape.md)) bear
+directly on §6.0–§6.4. Each carries a decision that must be made *before* the
+corresponding code is written, not after.
+
+| Work | What it does | Decision required |
+|---|---|---|
+| **iNODE**, arXiv:2608.13044 (Aug 2026) **[S]** | Embeds neural components as explicit analytic functions in the ODE; Fisher-information confidence intervals; ranks candidate architectures by accuracy, parsimony and identifiability under data-support constraints | **Adopt or differ, explicitly.** If its architecture-ranking procedure is sound, use it for §6.4(b) and cite it; what remains ours is the population hierarchy ($\eta$-shrinkage, fixed-effect Fisher information) and Test D, which asks a different question. Do not reinvent it silently. |
+| **Takeishi**, arXiv:2602.06837 **[S]** | Trains hybrid models with sharpness-aware minimisation so the fit lands in a flat basin | **Optimisation-side mitigation for R10.** If Test D fails at step 1–3 of its failure response, a flat-minimum training objective is the next thing to try *before* declaring degeneracy. Not an identifiability diagnostic; §11.6.2(e) had it under the wrong title and the wrong role. |
+| **Bisht & Agarwal**, arXiv:2606.12658 **[S]** | PINN on chemotherapy PK: only *matches* nonlinear least squares on the identifiable problem; on the non-identifiable Michaelis–Menten two-compartment model it converges to $k_{12} \to 0$ | Two consequences. (i) A parameter collapsing to a boundary is a **non-identifiability signature** — add it to §6.4 as diagnostic (e): flag any $\hat{\theta}$ within tolerance of its bound. (ii) Expect the UDE to *approach* B0, not beat it, on identifiable settings; say so in advance ([07 §7.3](07-validation-protocol.md)). |
+
+Also carried forward from the second sweep: Giampiccolo et al. 2024 (npj Syst Biol Appl,
+doi:10.1038/s41540-024-00460-3) on parameter estimation and identifiability with hybrid
+neural ODEs is the nearest published treatment of §6.4 as a whole and should be cited as
+the frame for it.
+
+> **中文讲解｜CN**
+> **这一节是"动手写 §06 的代码之前必须做的三个决定"，不是文献综述。**
+>
+> - **iNODE**：和 §6.4 重合度很高。要么采用它的架构排序方法并引用，要么写清楚我们为什么不同。
+>   **不能默默重造一个更弱的版本**——审稿人会认出来。我们独有的是群体层级和 Test D。
+> - **Takeishi**：是优化方法，不是诊断。它的位置是 **Test D 失败之后、宣布退化之前**的最后一招。
+> - **Bisht & Agarwal**：给了一个便宜的诊断——**参数收敛到边界就是不可辨识的信号**，
+>   加进 §6.4 当第 (e) 条。同时提前说明：在可辨识的设置下 UDE **接近** B0 就是预期，
+>   不要把"没赢过 oracle"当作失败，也不要把"接近 oracle"包装成胜利。
 
 ---
 

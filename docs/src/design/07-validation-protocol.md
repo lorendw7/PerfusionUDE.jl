@@ -46,6 +46,17 @@ Run **H1 as the primary case**. H2 as the harder case. H3 deliberately as a case
 Phase-1 input set is insufficient — reporting a *correctly detected failure* is a strong
 scientific result.
 
+**Why a generative virtual population cannot stand in for this generator (added
+2026-09-02).** Physics-constrained diffusion models that synthesise "biologically compliant"
+virtual patients now exist (arXiv:2602.18472, [11 §11.7.3(c)](11-literature-landscape.md)),
+and a reviewer may ask why we do not use one. The answer is what the twin study measures:
+$\mathrm{E}_{\mathrm{mech}}$ in §7.5 is an error *against a known hidden mechanism*. A
+generative population has no hidden mechanism — it has a learned distribution over
+trajectories — so there is nothing to score recovery against, and its "physiological
+constraints" are soft penalties on a loss, not the hard flow-continuity and mass
+conservation of [02](02-pbpk-forward-model.md). Such a population could serve as an
+additional *held-out individuals* test in §7.5, never as the ground truth.
+
 > **中文讲解｜CN**
 > H3 的设计意图值得特别说明：**它是故意设计成"当前输入集学不到"的情况。**
 >
@@ -115,8 +126,25 @@ genuinely dynamical (H1/H2 already are), and B4 should fail to recover it regard
 well it fits.
 
 **B3 now also feeds Test D.** Beyond comparing performance, use the B3 fit for the
-mechanistic-content test of [06 §6.0](06-identifiability.md): if the UDE and B3 agree on
-both fit and held-out-dose prediction, the mechanistic skeleton is contributing nothing.
+mechanistic-content test of [06 §6.0](06-identifiability.md), which since 2026-09-02 has a
+pre-registered decision rule: $R = 10$ seeds each, and a pass requires the UDE to beat B3
+on the held-out dose by more than $2\sigma_{\mathrm{run}}$ *with* comparable in-sample
+fit. B3 must therefore be run with the same seed schedule as the UDE, not once.
+
+**How this set maps onto the published comparisons (checked 2026-09-02).** Valderrama et
+al. 2025 (CPT:PSP 14(4), doi:10.1002/psp4.13313) compare SciML against population PK and
+classical ML on drug-concentration prediction; our B2 is their PopPK arm and B3 their ML
+arm, so the three-way comparison a PK reviewer expects is already present and should be
+labelled that way in the results. Two expectations to state *before* the results exist:
+
+- **B0 is the classical estimator on the identifiable problem, and the UDE should
+  approach it, not beat it.** Bisht & Agarwal (arXiv:2606.12658) found their PINN only
+  matched nonlinear least squares where the problem was identifiable; the same will be
+  true here, and it is not a weakness. Report the gap to B0 as the headline number, and
+  never describe "close to B0" as a win over classical estimation.
+- **The UDE's case rests on B1 and B4, not on B0.** B1 shows what misspecification costs;
+  B4 shows that a covariate-map network cannot recover a dynamical mechanism. Those are the
+  comparisons the method is for.
 
 > **中文讲解｜CN**
 > 新增的 **B4（deep compartment model）** 值得说明为什么重要。
@@ -223,9 +251,12 @@ Proceed to real data only if **all** hold:
 - [ ] UDE beats B1 (misspecified) on held-out dose level, with a margin exceeding run-to-run variability.
 - [ ] UDE beats B3 (black-box) on held-out dose level.
 - [ ] UDE beats B4 (deep compartment model) on hidden-mechanism recovery.
-- [ ] **Test D passes**: the UDE is observationally distinguishable from B3 — fits and
-      held-out-dose predictions differ by more than run-to-run variability
-      ([06 §6.0](06-identifiability.md)).
+- [ ] **Test D passes** under the pre-registered rule of [06 §6.0](06-identifiability.md):
+      in-sample fits within $2\sigma_{\mathrm{run}}$, held-out-dose advantage
+      $\Delta \ge 2\sigma_{\mathrm{run}}$, $R = 10$ seeds each. An *inconclusive* verdict
+      does not pass.
+- [ ] No estimated parameter sits within tolerance of its bound
+      ([06 §6.7](06-identifiability.md), diagnostic (e)).
 - [ ] $\eta$-shrinkage < 30% for the primary parameters.
 - [ ] Network-ablation test: $\hat{\mathrm{CL}}_{\mathrm{pop}}$ shifts by < 20% when the network is enabled.
 

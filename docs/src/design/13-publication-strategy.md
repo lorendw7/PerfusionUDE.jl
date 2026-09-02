@@ -265,16 +265,25 @@ that reports only successes.
 Dates are relative to the repository going public — **call that $T_0$, and make it this
 week.**
 
-| Time | Milestone | Publication action |
-|---|---|---|
-| $T_0$ | Repo public; docs committed; `v0.1.0` tag | **JOSS 6-month clock starts** |
-| $T_0$ + 1–2 mo | Phase 0–1 complete (CPU UDE, $N=50$) | Regular releases; arXiv preprint of the *method* to establish priority |
-| $T_0$ + 3–4 mo | Phase 2 complete (GPU, benchmarks) | Tutorials + CI mature |
-| $T_0$ + 5–6 mo | Phase 3 running (twin sweep) | Draft `paper.md` |
-| $T_0$ + 6–7 mo | Package registered, `v0.3.0`, docs complete | **JOSS earliest date reached (after 2027-02-06) — submit only once Gate 2 evidence exists** |
-| $T_0$ + 8–12 mo | Phase 4 (real data, VEM, FOCE comparison) | JOSS review + revisions |
-| $T_0$ + 12–15 mo | Full results assembled | Draft PLOS CB Methods manuscript |
-| $T_0$ + 15–18 mo | — | **Submit to PLOS CB** |
+*Revised 2026-09-02 to be driven by JOSS gate 2 rather than by the six-month clock. $T_0$ =
+2026-08-06. The same schedule, expressed in weeks with the immediate next step, is in
+[09 — Where the project stands](09-implementation-roadmap.md).*
+
+| Time | Milestone | Publication action | JOSS gate it serves |
+|---|---|---|---|
+| $T_0$ ✅ | Repo public; docs committed; `v0.1.0` tag | 6-month clock starts | 1 |
+| $T_0$ + 1–2 mo | Phase 0 complete: mechanistic model passes its six tests | **Tag `v0.2.0`** | 3 (closes it) |
+| $T_0$ + 3–4 mo | Phase 1 complete (CPU UDE, $N=50$, Test D passed) | **Tag `v0.3.0`; arXiv preprint v1 that uses and cites the package** | **2 (begins)** · 4 |
+| $T_0$ + 4–5 mo | Phase 2 complete (GPU, benchmarks) | Tutorials + CI mature; regular tags | 3 · 4 |
+| $T_0$ + 5–6 mo | Phase 3 running (twin sweep) | Preprint v2 with the phase diagram; draft `paper.md`; re-verify every **[S]**/**[U]** reference | 2 (strengthens) |
+| $T_0$ + 6–7 mo | Package registered, docs complete | **Submit to JOSS — after 2027-02-06 *and* with a public preprint citing the package** | all four |
+| $T_0$ + 8–12 mo | Phase 4 (real data, VEM, FOCE comparison) | JOSS review + revisions | — |
+| $T_0$ + 12–15 mo | Full results assembled | Draft PLOS CB Methods manuscript | — |
+| $T_0$ + 15–18 mo | — | **Submit to PLOS CB** | — |
+
+If Phase 1 slips, **the preprint slips with it and so does the JOSS submission** — the
+clock date does not move the submission forward. If Phase 1 lands early, submit the
+preprint early; it does not have to wait for the GPU results.
 
 Three scheduling notes:
 

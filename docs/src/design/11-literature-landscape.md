@@ -1111,22 +1111,29 @@ Supersedes the corresponding lines of §11.6.4.
 
 **Before [06](06-identifiability.md) is implemented:**
 
-- [ ] **Read iNODE (arXiv:2608.13044).** Decide explicitly: adopt its
-      architecture-ranking procedure and cite it, or state why ours differs. Do not
-      reinvent it silently.
-- [ ] **Narrow §11.4 claim (iii)** to *the mechanistic-content test under a population
-      hierarchy*, the way claim (ii) was narrowed in §11.6.2(d).
-- [ ] Move Takeishi (arXiv:2602.06837) into [06](06-identifiability.md) as an
-      **optimisation-side mitigation for R10**, under its real title.
-- [ ] Add a **classical estimator (NLS / FOCE)** to the [07 §7.3](07-validation-protocol.md)
-      baselines and report it even when it wins — Bisht & Agarwal found the PINN only
-      matched NLS on the identifiable problem. Flagged in `paper/paper.md` under research
-      impact so it is not quietly dropped.
+- [ ] **Read iNODE (arXiv:2608.13044).** The adopt-or-differ decision is now recorded as
+      required in [06 §6.7](06-identifiability.md); the reading itself is still to do.
+- [x] **Narrow §11.4 claim (iii)** to *the mechanistic-content test under a population
+      hierarchy* — done (amendment note under §11.4).
+- [x] Move Takeishi (arXiv:2602.06837) into [06 §6.7](06-identifiability.md) as an
+      **optimisation-side mitigation for R10**, under its real title — done.
+- [x] **Give Test D a statistic, a pre-registered threshold and a named failure
+      response** (open since §11.6.3(b)) — done, [06 §6.0](06-identifiability.md):
+      $R = 10$ seeds, $2\sigma_{\mathrm{run}}$, in-sample precondition, four-step ordered
+      response. Still to do: freeze it in code as `TestDRule` before the first Phase-1 fit.
+- [x] Reconcile the [07 §7.3](07-validation-protocol.md) baselines with Valderrama 2025
+      and Bisht & Agarwal — done: B2/B3 map onto their PopPK/ML arms; B0 is the classical
+      estimator the UDE should approach, not beat, and that expectation is now written down
+      before any result exists.
+- [x] Add the parameter-at-bound signature (Bisht & Agarwal) as diagnostic (e) in §6.4 —
+      recorded in [06 §6.7](06-identifiability.md) and in the [07 §7.6](07-validation-protocol.md) gate.
 
 **Publication strategy:**
 
-- [ ] **Re-plan around Gate 2, not the six-month clock.** Make the Phase-1/Phase-3 arXiv
-      preprint a submission prerequisite: it must *use* and *cite* the package.
+- [x] **Re-plan around Gate 2, not the six-month clock** — done: the §T.3 schedule and
+      the [13 §13.4](13-publication-strategy.md) timeline now carry the preprint as a
+      month-4 milestone that uses and cites the package, and JOSS submission requires both
+      the date and the preprint.
 - [x] Record the four pre-review gates in [13 §13.2](13-publication-strategy.md) as
       desk-rejection gates rather than scope prose — done in this pass.
 - [x] Complete the §13.5 AI disclosure wording: **tool versions**, **where** it was used,
@@ -1142,8 +1149,8 @@ Supersedes the corresponding lines of §11.6.4.
 
 - [x] Name **`NeoPKPD`** in the README "Not in scope" pointer, the §13.2
       state-of-the-field paragraph and `paper/paper.md` — done in this pass.
-- [ ] Say in [07](07-validation-protocol.md) why a generatively synthesised virtual
-      population (arXiv:2602.18472) cannot substitute for a ground-truth twin study.
+- [x] Say in [07 §7.2](07-validation-protocol.md) why a generatively synthesised virtual
+      population (arXiv:2602.18472) cannot substitute for a ground-truth twin study — done.
 
 **Method:**
 
