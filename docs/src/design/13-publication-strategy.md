@@ -273,7 +273,7 @@ week.**
 |---|---|---|---|
 | $T_0$ ✅ | Repo public; docs committed; `v0.1.0` tag | 6-month clock starts | 1 |
 | $T_0$ + 1–2 mo | Phase 0 complete: mechanistic model passes its six tests | **Tag `v0.2.0`** | 3 (closes it) |
-| $T_0$ + 2–3 mo | Structural-identifiability study ([06 §6.2](06-identifiability.md)) via the `StructuralIdentifiability` extension | **arXiv preprint v1** (decided 2026-09-02): which closure families are identifiable from plasma alone; uses and cites the package | **2 (begins)** |
+| $T_0$ + 2–3 mo | Structural-identifiability study ([06 §6.2](06-identifiability.md)) via the `StructuralIdentifiability` extension | **bioRxiv preprint v1** (decided 2026-09-02): which closure families are identifiable from plasma alone; uses and cites the package | **2 (begins)** |
 | $T_0$ + 3–4 mo | Phase 1 complete (CPU UDE, $N=50$, Test D passed) | **Tag `v0.3.0`; preprint v2** with the twin-study result | 2 · 4 |
 | $T_0$ + 4–5 mo | Phase 2 complete (GPU, benchmarks) | Tutorials + CI mature; regular tags | 3 · 4 |
 | $T_0$ + 5–6 mo | Phase 3 running (twin sweep) | Preprint v2 with the phase diagram; draft `paper.md`; re-verify every **[S]**/**[U]** reference | 2 (strengthens) |
@@ -392,7 +392,8 @@ be false, and JOSS treats an inaccurate disclosure as an ethical breach, not a s
 | **CPT: Pharmacometrics & Systems Pharmacology** | If the work reads better to a PK audience than a comp-bio one; strong existing literature on neural ODEs in PK |
 | **Journal of Pharmacokinetics and Pharmacodynamics** | Methodological PK audience; good fit for the identifiability results |
 | **PLOS ONE / Scientific Reports** | Fallback if PLOS CB rejects on impact grounds |
-| **arXiv (q-bio.QM / stat.ME)** | Always, early, non-exclusive |
+| **bioRxiv** | Preprint v1 (decided 2026-09-02): no endorsement system, in scope, precedent in this niche |
+| **arXiv (q-bio.QM / stat.ME)** | Preprint v2 if an endorser is in hand by then; otherwise bioRxiv again |
 | **JuliaCon Proceedings** | Alternative software venue if JOSS timing does not work out |
 
 If PLOS CB rejects on "insufficient biological insight" — a plausible outcome for a
@@ -472,9 +473,10 @@ identifiability of PBPK closure families) is squarely within its Systems Biology
 Pharmacology and Toxicology scope, and the closest precedent in this plan, the AML
 DeepNLME + symbolic-regression paper of [11 §11.2](11-literature-landscape.md), is itself a
 bioRxiv preprint. JOSS gate 2 says *"published papers or preprints"* without naming a
-server. **Decision (2026-09-02): post preprint v1 to bioRxiv unless an arXiv endorser is
-already in hand; pursue arXiv endorsement in parallel for the later, more methods-heavy
-preprint v2, where stat.ME / q-bio.QM readership matters more.**
+server. **Decision (2026-09-02, confirmed by the author): preprint v1 goes to bioRxiv.**
+Register the account and affiliation now, not when the manuscript is ready. arXiv
+endorsement is pursued in parallel and without urgency, for the later, more methods-heavy
+preprint v2; v2 may also simply go to bioRxiv.
 
 **Who at Kyushu University could review or endorse (checked 2026-09-02, names to be
 confirmed on the laboratory pages, which this network could not open).** The Faculty of
@@ -498,6 +500,7 @@ endorse it or adopt it:
 
 | Venue | Fit | 2026–27 timing (checked 2026-09-02; re-check) |
 |---|---|---|
+| **PAGJa** (Population Approach Group in Japan, ファーマコメトリクス研究会) | The Japanese pharmacometrics community itself; one-day meeting; **the most likely place to find a domain reviewer and a JSSX/PAGE contact** | 42nd: **2026-11-13**, Keio University, Yokohama; check whether late abstracts or attendance are open |
 | 日本薬物動態学会 (JSSX) 年会 | The pharmacometrics audience; PBPK sessions | 41st: 2026-11-16 → 19, Tsukuba; abstracts closed 2026-07-17. Attend to meet people; present at the 42nd (2027, abstracts ≈ July 2027) |
 | 日本数理生物学会 (JSMB) 年会 | Identifiability and ODE modelling; the natural home for preprint v1's content | 2026: 09-08 → 10, Matsue, closed. Next: 2027, abstracts ≈ July |
 | 日本計算工学会 計算工学講演会 (JSCES) | The CFD-correspondence angle ([08](08-cfd-correspondence.md)); the supervisor's community; proceedings are published | 32nd: 2027-06-07 → 09, Saitama; abstracts ≈ January 2027 |
@@ -508,12 +511,29 @@ The one that fits both the content and the calendar is **JSCES June 2027**: its 
 deadline falls right after preprint v1 should exist, it is the supervisor's community, and
 [08](08-cfd-correspondence.md) was written for exactly that audience.
 
+**International venues (checked 2026-09-02; re-check deadlines).** Same rule: none replaces
+the preprint, but two of them produce citable, DOI-bearing output that JOSS gate 2 can
+point to.
+
+| Venue | Fit | Output | Timing |
+|---|---|---|---|
+| **PAGE** (Population Approach Group Europe) | *The* pharmacometrics meeting; where Valderrama, Janssen and the NoLimits.jl group present | Abstracts are published online and routinely cited | Annual, June; abstracts open mid-January, close ≈ 1 March. **PAGE 2027 is the target for preprint v2's content** |
+| **ACoP** (ISoP, American Conference on Pharmacometrics) | North-American counterpart; hackathon track since 2026 | Abstracts published | ACoP 2026: 10-11 → 14, Maryland, abstracts closed; ACoP 2027 abstracts ≈ February |
+| **JuliaCon** | The package's own community; NoLimits.jl and DiffEqGPU.jl authors attend | **JuliaCon Proceedings has DOIs** and is the software venue named in §13.6 | 2026: Mainz, August, passed. 2027: host not yet announced; CFP usually February–March |
+| **SIAM CSE** | SciML and UQ minisymposia; the audience for the CFD-correspondence and mixed-mode-AD material | Abstracts only | CSE27: 2027-02-22, Pittsburgh; deadline was 2026-08-25, passed. CSE29 next |
+
+Priority order for gate 2 and for the network the project lacks: **PAGE 2027 (abstract by
+≈ March 2027, using the bioRxiv preprint) → JuliaCon 2027 (talk plus a Proceedings paper)
+→ ACoP 2027**. PAGJa in November 2026 is worth attending even without presenting, because
+it is the cheapest way to meet the Japanese pharmacometrics people who would later review
+or endorse.
+
 > **中文讲解｜CN**
 > **背书问题最简单的解法是 bioRxiv。** 它没有背书制度：注册、填单位、通过范围筛查即可，
 > 不审质量。预印本 v1（PBPK 闭合项家族的结构可辨识性）完全在它的范围内，
 > 而且计划里引用的 AML DeepNLME 那篇本来就是 bioRxiv 预印本。JOSS 门槛 2 只说"论文或预印本"，
-> 不限定服务器。**决定：v1 挂 bioRxiv，除非手上已经有 arXiv 背书人；arXiv 背书并行去办，
-> 留给更偏方法学的 v2。**
+> 不限定服务器。**决定（作者已确认）：v1 挂 bioRxiv。** 账号和单位信息现在就注册，别等稿子写完。
+> arXiv 背书不急，并行去办，留给 v2；v2 也可以直接再挂 bioRxiv。
 >
 > **九州大学校内**：薬学研究院有薬物動態学分野和薬剤学分野，是 PBPK 生理和清除率闭合的对口审读者，
 > 但日本药学口的组几乎不上 arXiv，所以他们大概率**不是合格的 arXiv 背书人**，即使是对的审读者。
@@ -525,8 +545,16 @@ deadline falls right after preprint v1 should exist, it is the supervisor's comm
 > "具体的非代码贡献"，也是对"作者名单太短"最诚实的回答。但导师的 arXiv 资历在物理领域，
 > **不能给 q-bio 背书，也不要为了凑背书人去改分类。**
 >
+> **国际会议**：PAGE（欧洲群体药代年会，6 月，摘要约 1 到 3 月）是这个领域**的**会议，
+> Valderrama、Janssen、NoLimits.jl 那些人都在那里；摘要在线发表、可引用，
+> **PAGE 2027 是预印本 v2 内容的目标**。JuliaCon 有带 DOI 的 Proceedings，2027 年主办地还没公布，
+> CFP 通常 2 到 3 月。ACoP 是美国对应的会。SIAM CSE27 截止已过。
+> 优先顺序：**PAGE 2027 → JuliaCon 2027 → ACoP 2027**。
+>
 > **日本国内会议**：都不能替代预印本（门槛 2 要的是可引用的公开文档），
-> 但都是认识审读者、背书人和潜在用户的地方。2026 年的截止基本都过了；
+> 但都是认识审读者、背书人和潜在用户的地方。新增 **PAGJa**（日本群体药代研究会，
+> 2026-11-13，横滨庆应）：一天的会，是最容易碰到日本药代圈里能审稿、能背书的人的地方，
+> 不发表也值得去。2026 年其他会的截止基本都过了；
 > **日程和内容都合的是 2027 年 6 月的計算工学講演会**：摘要截止约 2027 年 1 月，
 > 正好在预印本 v1 之后，又是导师所在的圈子，[08](08-cfd-correspondence.md) 就是为这个听众写的。
 
