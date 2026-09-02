@@ -36,14 +36,13 @@ version is `0.x`, minor version bumps may contain breaking changes.
   cheapest genuine research on the critical path; the Phase-1 twin study becomes preprint
   v2; **v1 goes to bioRxiv**, which has no endorsement system, because arXiv changed its
   policy on 2026-01-21 so that an institutional e-mail alone no longer grants automatic
-  endorsement; arXiv is pursued in parallel for v2. §13.7 also lists the Kyushu University
-  laboratories that are the domain readers, notes that a CFD supervisor is the right
-  reviewer for §08 and a permitted substantive contributor, and tabulates Japanese (PAGJa,
-  JSSX, JSMB, JSCES, CMD, JSIAM) and international (PAGE, JuliaCon, ACoP, SIAM CSE) venues
-  with 2026–27 timing. **Publication route: bioRxiv v1 → bioRxiv v2 → JOSS, with peer-reviewed,
-  DOI-bearing conference papers pursued as a quality signal (IFAC SYSID 2027 first).** The
-  venue list itself moved to the research repository (`lorendw7/PerfusionUDE`,
-  `notes/venues.md`) so the two repositories keep disjoint contents.
+  endorsement; arXiv is pursued in parallel for v2. **Publication route: bioRxiv v1 →
+  bioRxiv v2 → JOSS, with peer-reviewed, DOI-bearing conference papers pursued as a quality
+  signal (IFAC SYSID 2027 first).** The venue list, and everything personal to the author
+  (who could review or endorse, registration logistics), live in the private research
+  repository (`lorendw7/PerfusionUDE`, `notes/venues.md` and
+  `notes/submission-logistics.md`); this public repository keeps only the rules and the
+  decisions, so the two repositories stay disjoint.
 - **§13.7 Authorship for a solo project**, verified against the JOSS authorship rule and
   reviewer guidelines: single authorship is permitted with no affiliation requirement;
   *"general supervision of a research group"* is explicitly insufficient for

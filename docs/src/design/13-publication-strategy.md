@@ -478,21 +478,14 @@ Register the account and affiliation now, not when the manuscript is ready. arXi
 endorsement is pursued in parallel and without urgency, for the later, more methods-heavy
 preprint v2; v2 may also simply go to bioRxiv.
 
-**Who at Kyushu University could review or endorse (checked 2026-09-02, names to be
-confirmed on the laboratory pages, which this network could not open).** The Faculty of
-Pharmaceutical Sciences has a 薬物動態学分野 (pharmacokinetics) and a 薬剤学分野
-(pharmaceutics) laboratory; these are the domain readers for the PBPK physiology and the
-clearance closure, but Japanese pharmaceutical-sciences groups rarely post to arXiv, so they
-are unlikely to be *eligible arXiv endorsers* even when they are the right reviewers. The
-Department of Biology's mathematical-biology laboratory (Satake; Iwasa, emeritus) and the
-Institute of Mathematics for Industry are likelier arXiv authors, but eligibility is
-per-domain and must be checked on an abstract page's "Which of these authors are
-endorsers?" link. **A CFD supervisor is the right reviewer for [08](08-cfd-correspondence.md)**
-and for the closure-modelling framing of [01](01-background.md) and [03](03-ude-formulation.md);
-that is a substantive, specific contribution of the kind JOSS's authorship rule permits,
-and it answers the "short author list" question honestly. A CFD supervisor's arXiv standing
-is in the physics domain and does not endorse q-bio; do not choose a category to fit an
-endorser.
+**What a substantive second contribution looks like.** A methods or domain reviewer who
+reads and critiques a specific part of the design — the identifiability methodology of
+[06](06-identifiability.md), the pharmacometrics, or the closure-modelling correspondence
+of [08](08-cfd-correspondence.md) — is making the kind of *"active project direction and
+other non-code contribution"* the rule permits, and that directly answers the short-author-
+list question. Who those people are, and the endorsement and registration logistics, are
+personal to the author and live in the private research repository
+(`lorendw7/PerfusionUDE`, `notes/submission-logistics.md`), not in this public design doc.
 
 **Conferences (decided 2026-09-02, revised the same day).** Not attended as a matter of
 course. **Peer-reviewed venues with DOI-bearing proceedings are pursued as a quality
@@ -512,15 +505,11 @@ the conference papers alongside.
 > 不限定服务器。**决定（作者已确认）：v1 挂 bioRxiv。** 账号和单位信息现在就注册，别等稿子写完。
 > arXiv 背书不急，并行去办，留给 v2；v2 也可以直接再挂 bioRxiv。
 >
-> **九州大学校内**：薬学研究院有薬物動態学分野和薬剤学分野，是 PBPK 生理和清除率闭合的对口审读者，
-> 但日本药学口的组几乎不上 arXiv，所以他们大概率**不是合格的 arXiv 背书人**，即使是对的审读者。
-> 理学部数理生物学研究室（佐竹；巌佐名誉教授）和 IMI 更可能有 arXiv 记录，但要按领域逐个查。
-> 名字这边的网络打不开研究室页面，请你自己核对。
->
-> **导师审 CFD 部分完全可以，而且正合适**：[08](08-cfd-correspondence.md) 和 [01](01-background.md)、
-> [03](03-ude-formulation.md) 的闭合建模类比就是写给 CFD 读者的。这是 JOSS 允许的那种
-> "具体的非代码贡献"，也是对"作者名单太短"最诚实的回答。但导师的 arXiv 资历在物理领域，
-> **不能给 q-bio 背书，也不要为了凑背书人去改分类。**
+> **第二作者怎样才算"实质贡献"**：审读并批评设计的某一具体部分，比如 [06](06-identifiability.md) 的
+> 可辨识性方法、药代部分、或 [08](08-cfd-correspondence.md) 的闭合建模对应关系。这是规则允许的
+> "积极的项目指导和其他非代码贡献"，也直接回答"作者名单太短"的问题。
+> **具体找谁、背书和注册的操作细节，是作者个人的事，放在私有研究仓库**
+> （`lorendw7/PerfusionUDE` 的 `notes/submission-logistics.md`），不放在这份公开设计文档里。
 >
 > **会议（2026-09-02 决定，当天修订）**：不作为常规去参加，但**有同行评审、论文集带 DOI 的会议
 > 作为质量信号来投**，每篇预印本对应一篇，录用了才考虑差旅。首要目标是 **IFAC SYSID 2027**
