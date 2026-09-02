@@ -44,7 +44,8 @@ that is meant to go stale, and it says so.
 | Weeks 2–5 | Rest of Phase 0: `StaticArrays` out-of-place RHS, nondimensionalization, the six numerical tests of [02 §2.9](02-pbpk-forward-model.md), stiffness characterization. **Tag `v0.2.0`.** | `v0.2.0` closes gate 3. Everything downstream depends on a forward model that conserves mass. |
 | Weeks 6–9 | Closure layer with declarative constraints; twin generator H1. **`TestDRule` frozen in code before any fit is run.** | §T.4 item 1. Pre-registration only counts if it is committed before the results. |
 | Weeks 10–16 | Phase 1: joint MAP at $N = 50$, finite-difference gradient check *first*, baselines B0/B1/B3/B4 with $R = 10$ seeds, **Test D**. **Tag `v0.3.0`.** | Decides whether the project works. Nothing GPU until this passes. |
-| **Immediately after Phase 1** | **arXiv preprint v1**, using and citing the package — closure-recovery figure, Test D verdict, $N = 50$. Small is fine. | **This is the gate-2 evidence.** It also establishes priority; iNODE appeared during the last gap. |
+| **Before Phase 1 fitting** | **arXiv preprint v1 — decided 2026-09-02: the structural-identifiability study of [06 §6.2](06-identifiability.md).** Which closure families (single MM, two MM, MM + saturable uptake; the H1/H2 families) are parametrically identifiable from plasma alone on the 5-compartment topology, computed with the `StructuralIdentifiability` extension. No optimisation, no GPU. Must state the package version used and cite its Zenodo DOI. | **This is the gate-2 evidence, and it is on the critical path anyway** (§6.2 says "do this first"). Extends Bisht & Agarwal's MM non-identifiability result to PBPK. Fallback if it stalls: an audit of published PBPK parameter tables with `liver_inflow`. |
+| **After Phase 1** | **Preprint v2**: closure-recovery figure, Test D verdict, $N = 50$. | Strengthens gate 2; establishes priority on the UDE result. iNODE appeared during the last gap. |
 | Then | Phase 2 (GPU), Phase 3 (sweep) → preprint v2 with the phase diagram. Package registration. | Gate 2 gets stronger; the JOSS paper gets its research-impact section. |
 | **After 2027-02-06** *and* preprint public | Submit to JOSS. | Both conditions, not either. |
 
@@ -150,7 +151,8 @@ Relative to $T_0$ = the day the repository went public (**2026-08-06**). Assumes
 | 1–2 | Phase 0 on the 5-compartment model | six numerical tests green; RHS allocation-free; **tag `v0.2.0`** (closes JOSS gate 3) |
 | 2–3 | Closure layer + twin generator (H1); `TestDRule` frozen in code | constrained closure with declarative options |
 | 3–4 | Phase 1: joint MAP on CPU, $N=50$; baselines with $R=10$ seeds | **finite-difference gradient check green; Test D passes under the §6.0 rule; tag `v0.3.0`** |
-| 4 | **arXiv preprint v1** — uses and cites the package | **JOSS gate-2 evidence begins**; priority established |
+| 3 | **arXiv preprint v1** — structural identifiability of closure families on the 5-compartment topology (decided 2026-09-02); uses and cites the package | **JOSS gate-2 evidence begins**; on the §6.2 critical path |
+| 4 | **Preprint v2** — Phase-1 twin study, Test D | gate 2 strengthened; priority on the UDE result |
 | 4–5 | Phase 2: GPU Layout B | GPU matches CPU; breakeven $N$ measured |
 | 5–6 | 2-D sweep; tutorials; API docs; CHANGELOG | the closure-recovery figure; a small phase diagram; **preprint v2** |
 | 6–7 | Register the package; draft `paper.md`; re-verify every **[S]**/**[U]** reference | **JOSS submission — after 2027-02-06 *and* with the preprint public; neither alone suffices** |

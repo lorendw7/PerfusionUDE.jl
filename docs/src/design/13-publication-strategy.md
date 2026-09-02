@@ -273,7 +273,8 @@ week.**
 |---|---|---|---|
 | $T_0$ ✅ | Repo public; docs committed; `v0.1.0` tag | 6-month clock starts | 1 |
 | $T_0$ + 1–2 mo | Phase 0 complete: mechanistic model passes its six tests | **Tag `v0.2.0`** | 3 (closes it) |
-| $T_0$ + 3–4 mo | Phase 1 complete (CPU UDE, $N=50$, Test D passed) | **Tag `v0.3.0`; arXiv preprint v1 that uses and cites the package** | **2 (begins)** · 4 |
+| $T_0$ + 2–3 mo | Structural-identifiability study ([06 §6.2](06-identifiability.md)) via the `StructuralIdentifiability` extension | **arXiv preprint v1** (decided 2026-09-02): which closure families are identifiable from plasma alone; uses and cites the package | **2 (begins)** |
+| $T_0$ + 3–4 mo | Phase 1 complete (CPU UDE, $N=50$, Test D passed) | **Tag `v0.3.0`; preprint v2** with the twin-study result | 2 · 4 |
 | $T_0$ + 4–5 mo | Phase 2 complete (GPU, benchmarks) | Tutorials + CI mature; regular tags | 3 · 4 |
 | $T_0$ + 5–6 mo | Phase 3 running (twin sweep) | Preprint v2 with the phase diagram; draft `paper.md`; re-verify every **[S]**/**[U]** reference | 2 (strengthens) |
 | $T_0$ + 6–7 mo | Package registered, docs complete | **Submit to JOSS — after 2027-02-06 *and* with a public preprint citing the package** | all four |
@@ -446,6 +447,10 @@ submission:
 | Should a supervisor be added for the name? | **No.** It violates the authorship rule and invites the exact question reviewers are primed to ask. | Forbidden-contributions clause |
 | When would a second author help? | When they do something specific: review the identifiability methodology of [06](06-identifiability.md) or the pharmacometrics, or co-author the preprint that serves gate 2. That is a real author, and it directly answers reviewer passage 1. | Permitted-contributions clause; review passage 1 |
 | Where is a collaborator actually required? | **Paper 2 (PLOS CB) and Phase 4**, not this paper: real clinical data, an nlmixr2/NONMEM comparison, and pharmacometric peer reading cannot be self-supplied. | §T.1, §13.3 |
+
+**Preprint v1 is decided (2026-09-02): the structural-identifiability study of
+[06 §6.2](06-identifiability.md)**, because it is the cheapest piece of genuine research on
+the critical path that exercises the package. The Phase-1 twin study becomes preprint v2.
 
 **One practical item that is not authorship.** arXiv requires *endorsement* for first
 submissions to some categories, and the requirement is more likely to trigger without an
