@@ -1,22 +1,43 @@
-# 11 — Literature Landscape & Repositioning (August 2026)
+# 11 — Literature Landscape & Repositioning
 
-Results of the literature sweeps conducted **2026-08-06** (§11.1–§11.5) and
-**2026-08-07** (§11.6), and the consequent revisions to the research plan. **Read this
-before [01 §1.6](01-background.md) — it supersedes the positioning written there.**
+Results of the literature sweeps conducted **2026-08-06** (§11.1–§11.5), **2026-08-07**
+(§11.6) and **2026-09-02** (§11.7), and the consequent revisions to the research plan.
+**Read this before [01 §1.6](01-background.md) — it supersedes the positioning written
+there.**
 
-**§11.6 amends §11.1–§11.5. Where the two disagree, §11.6 wins.**
+**Later sweeps amend earlier ones. Where they disagree, the later sweep wins:
+§11.7 > §11.6 > §11.1–§11.5.**
 
 Citation status is marked explicitly:
-**[V]** = title/authors/venue confirmed during this sweep ·
+**[V]** = confirmed against a primary source that was opened ·
+**[S]** = title/authors/venue consistent across independent search results, **landing page
+not opened — re-check before it enters a manuscript** ·
 **[U]** = pointer only, **you must verify before citing**.
 
+`[S]` was introduced by the third sweep, which ran from a network that allowed a search
+index but blocked the publisher and preprint sites themselves — see §11.7.0. Nothing that
+was `[V]` before was downgraded; `[S]` exists so that weaker evidence is not recorded as
+if it were stronger.
+
+**A `[U]` entry carries an identifier and a one-line description only — never a guessed
+title.** §11.7.1 explains what happened the one time this rule was broken.
+
 > **中文讲解｜CN**
-> 本文档是 2026-08-06 做的文献扫描结果，以及由此对研究计划的修正。
+> 本文档是三次文献扫描（2026-08-06 / 08-07 / 09-02）的结果，以及由此对研究计划的修正。
 > **它取代 [01 §1.6](01-background.md) 里的定位段落。**
+> **后一次扫描覆盖前一次：§11.7 > §11.6 > §11.1–§11.5。**
 >
-> 每条文献都标了状态：**[V]** 表示本次检索中确认了标题/作者/出处；
-> **[U]** 表示只是检索线索，**引用前必须自己核实**。
-> 请严格遵守这个区分——用未核实的引用会在送审时出问题。
+> 每条文献都标了状态：
+> **[V]** = 打开了原始来源核实过；
+> **[S]** = 多组检索结果的元数据一致，但**没有真的打开页面**，进稿前必须重查；
+> **[U]** = 只是检索线索。
+>
+> `[S]` 是第三次扫描新增的：那次检索所在的网络只能用搜索索引，打不开 arXiv 和出版商页面
+> （见 §11.7.0）。**没有任何原先的 `[V]` 被降级**——新增这一档是为了
+> **不把弱证据记成强证据**。
+>
+> 还有一条硬规矩：**`[U]` 条目只写标识符和一句话描述，不许写猜的标题。**
+> §11.7.1 记录了违反这条规矩的后果。
 
 ---
 
@@ -192,6 +213,13 @@ What exists:
 No package occupies "composable, differentiable, GPU-parallel PBPK in Julia". **That is the
 JOSS niche, and it is a real one.**
 
+> **Amended by §11.6.2(c) and §11.7.4.** §11.6.2(c) requires this list to say what
+> Elmokadem 2024 (hierarchical deep compartment modelling, in Julia) does and does not
+> cover, rather than implying the space is empty. §11.7.4 adds **`NeoPKPD`**, registered
+> since this section was written, and re-establishes the claim by **enumerating the
+> General registry** rather than by failing to find things — a stronger form of the same
+> argument. **The claim survives; the evidence and the wording changed.**
+
 > **中文讲解｜CN**
 > 这一条是**通过"检索不到"确立的空白**，也是 JOSS 论文 statement of need 的核心。
 >
@@ -216,9 +244,9 @@ All 2024–2026, all **[U]** — verify before citing, but note the trend:
 
 | Work | Approach | How we differ |
 |---|---|---|
-| *Dynamic Graph Neural Network for Data-Driven PBPK Modeling*, arXiv:2510.22096 | GNN over the compartment graph, largely data-driven | We keep the ODE and conserve mass; they learn the dynamics |
-| *PBPK-iPINNs: Inverse PINNs for PBPK Brain Models*, arXiv:2509.12666 | PINN-based inverse parameter estimation | Single-subject; no population hierarchy, no ensemble |
-| *PINNs for Chemotherapy PK: ... Exposing Parameter Identifiability*, arXiv:2606.12658 | PINN + identifiability | Confirms identifiability is the field's live issue |
+| *Dynamic Graph Neural Networks for Physiological Based Pharmacokinetic Modeling: A Novel Data Driven Approach to Drug Concentration Prediction*, arXiv:2510.22096 **[S]** — title corrected in §11.7.1 | GNN over the compartment graph, largely data-driven | We keep the ODE and conserve mass; they learn the dynamics |
+| *PBPK-iPINNs: Inverse PINNs for PBPK Brain Models*, arXiv:2509.12666 **[S]** (§11.7.2) | PINN-based inverse parameter estimation | Single-subject; no population hierarchy, no ensemble |
+| *PINNs for Chemotherapy PK: ... Exposing Parameter Identifiability*, arXiv:2606.12658 **[S]** (§11.7.2) | PINN + identifiability | **Their PINN only matches nonlinear least squares on the identifiable problem** — see §11.7.2 |
 | *Neural Controlled Differential Equations in PK/PD*, PMC12823316 | NCDE for irregular sampling | Black-box; no mechanistic conservation |
 | *Bridging pharmacology and neural networks: neural ODEs*, Losada et al., CPT:PSP 2024, doi:10.1002/psp4.13149 | Review | Use as the framing reference for a PK audience |
 | *Deep compartment models*, CPT:PSP 2022, PMC9286722 | NN predicts PK parameters from covariates; ODE stays mechanistic | **A different hybridization point** — worth an explicit comparison |
@@ -296,6 +324,16 @@ document, proposal, and paper:
 > mechanistic-content test that distinguishes a genuine hybrid model from a disguised
 > neural ODE.** (i) is the software contribution; (ii) and (iii) are the scientific
 > contribution.
+
+> **Both (ii) and (iii) have since been narrowed — do not quote the paragraph above
+> unamended.** §11.6.2(d) narrows (ii) from "GPU + differentiable + PK" to *the
+> population-ensemble layout and the mixed forward/adjoint gradient policy over $N$
+> individuals*, citing arXiv:2411.19882 as prior art. §11.7.3(a) narrows (iii) from
+> identifiability-aware hybrid modelling in general to *the mechanistic-content test under
+> a population hierarchy*, because iNODE (arXiv:2608.13044, August 2026) now does
+> Fisher-information-based, identifiability-aware architecture selection for neural ODEs.
+> The prior art to name also changes: **Valderrama 2024** is the nearest published
+> neural-closure-inside-a-PK-ODE precedent (§11.6.2(a)), not DeepPumas/DeepNLME.
 
 > **中文讲解｜CN**
 > 这段是**修订后的新颖性陈述**，建议直接背下来，开题、JOSS 论文、PLOS 论文里反复用。
@@ -445,12 +483,17 @@ demonstrated on PK" is published prior art. **Sharpen claim (ii) of §11.4**: th
 contribution is not "GPU + differentiable + PK", it is *the population-ensemble layout and
 the mixed forward/adjoint gradient policy over N individuals*. State the narrower claim.
 
-### (e) *Sharpness-aware hybrid model learning for architecture-agnostic parameter
-estimation*, arXiv:2602.06837 **[U]**
+### (e) arXiv:2602.06837 **[U] — title was wrong, corrected in §11.7.1**
 
 Surfaced next to the hybrid-neural-ODE identifiability literature; not verified beyond its
 existence. Potentially relevant to [06](06-identifiability.md) as an optimisation-side
 approach to the same degeneracy problem. **Verify before citing.**
+
+> **Superseded by §11.7.1.** This entry was recorded under an invented title,
+> *"Sharpness-aware hybrid model learning for architecture-agnostic parameter estimation"*.
+> The paper is ***Learning Deep Hybrid Models with Sharpness-Aware Minimization***, by
+> Naoya Takeishi **[S]**, and it is an **optimisation** paper, not an identifiability
+> paper. Use it as an optimisation-side mitigation for R10.
 
 Also noted, not yet assessed: *Machine-learning-enabled modeling of pharmacokinetics and
 pharmacodynamics*, Drug Discovery Today 2026 (ScienceDirect S1359644626000504) **[U]** —
@@ -529,6 +572,12 @@ A test with no failure condition is a stub with extra steps.
 
 ### (c) The six-month rule is real, and slightly stricter than the plan assumes
 
+> **Incomplete — see §11.7.5.** Everything below is correct, but it reads the six-month
+> requirement as *scope prose*. Since **2026-03-15** it has been **gate 1 of four
+> pre-review gates**, any one of which is a desk rejection, and the other three were not
+> recorded here at all. One of them — *demonstrated research impact* — displaces the
+> six-month clock as the binding constraint on this project.
+
 Checked against the JOSS submission documentation on 2026-08-07: the six-month public
 period in [13 §13.2](13-publication-strategy.md) is **a genuine JOSS requirement, not this
 project's own conservatism**. Two details sharpen it:
@@ -596,6 +645,519 @@ Supersedes the corresponding lines of §11.5.
 - [ ] Next sweep: include CPT:PSP, Clinical and Translational Science, Journal of
       Pharmacokinetics and Pharmacodynamics and Clinical Pharmacokinetics explicitly.
       **Searching arXiv alone missed the closest competitors.**
+
+# 11.7 Third sweep — 2026-09-02
+
+Twenty-seven days after the repository went public and **seventeen days after the last
+commit**. The sweep was triggered by that gap, not by the calendar: §T.3 requires a commit
+every week, and the reason it does turns out to have hardened since it was written (§11.7.5).
+
+**§11.7 amends §11.1–§11.6. Where they disagree, §11.7 wins.**
+
+## 11.7.0 Method, and the limits of this sweep
+
+Read this before trusting anything below.
+
+This sweep was run from a network that permits a **search index** but blocks direct
+retrieval of `arxiv.org`, publisher landing pages and `joss.readthedocs.io`. Titles,
+authors and venues below therefore rest on search-index metadata, cross-checked across
+independent result sets — **not** on an opened abstract page. That is genuinely weaker
+than the first two sweeps, and pretending otherwise would defeat the purpose of the
+markers. So a third one is introduced:
+
+**[V]** = confirmed against a primary source that was actually opened ·
+**[S]** = title/authors/venue consistent across independent search results, **landing page
+not opened — re-check before it appears in a manuscript** ·
+**[U]** = pointer only.
+
+Two classes of finding in this sweep *are* **[V]**, because their primary sources are git
+repositories and those were cloned and read directly:
+
+- the JOSS requirements of §11.7.5, from `openjournals/joss` at commit `4966962`
+  (2026-08-26), including the commit that introduced each rule;
+- the Julia ecosystem facts of §11.7.4 and §11.7.6, from the General registry
+  (`JuliaRegistries/General`, cloned 2026-09-02) and from upstream release tags.
+
+> **中文讲解｜CN**
+> **这一小节比后面的内容更重要，因为它决定了后面的内容能信到什么程度。**
+>
+> 本次检索所在的网络**能用搜索索引，但打不开 arxiv.org、出版商页面和 joss.readthedocs.io**。
+> 也就是说：下面这些论文的标题/作者/出处来自搜索结果的元数据（且做了多组交叉验证），
+> **但没有真的打开摘要页确认**。这比前两次扫描弱，所以**不能沿用 `[V]`**——
+> 否则标记体系就废了。因此新增 **`[S]`**：检索元数据一致，但未开页核实，**进稿前必须重查**。
+>
+> 反过来，§11.7.4 / §11.7.5 / §11.7.6 里关于 JOSS 规则和 Julia 生态的结论**是真 `[V]`**：
+> 它们的原始来源是 git 仓库，而 git 是通的——JOSS 文档仓库和 General 注册表都是**直接 clone 下来读的**，
+> 连每条规则是哪个 commit、哪一天加进去的都能查到。
+>
+> **教训**：当核实手段本身受限时，正确做法是**降级标记并写明限制**，
+> 而不是把弱证据说成强证据。前者只是暂时不能引用，后者是学术不端。
+
+---
+
+## 11.7.1 Two citations in §11.6.2 have the wrong title
+
+Both were carried as **[U]**. Both are real papers; both are recorded under a title that
+is not theirs, which is worse than a missing citation because it looks verified.
+
+| Where | Recorded as | Actually **[S]** |
+|---|---|---|
+| §11.6.2(e) | *Sharpness-aware hybrid model learning for architecture-agnostic parameter estimation*, arXiv:2602.06837 | ***Learning Deep Hybrid Models with Sharpness-Aware Minimization***, Naoya Takeishi, arXiv:2602.06837 (cs.LG, stat.ML), Feb 2026 |
+| §11.2 | *Dynamic Graph Neural Network for Data-Driven PBPK Modeling*, arXiv:2510.22096 | ***Dynamic Graph Neural Networks for Physiological Based Pharmacokinetic Modeling: A Novel Data Driven Approach to Drug Concentration Prediction***, arXiv:2510.22096 |
+
+Takeishi's paper is **not** an identifiability paper. It is an optimisation paper: hybrid
+models combining an ML component with a scientific model, trained with sharpness-aware
+minimisation so that the fit lands in a flat basin rather than a sharp one. §11.6.2(e)
+guessed "potentially relevant to [06](06-identifiability.md) as an optimisation-side
+approach to the same degeneracy problem" — that guess was right, but for the wrong stated
+reason. Keep it in §06 as an **optimisation-side mitigation for R10**, not as an
+identifiability diagnostic.
+
+> **中文讲解｜CN**
+> **标题记错比漏引更危险**，因为它伪装成已核实。这两条都是从检索线索直接抄进文档的，
+> 而 §11.6 明明把它们标成了 `[U]`——问题在于 `[U]` 的条目仍然带着一个**看起来像真的标题**。
+>
+> 以后的规矩：**`[U]` 条目只写标识符（arXiv 号 / DOI）加一句话描述，不要写猜的标题。**
+>
+> Takeishi 那篇的实际内容也和 §11.6 的猜测不同：它是**优化**论文（用 sharpness-aware
+> minimization 让混合模型落在平坦极小值），不是可辨识性论文。
+> 它在 [06](06-identifiability.md) 里的正确位置是 **R10 的优化侧缓解手段**，不是诊断工具。
+
+---
+
+## 11.7.2 Status upgrades
+
+| Entry | Was | Now | Detail |
+|---|---|---|---|
+| arXiv:2509.12666 | **[U]** | **[S]** | *PBPK-iPINNs: Inverse Physics-Informed Neural Networks for Physiologically Based Pharmacokinetic Brain Models* — Wickramasinghe, Weerasinghe, Ranaweera, Hapuhinna. Permeability-limited **four-compartment brain** PBPK; estimates drug- or patient-specific parameters. Confirms the §11.2 reading: single-subject, no population layer. |
+| arXiv:2606.12658 | **[U]** | **[S]** | *Physics-Informed Neural Networks for Chemotherapy Pharmacokinetics: Benchmarking the Clinical Estimator and Exposing Parameter Identifiability* — Bisht, Agarwal. **Read the result, not just the title:** on the linear two-compartment problem nonlinear least squares is near-optimal and the PINN only matches it; the interesting finding is that the Michaelis–Menten two-compartment model is **non-identifiable from plasma alone**, and the PINN signals this by converging to $k_{12} \to 0$. |
+| Drug Discovery Today review | **[U]** | **[S]** | *Machine-learning-enabled modeling of pharmacokinetics and pharmacodynamics*, Drug Discovery Today, 2026-03-17, ScienceDirect S1359644626000504. Usable as a framing citation alongside Losada et al. 2024. |
+
+The Bisht & Agarwal result deserves more than a row in a table. A PINN that reports
+non-identifiability by collapsing a rate constant to zero is doing, by accident, what
+[06](06-identifiability.md) proposes to do deliberately — and their honest finding that
+**the mechanistic-ML method does not beat least squares on the identifiable problem** is
+exactly the comparison a reviewer will demand of us. Put a classical estimator in the
+baseline set and report it even when it wins.
+
+> **中文讲解｜CN**
+> 第二行请读结论而不是标题：**在可辨识的线性二房室问题上，PINN 并没有赢过普通的非线性最小二乘。**
+> 真正有价值的发现是：Michaelis–Menten 二房室模型**仅凭血浆数据不可辨识**，
+> 而 PINN 会以"$k_{12}$ 收敛到 0"的方式把这件事暴露出来。
+>
+> 这对我们有两层意义：
+> 1. [06](06-identifiability.md) 想**主动**做的诊断，别人**被动**已经观察到了——先例要引；
+> 2. **基线里必须放经典估计器，而且输了也要如实报告。**
+>    审稿人一定会问"你这套机制学习比最小二乘强在哪"，事先没有这个对比就会很被动。
+
+---
+
+## 11.7.3 New since the second sweep — one of them matters a lot
+
+### (a) iNODE — identifiability-aware neural ODEs, arXiv:2608.13044, August 2026 **[S] — READ FIRST**
+
+*Identifiability-aware neural ordinary differential equations for parsimonious and reliable
+dynamic modelling.*
+
+This is the closest thing to contribution (iii) that has appeared since the plan was
+written, and it appeared **during the seventeen-day gap in this repository's commit
+history**. From the abstract: neural components are embedded as **explicit analytic
+functions inside the governing equations**, which enables direct sensitivity analysis,
+**Fisher-information-based confidence intervals**, and **identifiability-aware architecture
+selection**; candidate architectures are generated **under data-support constraints**,
+jointly calibrated, and ranked by predictive accuracy, parsimony and parameter
+identifiability. Reported outcome: more compact architectures, reduced parameter
+uncertainty, better extrapolation.
+
+Compare that list against [06](06-identifiability.md): empirical support density, Fisher
+information, profile likelihood, ablation. **The overlap is substantial and it is not a
+coincidence — it is the same problem being solved at the same time.**
+
+What survives, stated precisely rather than defensively:
+
+- iNODE selects an architecture **for one system**; our (ii) is a **phase diagram over
+  population size, sampling density and noise** — a characterisation of *when* recovery is
+  possible, not a procedure for one dataset.
+- iNODE has no **population/NLME hierarchy**, so its Fisher information is over a single
+  parameter vector, not over fixed effects with $\eta$-shrinkage.
+- iNODE ranks architectures by identifiability; **Test D asks a different question** — not
+  "which network is best identified" but "does the mechanistic skeleton contribute
+  anything at all". A model can be well-identified and still be a disguised neural ODE.
+
+What does **not** survive: any wording implying that identifiability-aware design of neural
+ODEs is unaddressed. §11.4's claim (iii) must be narrowed the way claim (ii) was narrowed
+in §11.6.2(d) — the novel object is the **mechanistic-content test under a population
+hierarchy**, not identifiability-aware hybrid modelling in general.
+
+**This paper must be read before [06](06-identifiability.md) is implemented.** If its
+architecture-ranking procedure is sound, adopting it and citing it is strictly better than
+reinventing a weaker version, and it frees effort for the population layer, which is
+genuinely ours.
+
+### (b) Uni-PK, JCIM 2026 **[S]**
+
+*Toward Generalizable Data-Driven Pharmacokinetics with Interpretable Neural ODEs*, Cui,
+Ji, Guo et al., *Journal of Chemical Information and Modeling* 66(5):2640–2650,
+2026-03-09, doi:10.1021/acs.jcim.5c02924.
+
+Neural ODEs embedded in a mechanistically grounded PK structure, driven by **molecular
+representations** plus individual covariates, predicting the concentration trajectory
+end-to-end; evaluated on rat and human data across routes of administration.
+
+Same hybridization point as ours (network inside the RHS) but the input is **chemical
+structure**, and the goal is cross-drug generalisation rather than within-drug mechanism
+recovery. It is not a competitor for (ii) or (iii), and it is a useful citation for the
+claim that a network inside a PK RHS is now an established construct rather than a novelty.
+
+### (c) Physiologically Informed Deep Learning, arXiv:2602.18472 **[S]**
+
+*A Multi-Scale Framework for Next-Generation PBPK Modeling*, Liu, Qiu, Wang, 2026-02-09.
+Three components: foundation **PBPK Transformers** treating PK forecasting as sequence
+modelling; **physiologically constrained diffusion models** generating virtual patient
+populations under a physics-informed loss; and **Neural Allometry**, a GNN + neural-ODE
+hybrid for interspecies extrapolation.
+
+Note the second component: **generating a virtual population under physiological
+constraints** is adjacent to our twin-study generator in
+[07](07-validation-protocol.md). Different means (a diffusion model against a soft physics
+loss, versus sampling a hierarchical model with hard flow-continuity constraints), and
+ours is the one that supports a ground-truth recovery experiment — but the comparison will
+be raised, so [07](07-validation-protocol.md) should say why a generative virtual
+population cannot serve as a twin study.
+
+### (d) Also logged, lower priority **[S]**
+
+| Work | Why it is here |
+|---|---|
+| *Learning functional components of PDEs from data using neural networks*, arXiv:2602.13174 | Functional recovery of an unknown term in a PDE — the PDE-side sibling of a UDE closure; relevant to [08](08-cfd-correspondence.md) |
+| *Integrating Mechanistic and Data-Driven Models for Neurological Disorders through Differentiable Programming*, arXiv:2606.06094 | Another differentiable-programming hybrid; another domain |
+| *Leveraging Neural ODEs for Population Pharmacokinetics of Dalbavancin in Sparse Clinical Data*, PMC12192077 | Neural ODE **with** a population layer on **sparse clinical** data — the sparsity regime of our phase diagram, on real data |
+| *A machine learning approach to population pharmacokinetic modelling automation*, Communications Medicine, doi:10.1038/s43856-025-01054-8 | Automation of PopPK model building; adjacent, not competing |
+| *Improving Population Pharmacokinetic Modelling with Artificial Patients using Generative AI*, Pharmacol Res Perspect 2026, doi:10.1002/prp2.70241 | Same virtual-population theme as (c) |
+| *Opportunities for machine learning and AI in PBPK modeling*, PMC12573771 | Review; framing citation for a PBPK audience |
+
+> **中文讲解｜CN**
+> **(a) 是本次扫描唯一真正影响计划的发现，请认真读完。**
+>
+> iNODE 把"可辨识性"直接做进了神经 ODE 的设计流程：神经项写成显式解析函数嵌进方程，
+> 于是可以做灵敏度分析、**基于 Fisher 信息的置信区间**、以及**面向可辨识性的架构选择**，
+> 候选架构在**数据支撑约束**下生成，再按预测精度、简约性、参数可辨识性排序。
+>
+> 把这串东西和 [06](06-identifiability.md) 的清单对一下——**重合度非常高**。
+> 这不是巧合，是同一个问题在同一时间被不同的人做。
+>
+> **重要的是怎么反应。** 不要去论证"我们还是不一样"，要精确说清剩下什么：
+> 1. iNODE 是**给一个系统选一个架构**；我们 (ii) 是**在群体规模 × 采样密度 × 噪声上画相图**，
+>    回答的是"什么条件下能恢复"，不是"这份数据该用哪个网络"；
+> 2. iNODE **没有群体/NLME 层级**，它的 Fisher 信息是单个参数向量上的，
+>    没有固定效应、没有 $\eta$-shrinkage；
+> 3. **Test D 问的是另一个问题**：不是"哪个网络辨识得最好"，而是"机理骨架到底有没有贡献"。
+>    一个模型完全可能**辨识得很好，同时是个伪装的神经 ODE**。
+>
+> 但 §11.4 的第 (iii) 条**必须收窄**，就像 §11.6.2(d) 收窄第 (ii) 条那样：
+> 新颖的是**群体层级下的机理含量检验**，不是"可辨识性感知的混合建模"本身。
+>
+> **还有一个更实际的判断**：如果 iNODE 的架构排序方法是靠谱的，
+> **直接采用并引用它，比自己重造一个更弱的版本好得多**，省下的力气应该投到群体层——那才是我们独有的。
+> 学术上不吃亏，工程上省半年。
+>
+> ⚠️ 最后注意一件事：**这篇是在本仓库停更的那十七天里出现的。**
+> 快速领域里，停更不只是 JOSS 的合规问题，也是信息滞后的问题。
+
+---
+
+## 11.7.4 Ecosystem re-check — the gap claim survives, with a new neighbour
+
+§11.1(4) itself warns that a claim established "by absence" has a shelf life. It was
+re-checked on **2026-09-02 against the General registry directly** (cloned; registry HEAD
+2026-09-02), not against a search engine. **[V]**
+
+**Everything matching `pbpk|pharmac|pkpd|nlme|physiolog|popPK|torsten|nonmem|clinical` in
+the registry was enumerated.** The pharmacometrics-relevant results:
+
+| Package | Latest registered | Assessment |
+|---|---|---|
+| `NoLimits` | **0.2.7** | Registered and actively versioned. §11.1(3) stands; the interoperability path of §11.5 is with a live package, not a preprint. |
+| **`NeoPKPD`** | **0.1.0** — *new, not in any previous sweep* | See below. |
+
+**`NeoPKPD`** (`shramish2057/NeoPKPD`, MIT, Zenodo DOI 10.5281/zenodo.18215969) is a
+Julia + Python PK/PD platform: one/two/three-compartment and TMDD models, NLME estimation
+by FOCE-I / SAEM / Laplacian / Bayesian, NCA, trial simulation, VPC, NONMEM and Monolix
+model import, CDISC/SDTM data import, 21 CFR Part 11 compliance features.
+
+It was inspected in the clone rather than judged from its README:
+
+- **No PBPK.** The string `pbpk` does not occur anywhere in its sources or docs.
+- **No GPU.** No `CUDA`, no `DiffEqGPU` in its dependencies.
+- **No neural closure.** No `Lux`, no `Flux`, no `SciMLSensitivity`; AD is `ForwardDiff` /
+  `ReverseDiff` / `Enzyme` for estimation, not for learning a term inside the RHS.
+
+**The §11.1(4) gap claim therefore survives, and is now better evidenced than when it was
+made** — the enumeration is reproducible and the disqualifying properties are specific
+rather than impressionistic. But two things must change:
+
+1. The **README "Not in scope"** pointer and the **§13.2 state-of-the-field paragraph**
+   must name `NeoPKPD` alongside NoLimits.jl and Pumas. A JOSS reviewer drawn from the
+   Julia pharmacometrics community will know it, and a state-of-the-field paragraph that
+   omits a registered Julia NLME package published this year reads as a sweep that was not
+   done.
+2. R11 in [09](09-implementation-roadmap.md) ("a competing package closes the gap") should
+   be re-scored. It did not fire, but the arrival of a broad Julia PK/PD platform within a
+   month of going public is evidence that the space is being actively filled.
+
+> **中文讲解｜CN**
+> **这次是把 General 注册表整个 clone 下来枚举的，不是搜索"有没有 Julia PBPK 包"。**
+> 差别在于：搜索得到的是"我没找到"，枚举得到的是"注册表里符合条件的包是这些，逐个看过"。
+> **"由检索不到确立的空白"和"由枚举确立的空白"，在审稿人眼里完全不是一个东西。**
+>
+> 新出现的 `NeoPKPD` 是个功能很全的 Julia PK/PD 平台（NLME 估计、NCA、试验模拟、
+> NONMEM/Monolix 导入、合规功能），但**没有 PBPK、没有 GPU、没有神经闭合**——
+> 这三条是在 clone 下来的源码里查的，不是看 README 猜的。所以我们的位置还在。
+>
+> **但必须主动把它写进 README 的"不在范围内"和 §13.2 的 state-of-the-field 段落。**
+> 理由很实际：JOSS 审稿人很可能就是 Julia 药代圈的人，
+> **漏掉一个今年刚注册的同生态包，会被判定为"文献工作没做"**，比承认它存在的代价大得多。
+
+---
+
+## 11.7.5 JOSS changed its rules, and the plan is measuring the wrong constraint
+
+Verified **[V]** against `openjournals/joss`, cloned 2026-09-02 at commit `4966962`
+(2026-08-26). Because it is a git repository, each rule can be dated by the commit that
+introduced it:
+
+| Rule | Introduced | Commit |
+|---|---|---|
+| AI usage policy (interim) | **2025-09-16** | `a03374a` |
+| AI usage policy (current wording) | **2025-12-07** | `3724001` |
+| Scope/eligibility rewrite | 2026-01-05 | `a4090f5` |
+| **Pre-review screening criteria — four desk-rejection gates** | **2026-03-15** | `57b370c` (Arfon Smith, *"Updating docs to reflect new scope gates for EiCs"*) |
+| Further revisions | 2026-06-24, 2026-07-13 | `8d9827c`, `3bdbe7d` |
+
+The 2026-08-07 check in §11.6.3(c) read the six-month sentence correctly but recorded it as
+prose about *scope*. It is not prose. Since 2026-03-15 it is **gate 1 of four hard gates**,
+and *"a submission that fails any one of these will receive a desk rejection."* The other
+three were not recorded at all.
+
+**Gate 1 — Sufficient public development history.** *"The repository must have been public
+for more than six months prior to submission, with active development spanning that
+period. A repository made public immediately before submission, or one showing development
+concentrated into a few days or weeks, will not be accepted. **We run automated checks on
+commit distribution — a repo dump is not a history.**"*
+
+That last sentence is new relative to what §11.6.3(c) recorded, and it is not rhetoric —
+it describes a mechanical check. This repository's current distribution: nine commits, of
+which **six fall on 2026-08-06 and 2026-08-07**, then one on 08-13, one on 08-16, and
+nothing since. That is, right now, a two-day burst followed by a thinning tail. It is
+early enough to fix by simply continuing; it is exactly what the check is designed to find.
+
+**Gate 2 — Demonstrated research impact. This is the binding constraint, and the plan does
+not model it.** *"There **must** be evidence that the software is being used for research —
+at minimum by the developers themselves, and ideally by others… **Aspirational statements
+about future use are not sufficient; JOSS will not publish papers that are meant to
+advertise software that is not yet being used in research.**"* The current wording adds
+that adoption in a currently private workflow is acceptable **if demonstrated to the
+editorial team**.
+
+[13 §13.4](13-publication-strategy.md) says *"the 6-month rule is the binding constraint on
+JOSS. Nothing else you do can compress it."* **That is no longer true.** The six-month
+clock expires on 2027-02-06 and runs by itself. Gate 2 does not run by itself: on the
+current schedule the package is registered at $T_0 + 6$–7 months and submitted immediately,
+with the twin study as its only use — and a twin study run by the author to produce the
+software's own paper is the weakest reading of "used for research", certainly not
+"published papers, external adopters or integrations".
+
+The fix is a scheduling one, and it is cheap if made now and expensive if made later:
+**the arXiv preprint of the method (already in §13.4 at $T_0+1$–2 as a priority-securing
+move) is also the Gate 2 evidence**, provided it *uses* the package and *cites* it. That
+converts an optional nicety into a submission prerequisite. A Phase-3 phase-diagram result
+posted as a preprint that cites `PerfusionUDE.jl` satisfies *"references in published
+papers or preprints"* directly.
+
+**Gate 3 — Good open source practices.** For single-author projects, *multiple* indicators
+must be present: meaningful commit history over time, tagged releases or a changelog, tests
+and CI, clear documentation, a CONTRIBUTING file, stated support or governance
+expectations. This project already has changelog, CI, docs, CONTRIBUTING and a maintenance
+statement. **Gate 3 is close to satisfied and is the cheapest gate to finish** — the
+missing indicator is a tagged release beyond `v0.1.0`, i.e. §T.3's second rule.
+
+**Gate 4 — Iterative development over time.** *"The development history must show ongoing
+iteration, not a single burst of commits. We look for evidence that the software has been
+refined through use and feedback over time."* Gate 4 is Gate 1 seen from the other side and
+it is what §T.3's weekly-commit rule was already protecting.
+
+**On the AI usage policy:** [13 §13.5](13-publication-strategy.md) anticipated this and is
+substantially correct, but its suggested wording is missing one required element. The
+policy requires *"the tools/models used **(and versions)** and **where** they were used
+(code, paper text, docs)"*, the nature and scope of assistance, and an explicit assertion
+that human authors reviewed, edited and validated all AI-assisted output **and made the
+core design decisions**. The §13.5 draft names the tool but not versions, does not
+enumerate where, and does not contain the core-design-decisions assertion. It also warns
+that the "all references verified" clause may only be written if true — with this sweep's
+**[S]** entries on the books, **it is not currently true**, and §13.5's own warning now has
+teeth.
+
+> **中文讲解｜CN**
+> **这一节是本次"有效性更新"最重要的产出，因为它推翻了计划里一句被当成定论的话。**
+>
+> §11.6.3(c) 在 2026-08-07 读到了"公开超过六个月"，但把它当成了**范围说明**。
+> 它不是说明。自 **2026-03-15** 起（能查到是哪个 commit、谁提交的），
+> 它是**四道硬性初审门槛的第一道**，而原文写明：**任何一道不过，直接拒稿。**
+> 另外三道，计划里一条都没有。
+>
+> **门槛 1** 新增了一句：**"我们对提交分布做自动检查——仓库倾倒不是历史。"**
+> 本仓库现在的分布是：9 个提交，其中 **6 个集中在 8 月 6–7 日两天**，
+> 然后 8-13 一个、8-16 一个，之后停了。**这正是那个自动检查要抓的形状。**
+> 好消息是现在还早，继续正常提交就能修好；坏消息是它事后补不了。
+>
+> **门槛 2 才是真正卡住我们的那道，而计划完全没有建模它。**
+> 原文：**"必须有证据表明软件正在被用于研究……对未来用途的展望不算数；
+> JOSS 不发表用于宣传尚未被实际使用的软件的论文。"**
+>
+> 而 [13 §13.4](13-publication-strategy.md) 写着"六个月是 JOSS 的硬约束，
+> 任何努力都压缩不了它"——**这句话现在是错的**。六个月会自己走完（2027-02-06），
+> 门槛 2 不会自己走完。按现在的排期，$T_0+6$~7 个月注册完就投，
+> 软件唯一的"使用记录"是作者自己为了写这篇软件论文跑的孪生实验——
+> 这是"被用于研究"最弱的一种读法。
+>
+> **解法很便宜，但必须现在改**：§13.4 里那个"Phase 1 之后挂 arXiv 预印本"
+> 原本只是"确立优先权的好习惯"，现在它**同时是门槛 2 的证据**——
+> 前提是那篇预印本**真的用了这个包并且引用了它**。
+> 一篇引用了 `PerfusionUDE.jl` 的相图预印本，直接满足"预印本中的引用"这一条。
+> **一件事同时解决两个问题，就把它从"可选"改成"前置条件"。**
+>
+> **门槛 3（开源实践）我们其实快满足了**——CHANGELOG、CI、文档、CONTRIBUTING、
+> 维护声明都有了，缺的是 `v0.1.0` 之后的 tag，也就是 §T.3 的第二条规则。**这是最便宜的一道门。**
+>
+> **关于 AI 披露**：§13.5 提前想到了这件事，方向是对的，但**建议措辞漏了要素**。
+> 政策要求写明"工具/模型**及版本**"、"**用在哪里**（代码/正文/文档）"、
+> 协助的性质与范围，以及"人类作者审阅、编辑、验证了所有 AI 产出**并做出了核心设计决策**"。
+> 现在的草稿只写了工具名。
+>
+> 还有一句要认真对待：§13.5 自己写了"'所有引用均已核实'这句只有做到了才能写"。
+> **本次扫描新增了一批 `[S]` 条目，所以现在这句话不能写。** 它自己的警告开始生效了。
+
+---
+
+## 11.7.6 Software validity — three findings outside the literature
+
+Checked **[V]** against upstream git tags and the General registry on 2026-09-02.
+
+**(a) Two compat bounds in `Project.toml` exclude the current release of their package.**
+
+| Dependency | Bound | Latest released | Effect |
+|---|---|---|---|
+| `CUDA` | `"5"` | **6.3.1** | The GPU extension cannot load with a current CUDA.jl |
+| `SymbolicRegression` | `"1"` | **2.2.0** | The symbolic-recovery extension cannot load with a current SymbolicRegression.jl |
+
+Both are weak dependencies, so the base package still installs and tests — which is
+precisely why this would have gone unnoticed until Phase 2 or Phase 3, i.e. until the
+extension was needed. The remaining eleven bounds were checked and are current.
+
+This is [09 R1](09-implementation-roadmap.md) ("Enzyme/CUDA/Lux version incompatibility")
+arriving early and from the boring direction: not an AD conflict, just a major-version bump
+that a hand-written bound did not follow.
+
+**(b) Every third-party GitHub Action in CI is behind by two or three majors.**
+
+`actions/checkout` v4 → **v7** · `actions/upload-artifact` v4 → **v7** ·
+`codecov/codecov-action` v4 → **v7** · `julia-actions/setup-julia` v2 → **v3** ·
+`julia-actions/cache` v2 → **v3**. The `julia-actions/julia-buildpkg`,
+`julia-runtest` and `julia-processcoverage` actions are still on v1, which is current.
+
+`codecov/codecov-action@v4` has not been touched upstream since **2024-10-01** — three
+majors and nearly two years of runner deprecations. `setup-julia@v3` runs on `node24`;
+its `version` input is unchanged, and it now accepts `lts`, `pre`, `min-minor` and
+`min-patch` in addition to a version string. `codecov-action@v7` still takes `files` and
+`token`, so that step needs only a version bump.
+
+`min-minor` / `min-patch` are worth noting against the `v0.1.0` known limitation
+*"dependency compat bounds have not been tested against their lower bounds"* — a `min`
+entry in the CI matrix tests the declared Julia floor directly.
+
+**(c) The reference against which "current" was judged.** Julia's latest release is
+**1.12.7**, with a `release-1.13` branch open upstream. The CI matrix (`1.10` and `1`) is
+therefore still correct: `1.10` is the declared floor and `1` tracks the latest stable.
+
+> **中文讲解｜CN**
+> **(a) 是本次唯一会真正让代码跑不起来的问题，而且它藏得很好。**
+> `CUDA = "5"` 但 CUDA.jl 已经到 6.3.1，`SymbolicRegression = "1"` 但已经到 2.2.0。
+> 因为这两个都是 **weak dependency**，基础包照常安装、CI 照常全绿——
+> **要等到 Phase 2 上 GPU、Phase 3 做符号回归时才会炸。**
+>
+> 这就是 [09 R1](09-implementation-roadmap.md) 提前到来，而且是从最无聊的方向来的：
+> 不是 AD 冲突，只是**手写的版本上界没跟上大版本升级**。
+> 教训：**上界写死在一个主版本上，等于给自己埋了一个延迟半年爆炸的雷。**
+> 另外十一条边界都查过了，是当前的。
+>
+> **(b)** CI 里所有第三方 Action 都落后两到三个大版本，其中 `codecov-action@v4`
+> **上游从 2024-10-01 起就没动过**。GitHub runner 会逐步淘汰旧 Node 运行时，
+> 这类落后**不是风格问题，是会突然变红的**。
+> 顺带一提：`setup-julia@v3` 支持 `min-minor`/`min-patch`，
+> 正好对应 `v0.1.0` 里那条"兼容性下界从未测试过"的已知限制——矩阵里加一项就能测。
+
+---
+
+## 11.7.7 Amended checklist
+
+Supersedes the corresponding lines of §11.6.4.
+
+**Blocking, before anything else:**
+
+- [ ] **Resume weekly commits.** Gate 1 and Gate 4 are checked automatically against commit
+      distribution, and the current shape is a two-day burst plus a thinning tail.
+- [x] Fix the `CUDA` and `SymbolicRegression` compat bounds — done in this pass.
+- [x] Bump the CI action majors — done in this pass.
+
+**Before [06](06-identifiability.md) is implemented:**
+
+- [ ] **Read iNODE (arXiv:2608.13044).** Decide explicitly: adopt its
+      architecture-ranking procedure and cite it, or state why ours differs. Do not
+      reinvent it silently.
+- [ ] **Narrow §11.4 claim (iii)** to *the mechanistic-content test under a population
+      hierarchy*, the way claim (ii) was narrowed in §11.6.2(d).
+- [ ] Move Takeishi (arXiv:2602.06837) into [06](06-identifiability.md) as an
+      **optimisation-side mitigation for R10**, under its real title.
+- [ ] Add a **classical estimator (NLS / FOCE)** to the [07 §7.3](07-validation-protocol.md)
+      baselines and report it even when it wins — Bisht & Agarwal found the PINN only
+      matched NLS on the identifiable problem. Flagged in `paper/paper.md` under research
+      impact so it is not quietly dropped.
+
+**Publication strategy:**
+
+- [ ] **Re-plan around Gate 2, not the six-month clock.** Make the Phase-1/Phase-3 arXiv
+      preprint a submission prerequisite: it must *use* and *cite* the package.
+- [x] Record the four pre-review gates in [13 §13.2](13-publication-strategy.md) as
+      desk-rejection gates rather than scope prose — done in this pass.
+- [x] Complete the §13.5 AI disclosure wording: **tool versions**, **where** it was used,
+      and the **core-design-decisions** assertion — done in this pass, and mirrored into
+      `paper/paper.md`.
+- [x] Remove "all references verified" from the disclosure while any **[S]** or **[U]**
+      entry remains — done. **Do not restore it until every entry is [V].**
+- [ ] Fill in the AI-disclosure `TODO`s in `paper/paper.md`: model versions, and the scope
+      of assistance for source code and paper text. Record these **as work happens**.
+- [ ] Finish Gate 3: tag `v0.2.0` when the mechanistic model passes its tests.
+
+**Positioning:**
+
+- [x] Name **`NeoPKPD`** in the README "Not in scope" pointer, the §13.2
+      state-of-the-field paragraph and `paper/paper.md` — done in this pass.
+- [ ] Say in [07](07-validation-protocol.md) why a generatively synthesised virtual
+      population (arXiv:2602.18472) cannot substitute for a ground-truth twin study.
+
+**Method:**
+
+- [ ] **Never write a bibliographic field you did not read.** `[U]` entries carry an
+      identifier and a one-line description only — never a guessed title. The same applies
+      to author fields: where a sweep confirmed surnames, record surnames and mark the
+      given names `[U]`. Two wrong titles in §11.6.2 came from breaking the first half of
+      this rule; `paper.bib` now marks partial author lists explicitly rather than
+      completing them plausibly.
+- [ ] Re-verify every **[S]** entry from an opened primary source before it enters a
+      manuscript.
+- [ ] Next sweep: **establish the ecosystem gap by enumerating the General registry**, not
+      by searching. Keep CPT:PSP, Clinical and Translational Science, JPKPD and Clinical
+      Pharmacokinetics on the journal list, and add **JCIM** — Uni-PK was published there.
 
 ---
 

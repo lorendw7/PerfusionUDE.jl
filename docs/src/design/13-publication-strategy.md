@@ -51,7 +51,47 @@ DOI-bearing software artifact to reference.
 
 ## 13.2 JOSS — requirements and how to satisfy them
 
-### Hard requirements (confirmed 2026-08-06)
+### Pre-review screening gates (confirmed 2026-09-02 — **read this before the table**)
+
+Since **2026-03-15** JOSS applies four *pre-review screening criteria* before a submission
+enters review: *"a submission that fails any one of these will receive a desk rejection."*
+Verified against the `openjournals/joss` repository at commit `4966962` (2026-08-26);
+the gates were introduced by commit `57b370c`. See
+[11 §11.7.5](11-literature-landscape.md) for the full provenance and for what this
+supersedes.
+
+| # | Gate | Where we stand |
+|---|---|---|
+| 1 | **Sufficient public development history** — public **more than** six months, *"active development spanning that period"*; *"we run automated checks on commit distribution — a repo dump is not a history"* | Clock started 2026-08-06. **The distribution, not the elapsed time, is the exposure** — see §T.3 |
+| 2 | **Demonstrated research impact** — *"there must be evidence that the software is being used for research"*; *"aspirational statements about future use are not sufficient"* | ⚠️ **The binding constraint. Not modelled by the old timeline** — see below |
+| 3 | **Good open source practices** — for a solo project, *multiple* indicators: commit history over time, tagged releases or changelog, tests and CI, docs, `CONTRIBUTING`, stated support expectations | Changelog ✅ CI ✅ docs ✅ `CONTRIBUTING` ✅ maintenance statement ✅ — **missing: a tagged release beyond `v0.1.0`** |
+| 4 | **Iterative development over time** — *"ongoing iteration, not a single burst of commits"* | Gate 1 from the other side; §T.3's weekly-commit rule protects it |
+
+**Gate 2 replaces the six-month clock as the binding constraint.** The clock expires on
+2027-02-06 and runs by itself; Gate 2 does not. The remedy is already in the plan but
+mis-classified: §13.4 lists an early arXiv preprint as a priority-securing nicety. **It is
+now a submission prerequisite**, and it only counts if the preprint *uses* the package and
+*cites* it — that is precisely JOSS's *"references in published papers or preprints"*.
+Adoption inside a private workflow is also acceptable, but must be *demonstrated to the
+editorial team*, which is harder than posting a preprint.
+
+> **中文讲解｜CN**
+> **自 2026-03-15 起，JOSS 在进入评审前先过四道门，任何一道不过就是直接拒稿（desk rejection）。**
+> 这四道门是从 `openjournals/joss` 仓库里直接读出来的（commit `57b370c` 引入），
+> 不是二手转述——出处见 [11 §11.7.5](11-literature-landscape.md)。
+>
+> **最要紧的是第 2 道门，而旧计划完全没有考虑它。**
+> 原文：**"必须有证据表明软件正在被用于研究……对未来用途的展望不算数。"**
+>
+> 六个月的钟会自己走完（2027-02-06），**第 2 道门不会自己走完**。
+> 好消息是解法已经在计划里了，只是**定位错了**：§13.4 把"早点挂 arXiv 预印本"
+> 写成了"确立优先权的好习惯"。**它现在是投稿的前置条件**，
+> 而且只有当那篇预印本**真的用了这个包并且引用了它**才算数。
+>
+> **第 3 道门我们已经快过了**——CHANGELOG、CI、文档、CONTRIBUTING、维护声明都有，
+> 只差 `v0.1.0` 之后的一个 tag。**这是四道门里最便宜的一道，不要拖。**
+
+### Hard requirements (confirmed 2026-08-06, re-checked 2026-09-02)
 
 **Cost and eligibility.** JOSS is diamond open access: **no article processing charges, no
 submission fees, no subscription**. It is run by volunteers and published by Open Journals
@@ -65,12 +105,13 @@ maturity indicators applied to single-author submissions.
 | OSI-approved license as a `LICENSE` file | MIT, committed |
 | Public repo, browsable & clonable without registration | GitHub, public |
 | Public issue tracker | GitHub Issues enabled |
-| **Public ≥ 6 months with active development spanning that period** | ⚠️ **Start the clock today** |
+| **Public > 6 months with active development spanning that period** | Clock started 2026-08-06 → earliest submission **after** 2027-02-06. **Gate 1** above |
 | Automated tests + CI | See [12 §12.4](12-package-design.md) |
 | Documentation: install, example, API, community guidelines | See [12 §12.5](12-package-design.md) |
 | `paper.md` + `paper.bib` | Drafted in `paper/` |
 | Archived release with DOI | Zenodo, at acceptance |
-| **AI usage disclosure** | §13.5 |
+| **AI usage disclosure** | §13.5 — policy added 2025-09-16, current wording 2025-12-07 |
+| **Evidence the software is used for research** | ⚠️ **Gate 2** above — not satisfied by the twin study alone |
 | Not a pre-trained model or a notebook collection | N/A — it is a package |
 
 ### Required `paper.md` sections (confirmed)
@@ -88,14 +129,23 @@ Do **not** put API documentation in the paper; that belongs in the docs.
 ### The state-of-the-field paragraph (draft)
 
 > Population PBPK modelling is served by NONMEM, Monolix, Pumas.jl and PK-Sim/MoBi;
-> open-source options include nlmixr2, mrgsolve, rxode2 and PKPDsim in R, and the recent
-> NoLimits.jl in Julia. Neural-network-augmented mixed-effects modelling is available in
-> the commercial DeepPumas. None of these expose a composable, differentiable PBPK
-> transport-network layer with GPU-parallel population ensembles: the Julia PBPK resources
-> that exist (`bioPBPK`, `BayesPBPK-tutorial`) are model collections and tutorials rather
-> than packages, and PK-Sim is a GUI/XML modelling environment without a
-> differentiable-programming path. PerfusionUDE.jl fills that gap and interoperates with
-> NoLimits.jl for marginal-likelihood-correct inference rather than duplicating it.
+> open-source options include nlmixr2, mrgsolve, rxode2 and PKPDsim in R, and NoLimits.jl
+> and NeoPKPD in Julia. Neural-network-augmented mixed-effects modelling is available in
+> the commercial DeepPumas, and neural closures inside PK ODEs have been demonstrated for
+> single-compartment models (Valderrama et al. 2024) and, on the covariate → parameter map,
+> hierarchically in Julia (Elmokadem et al. 2024). None of these expose a composable,
+> differentiable PBPK transport-network layer with GPU-parallel population ensembles: the
+> Julia PBPK resources that exist (`bioPBPK`, `BayesPBPK-tutorial`) are model collections
+> and tutorials rather than packages, NoLimits.jl and NeoPKPD are general NLME and PK/PD
+> estimation packages with no organ-level transport layer, and PK-Sim is a GUI/XML
+> modelling environment without a differentiable-programming path. PerfusionUDE.jl fills
+> that gap and interoperates with NoLimits.jl for marginal-likelihood-correct inference
+> rather than duplicating it.
+
+*Basis for the enumeration: the Julia General registry was enumerated on 2026-09-02, not
+searched — see [11 §11.7.4](11-literature-landscape.md). State the method and the date in
+the manuscript; "we could not find one" and "we enumerated the registry" are not the same
+claim.*
 
 > **中文讲解｜CN**
 > 上面这段是 **state of the field 的草稿**，写法上有三点值得学：
@@ -221,17 +271,25 @@ week.**
 | $T_0$ + 1–2 mo | Phase 0–1 complete (CPU UDE, $N=50$) | Regular releases; arXiv preprint of the *method* to establish priority |
 | $T_0$ + 3–4 mo | Phase 2 complete (GPU, benchmarks) | Tutorials + CI mature |
 | $T_0$ + 5–6 mo | Phase 3 running (twin sweep) | Draft `paper.md` |
-| $T_0$ + 6–7 mo | Package registered, `v0.3.0`, docs complete | **Submit to JOSS** |
+| $T_0$ + 6–7 mo | Package registered, `v0.3.0`, docs complete | **JOSS earliest date reached (after 2027-02-06) — submit only once Gate 2 evidence exists** |
 | $T_0$ + 8–12 mo | Phase 4 (real data, VEM, FOCE comparison) | JOSS review + revisions |
 | $T_0$ + 12–15 mo | Full results assembled | Draft PLOS CB Methods manuscript |
 | $T_0$ + 15–18 mo | — | **Submit to PLOS CB** |
 
 Three scheduling notes:
 
-1. **The 6-month rule is the binding constraint on JOSS.** Nothing else you do can
-   compress it. Start the clock before writing another line of code.
-2. **Post an arXiv preprint early** (after Phase 1). It establishes priority in a fast
-   moving area — see [11 §11.2](11-literature-landscape.md) — and costs nothing.
+1. ~~**The 6-month rule is the binding constraint on JOSS.**~~ **Superseded 2026-09-02.**
+   The clock still cannot be compressed — it expires 2027-02-06 and submission must be
+   *after* that date — but it now runs by itself. The binding constraint is **Gate 2,
+   demonstrated research impact** (§13.2): the package must be *in use for research* at
+   submission time, and aspirational statements do not count. Plan backwards from that,
+   not from the calendar.
+2. **Post an arXiv preprint early** (after Phase 1) — **now a submission prerequisite,
+   not an optional nicety.** It establishes priority in a fast-moving area — see
+   [11 §11.2](11-literature-landscape.md) and the August-2026 arrivals in
+   [§11.7.3](11-literature-landscape.md) — *and* it is the Gate 2 evidence, provided it
+   **uses the package and cites it**. A preprint about the method that does not cite the
+   software satisfies neither purpose fully.
 3. **Re-run the literature sweep one week before each submission** and record the date in
    the manuscript.
 
@@ -254,33 +312,65 @@ Three scheduling notes:
 
 ## 13.5 AI usage disclosure
 
-JOSS requires an explicit statement. The documentation in this repository was drafted with
-substantial assistance from a large language model (Claude, Anthropic). Disclose it
+JOSS requires an explicit statement. The policy was added on **2025-09-16** and reached its
+current wording on **2025-12-07** (verified 2026-09-02 against `openjournals/joss`; see
+[11 §11.7.5](11-literature-landscape.md)). The documentation in this repository was drafted
+with substantial assistance from a large language model (Claude, Anthropic). Disclose it
 plainly; it does not affect eligibility, and omitting it would.
 
-Suggested wording for `paper.md`:
+The policy requires **three** elements, and the disclosure is incomplete without all of
+them:
 
-> **AI usage disclosure.** Generative AI (Claude, Anthropic) was used to draft and edit
-> portions of the project's design documentation and to assist with literature search.
-> All software implementation, experimental design decisions, numerical results, and
-> scientific claims are the authors' own; all AI-assisted text was reviewed and revised by
-> the authors, and all cited references were verified against their primary sources.
+1. **Tool use** — the tools/models used **and their versions**, and **where** they were
+   used (code, paper text, docs).
+2. **Nature and scope** of the assistance — code generation, refactoring, test
+   scaffolding, copy-editing, drafting.
+3. **Confirmation of review** — an assertion that the human authors reviewed, edited and
+   validated all AI-assisted output **and made the core design decisions**.
 
-Only state the last clause if it is true. Verify the references — see
-[10-references.md](10-references.md) and the **[V]/[U]** markers in
-[11](11-literature-landscape.md).
+Keep a running record of (1) as work proceeds; model versions change and cannot be
+reconstructed a year later from memory.
+
+Suggested wording for `paper.md` — fill in the bracketed parts from that record:
+
+> **AI usage disclosure.** Generative AI (Claude, Anthropic; models [list the models and
+> versions used]) was used in the preparation of this software and manuscript, as follows:
+> **design documentation** — drafting and editing; **literature search** — candidate
+> identification and metadata retrieval, with citation status tracked explicitly in the
+> repository; **source code** — [state the scope: e.g. implementation drafting, test
+> scaffolding, refactoring]; **paper text** — [state the scope]. The human authors
+> reviewed, edited and validated all AI-assisted output and **made all core design
+> decisions**, including the model formulation, the closure placement and its structural
+> constraints, the identifiability tests and their acceptance criteria, and the validation
+> protocol. All experimental design decisions, numerical results and scientific claims are
+> the authors' own.
+
+Note what this wording does **not** claim. The earlier draft ended with *"all cited
+references were verified against their primary sources"*. **Do not write that sentence
+until it is true.** The third sweep introduced a **[S]** tier for references confirmed
+only from search-index metadata because the primary sources were unreachable
+([11 §11.7.0](11-literature-landscape.md)); while any **[S]** or **[U]** entry remains in
+[10-references.md](10-references.md) or [11](11-literature-landscape.md), that clause would
+be false, and JOSS treats an inaccurate disclosure as an ethical breach, not a slip.
 
 > **中文讲解｜CN**
 > **这一条不要有任何侥幸心理。**
 >
-> JOSS 现在明确要求披露生成式 AI 的使用。本仓库的设计文档确实由 Claude 大量协助起草，
-> 这**必须**写进 paper.md。如实披露完全不影响录用；不披露被发现则是学术不端。
+> JOSS 现在明确要求披露生成式 AI 的使用（政策 2025-09-16 加入，2025-12-07 定稿）。
+> 本仓库的设计文档确实由 Claude 大量协助起草，这**必须**写进 paper.md。
+> 如实披露完全不影响录用；不披露被发现则是学术不端。
 >
-> ⚠️ 但注意上面建议措辞的**最后一句**："所有引用文献均已对照原始来源核实"——
-> **这句话只有在你真的做了核实之后才能写。**
+> **原来的草稿漏了两个必需要素**，2026-09-02 核对官方政策后补上：
+> **(1) 模型的"版本"和"用在哪里"（代码/正文/文档要分开说）**；
+> **(2) "核心设计决策由人类作者做出"这句断言**——政策原文明确要求这一句。
+> 建议**边做边记**模型版本，一年后回忆不出来。
 >
-> 目前 [10-references.md](10-references.md) 和 [11](11-literature-landscape.md) 里
-> 标 **[U]** 的条目都还没核实。在写这句话之前，必须把它们全部核对完并改成 **[V]**。
+> ⚠️ 关于最后那句"所有引用文献均已对照原始来源核实"：**新措辞里已经删掉了它。**
+> 第三次扫描新增了 **[S]** 档（只有检索元数据、打不开原始页面，见
+> [11 §11.7.0](11-literature-landscape.md)）。
+> **只要 [10](10-references.md) 和 [11](11-literature-landscape.md) 里还有 [S] 或 [U]，
+> 这句话就是假的。** JOSS 把披露不实当作学术不端处理，不是笔误。
+>
 > 这也是为什么那两份文档要用标记区分状态——它不是形式，是给你自己的待办清单。
 
 ---

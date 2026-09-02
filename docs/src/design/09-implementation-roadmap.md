@@ -82,7 +82,7 @@ Relative to $T_0$ = the day the repository went public (**2026-08-06**). Assumes
 
 | Month | Work | Deliverable |
 |---|---|---|
-| 0–1 | Julia basics; Phase −1 complete; `physiology/` and `topology.jl`; **Phase −0.5 (blocking)** | reference data structures with provenance; continuity assertions; **every reference value verified against a primary source** |
+| 0–1 | Julia basics; Phase −1 complete; `physiology/` and `topology.jl`; ~~**Phase −0.5 (blocking)**~~ **✅ done 2026-08-16** | reference data structures with provenance ✅; **every reference value verified against ICRP 89** ✅; continuity assertions — `liver_inflow` and `flow_continuity_residual` tested ✅ |
 | 1–2 | Phase 0 on the 5-compartment model | six numerical tests green; RHS allocation-free |
 | 2–3 | Closure layer + twin generator (H1) | constrained closure with declarative options |
 | 3–4 | Phase 1: joint MAP on CPU, $N=50$ | **finite-difference gradient check green; Test D passes** |
@@ -95,9 +95,23 @@ Two rules that matter more than the schedule:
 1. **Commit at least once a week, every week.** For a single-author submission JOSS looks
    for a meaningful commit history spanning the public period, precisely because there is
    no pull-request record to demonstrate process. This cannot be reconstructed afterwards.
+
+   **This is now known to be mechanically enforced.** JOSS's pre-review gate 1 states:
+   *"we run automated checks on commit distribution — a repo dump is not a history"*, and
+   gate 4 rejects a history that is *"a single burst of commits"*
+   ([13 §13.2](13-publication-strategy.md),
+   [11 §11.7.5](11-literature-landscape.md)). The rule is not good practice with a
+   plausible rationale; it is a check that runs.
+
+   **Status on 2026-09-02:** nine commits, six of them on 2026-08-06 and 2026-08-07, then
+   one on 08-13, one on 08-16, and a **seventeen-day gap**. That is the exact shape the
+   check looks for. It is early enough to fix by simply resuming, and it is the reason
+   this validity sweep was run at all.
 2. **Tag a release whenever something works.** `v0.2.0` when the mechanistic model passes
    its tests, `v0.3.0` when the closure fits, and so on. Tagged releases plus a changelog
-   are among the maturity indicators for solo projects.
+   are among the maturity indicators for solo projects — and a tagged release beyond
+   `v0.1.0` is **the one indicator gate 3 is still missing**; everything else it asks a
+   solo project for is already in the repository.
 
 > **中文讲解｜CN**
 > **下面两条比时间表本身重要得多：**
@@ -107,9 +121,20 @@ Two rules that matter more than the schedule:
 >    因为独作者没有 PR 记录可以证明开发流程是规范的。
 >    **这一项事后无法补救**：攒三个月一次性推上去，历史上看得清清楚楚。
 >
+>    **2026-09-02 更新：这条现在确认是"机器查"的，不是"惯例"。**
+>    JOSS 初审门槛 1 的原话是：**"我们对提交分布做自动检查——仓库倾倒不是历史"**，
+>    门槛 4 直接拒绝"一次性集中提交"的历史。
+>
+>    **本仓库当前状态**：9 个提交，其中 6 个挤在 8-06/8-07 两天，
+>    然后 8-13 一个、8-16 一个，**之后停了十七天**。
+>    这正是那个检查要抓的形状。现在还早，恢复正常提交就能修好——
+>    **这次有效性扫描本身就是因为这个停更触发的。**
+>
 > 2. **每当有东西能跑就打个 tag。**
 >    机理模型测试全绿 → `v0.2.0`；闭合项能拟合了 → `v0.3.0`。
->    "有 tag 的发布 + CHANGELOG"是 JOSS 评估单人项目成熟度的指标之一。
+>    "有 tag 的发布 + CHANGELOG"是 JOSS 评估单人项目成熟度的指标之一——
+>    而且这是**门槛 3 唯一还缺的那一项**：它对单作者项目要求的其他指标
+>    （CI、文档、CONTRIBUTING、维护声明、CHANGELOG）仓库里都有了。
 >
 > 时间表本身可以滑，这两条不能。
 
@@ -154,12 +179,21 @@ Not a research phase, but it gates the JOSS submission and costs almost nothing.
 - [x] Issues and Discussions enabled
 - [x] Dependency UUIDs resolved by `Pkg` (two hand-written ones were wrong)
 - [x] `v0.1.0` tagged and released
-- [ ] `CHANGELOG.md` and a stated maintenance/support commitment — solo-submission
+- [x] `CHANGELOG.md` and a stated maintenance/support commitment — solo-submission
       maturity indicators
-- [ ] Weekly commit cadence established
+- [ ] Weekly commit cadence established — **broken 2026-08-16 → 2026-09-02 (17 days);
+      re-established 2026-09-02**
+- [ ] A tagged release beyond `v0.1.0` — the one JOSS gate-3 indicator still missing
 
 **The JOSS six-month public-development clock started 2026-08-06. Earliest submission:
-2027-02-06.**
+after 2027-02-06** (JOSS requires *more than* six months, so that date is the boundary,
+not a valid submission date).
+
+**Reaching that date is no longer sufficient.** Since 2026-03-15 JOSS applies four
+pre-review gates, and gate 2 requires *evidence that the software is being used for
+research* — see [13 §13.2](13-publication-strategy.md), risk **R12**, and
+[11 §11.7.5](11-literature-landscape.md). Phase −1 gates the clock; it does not gate the
+submission.
 
 > **中文讲解｜CN**
 > **这是本路线图里唯一一个"今天就该做"的阶段。**
@@ -173,6 +207,11 @@ Not a research phase, but it gates the JOSS submission and costs almost nothing.
 > 反而比"某天突然出现一个完整的包"更符合 JOSS 的期待。
 >
 > **每推迟一周公开，JOSS 就推迟一周能投。**
+>
+> **2026-09-02 补充：光是等满六个月已经不够了。**
+> JOSS 从 2026-03-15 起加了四道初审门槛，其中第 2 道要求
+> **"有证据表明软件正在被用于研究"**（见 [13 §13.2](13-publication-strategy.md) 和风险 R12）。
+> Phase −1 只启动了那个时钟，**它并不等于拿到了投稿资格**。
 
 ---
 
@@ -358,9 +397,24 @@ Only if Phases 0–4 are complete:
 | R6 | GPU speedup smaller than expected | Medium | Low | Report the breakeven $N$ honestly; the scientific results do not depend on the speedup | Breakeven $N > 10^4$ |
 | R7 | Scope creep into 3D hemodynamics / PD modelling | Medium | Medium | Scope boundaries in README; Phase 5 gating | — |
 | R8 | Float32 precision insufficient | Low | Medium | Nondimensionalization first; selective Float64 | Float32-vs-Float64 test fails after nondimensionalization |
-| R9 | JOSS 6-month public-repo clock not started | **Certain if delayed** | Medium | **Phase −1: go public now** | Any day the repo is still private |
+| R9 | JOSS 6-month public-repo clock not started | ~~Certain if delayed~~ **retired** | Medium | Repo public since 2026-08-06 | — |
+| R9′ | **Commit distribution fails JOSS gate 1/4** — history reads as a burst plus gaps rather than sustained development | **High** | **High** | §T.3 rule 1, enforced weekly; tag releases as milestones land | Any 7-day period with no commit |
+| R12 | **JOSS gate 2 (demonstrated research impact) unmet at submission** — the package is not *used* for research by anyone, including us | **High** | **High** | Make the Phase-1/Phase-3 arXiv preprint a prerequisite, and have it **use and cite** the package ([13 §13.2](13-publication-strategy.md)) | Reaching 2027-02-06 with no preprint or external use citing the package |
 | R10 | UDE turns out to be observationally equivalent to a neural ODE | Medium | **Very high** | Test D in Phase 1; narrow $\mathbf{z}$, tighten placement and structural constraints | Test D fails |
 | R11 | A competing package or paper closes the gap mid-project | Medium | Medium | Early arXiv preprint; re-run the literature sweep before each submission | New package/paper found in a sweep |
+| R13 | **A weak dependency's compat bound silently excludes its current release** — the base package tests green because the extension is never loaded on CI | **Realised 2026-09-02** | Medium | Re-check every bound against upstream releases at each sweep; CI cannot catch this for weak deps | Any bound whose upper major is below the package's latest release |
+
+**R11 has not fired but moved.** The third sweep found no package closing the gap, but
+`NeoPKPD` (a broad Julia PK/PD platform) was registered within a month of this repository
+going public, and iNODE (arXiv:2608.13044) appeared in August 2026 doing
+identifiability-aware architecture selection for neural ODEs. Neither takes the niche; both
+narrow the claims. See [11 §11.7.3](11-literature-landscape.md) and
+[§11.7.4](11-literature-landscape.md).
+
+**R13 already fired.** `CUDA = "5"` against a released CUDA.jl 6.3.1, and
+`SymbolicRegression = "1"` against a released 2.2.0. Because both are weak dependencies,
+CI stayed green — the failure would have surfaced in Phase 2 or Phase 3, when the
+extension was first needed. Fixed in the same pass; the mechanism is what to remember.
 
 > **中文讲解｜CN**
 > **R4 需要重新理解一下，它是本项目最重要的风险管理决定。**
@@ -394,6 +448,17 @@ Suggested procedure:
    `EnzymeVJP` on GPU, gradient-checked against finite differences.
 3. **Only then** commit the `Manifest.toml` as the known-good baseline.
 4. Re-run the smoke test after any dependency update; never update mid-experiment.
+
+**A pinning discipline is not a compat-bound discipline — and the second one has already
+failed once.** A `[compat]` upper bound that names a single major (`CUDA = "5"`) does not
+"pin" anything; it *excludes* every later major, and for a **weak** dependency it does so
+invisibly, because the extension is never loaded on a CPU-only CI runner. On 2026-09-02
+both extension bounds in this repository were found to exclude the current release of
+their package ([11 §11.7.6](11-literature-landscape.md), R13). Add to the procedure:
+
+5. **At every literature sweep, re-check each `[compat]` upper bound against the
+   dependency's latest release**, weak dependencies first. This costs one `git ls-remote`
+   per dependency and is the only check that covers code CI never exercises.
 
 > **中文讲解｜CN**
 > Julia SciML 生态里 **AD + GPU 的组合是最脆弱的一环**，版本兼容性经常变。

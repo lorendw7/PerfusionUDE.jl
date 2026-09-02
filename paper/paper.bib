@@ -99,20 +99,24 @@
 @article{janssen2022deep,
   title   = {Deep compartment models: A deep learning approach for the reliable
              prediction of time-series data in pharmacokinetic modeling},
-  author  = {Janssen, ... and others},
+  author  = {Janssen and others},
   journal = {CPT: Pharmacometrics \& Systems Pharmacology},
   year    = {2022},
-  note    = {[U] VERIFY authors, volume, pages, DOI (PMC9286722)}
+  doi     = {10.1002/psp4.12808},
+  note    = {[V] title, venue and DOI confirmed in the second sweep (design doc 11.6.1).
+             [U] AUTHOR LIST — only the first surname is known; take the full list,
+             with given names, volume and pages from the article}
 }
 
 @article{hybridnode2024identifiability,
   title   = {Robust parameter estimation and identifiability analysis with hybrid
              neural ordinary differential equations in computational biology},
-  author  = {TODO},
+  author  = {Giampiccolo and Reali and Fochesato and Iacca and Marchetti},
   journal = {npj Systems Biology and Applications},
   year    = {2024},
   doi     = {10.1038/s41540-024-00460-3},
-  note    = {[U] VERIFY full author list}
+  note    = {[V] the five surnames were confirmed in the second sweep (design doc 11.6.1).
+             [U] GIVEN NAMES — take them from the article; do not guess}
 }
 
 @article{beal2001blq,
@@ -152,4 +156,59 @@
   journal = {Journal of Pharmacokinetics and Pharmacodynamics},
   year    = {2013},
   note    = {[U] VERIFY authors, volume, pages (PubMed 24002801)}
+}
+
+% ── Added by the third sweep, 2026-09-02 (design doc 11.7). ─────────────────
+% [S] = title/authors/venue consistent across independent search results, but the
+% landing page could not be opened from the network that ran the sweep.  Every [S]
+% entry must be re-verified against the publisher or arXiv page before submission.
+
+@article{valderrama2024sciml,
+  title   = {Integrating machine learning with pharmacokinetic models: Benefits of
+             scientific machine learning in adding neural network components to
+             existing pharmacokinetic models},
+  author  = {Valderrama and others},
+  journal = {CPT: Pharmacometrics \& Systems Pharmacology},
+  year    = {2024},
+  doi     = {10.1002/psp4.13054},
+  note    = {[V] title, venue and DOI confirmed in the second sweep; identified there as
+             the nearest published precedent for a neural closure inside a PK ODE.
+             [U] AUTHOR LIST — only the first surname is known; complete it from the
+             article, with volume and pages}
+}
+
+@article{elmokadem2024hdcm,
+  title   = {Hierarchical deep compartment modeling: A workflow to leverage machine
+             learning and {B}ayesian inference for hierarchical pharmacometric
+             modeling},
+  author  = {Elmokadem and Wiens and Knab and Utsey and Callisto and Kirouac},
+  journal = {Clinical and Translational Science},
+  year    = {2024},
+  doi     = {10.1111/cts.70045},
+  note    = {[V] the six surnames, venue and DOI were confirmed in the second sweep
+             (design doc 11.6.2c; PubMed 39402751).  Hierarchical, implemented in Julia;
+             the mandatory B4 baseline.  [U] GIVEN NAMES, volume and pages}
+}
+
+@misc{inode2026identifiability,
+  title  = {Identifiability-aware neural ordinary differential equations for
+            parsimonious and reliable dynamic modelling},
+  year   = {2026},
+  eprint = {2608.13044},
+  archivePrefix = {arXiv},
+  note   = {[S] VERIFY authors and abstract before citing.  Nearest work to the
+            identifiability contribution; single system, no population hierarchy}
+}
+
+@misc{neopkpd2026,
+  title  = {{NeoPKPD}: Transparent, validated pharmacokinetics and pharmacodynamics
+            modeling infrastructure},
+  author = {{NeoPKPD contributors}},
+  year   = {2026},
+  doi    = {10.5281/zenodo.18215969},
+  note   = {[V] for the facts that matter to the comparison: registered in the Julia
+            General registry at v0.1.0 (registry enumerated 2026-09-02), and the clone
+            contains no PBPK, no CUDA/DiffEqGPU and no neural-network dependency.
+            The DOI is from the project README.  [U] AUTHOR LIST — the placeholder
+            above must be replaced with the real names from the Zenodo record}
 }

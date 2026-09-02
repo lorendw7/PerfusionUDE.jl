@@ -9,14 +9,69 @@ version is `0.x`, minor version bumps may contain breaking changes.
 ## [Unreleased]
 
 ### Added
+- **Third literature and validity sweep, 2026-09-02** (design doc §11.7), triggered by a
+  seventeen-day gap in the commit history rather than by the calendar. It re-checked the
+  claims, the dependency bounds, the CI toolchain and the JOSS requirements, and introduced
+  an **[S]** citation tier for references confirmed only from search-index metadata,
+  because the network available to that sweep blocked the preprint and publisher sites
+  themselves. Nothing previously marked **[V]** was downgraded; the new tier exists so that
+  weaker evidence is not recorded as if it were stronger.
 - `ReferenceIndividual` and `OrganReference`: reference physiology in which every value
   carries a mandatory `source` string, with accessors `tissue`, `blood_flow`,
   `liver_inflow`, `flow_continuity_residual` and `total_volume`. Unit tests assert
   Σq = 1 over perfused tissues, ΣV ≈ body weight, and that no `source` is empty.
 - Second literature sweep (design doc §11.6): five works the first sweep missed, five
   citations upgraded from pointer to verified, and three plan defects recorded.
+- The four **JOSS pre-review screening gates**, recorded in §13.2 as desk-rejection gates
+  with their provenance. They were introduced upstream on 2026-03-15 and the 2026-08-07
+  check read only the first of them, as scope prose rather than as a gate. Verified against
+  the `openjournals/joss` repository at commit `4966962`, which dates each rule by the
+  commit that added it.
+- Risks **R9′** (commit distribution fails JOSS gates 1 and 4), **R12** (gate 2, research
+  impact, unmet at submission) and **R13** (a weak dependency's compat bound silently
+  excludes its current release).
+- A dated **currency statement** in the README: positioning claims established by absence
+  have a shelf life, and the reader should know when they were last checked.
 
 ### Changed
+- **The binding constraint on the JOSS submission is no longer the six-month clock.** §13.4
+  said *"the 6-month rule is the binding constraint… nothing else you do can compress it"*;
+  that is now false. The clock expires on 2027-02-06 and runs by itself, whereas **gate 2 —
+  *"there must be evidence that the software is being used for research… aspirational
+  statements about future use are not sufficient"*** — does not. The plan is re-based on it:
+  the early arXiv preprint, previously an optional priority-securing move, is now a
+  submission prerequisite and must *use and cite* the package.
+- The **§11.4 novelty claim (iii)** is narrowed from identifiability-aware hybrid modelling
+  in general to *the mechanistic-content test under a population hierarchy*, because iNODE
+  (arXiv:2608.13044, August 2026) now performs Fisher-information-based,
+  identifiability-aware architecture selection for neural ODEs — for a single system,
+  without a population layer, and asking which network is best identified rather than
+  whether the mechanistic skeleton contributes at all. Claim (ii) had already been narrowed
+  by the second sweep; (iii) had not.
+- The **§13.5 AI usage disclosure** wording now carries all three elements the JOSS policy
+  requires: tool **versions**, **where** the tool was used, and the assertion that the human
+  authors **made the core design decisions**. Its closing claim that all references were
+  verified against primary sources was removed — with **[S]** entries on the books it would
+  be false, and JOSS treats an inaccurate disclosure as an ethical breach.
+- The **state-of-the-field paragraph** and the README now name `NeoPKPD`, a Julia PK/PD
+  package registered since the last sweep, and state that the ecosystem gap was established
+  by **enumerating** the General registry rather than by searching it. "We could not find
+  one" and "we enumerated the registry" are not the same claim.
+- CI third-party actions, all two or three majors behind: `actions/checkout` v4 → v7,
+  `actions/upload-artifact` v4 → v7, `codecov/codecov-action` v4 → v7 (untouched upstream
+  since 2024-10-01), `julia-actions/setup-julia` v2 → v3, `julia-actions/cache` v2 → v3.
+  The `julia-actions/julia-*` actions remain on v1, which is current. Inputs were checked
+  against the new majors before bumping; none changed.
+- `paper/paper.md` is brought in line with all of the above: the statement of need and
+  state-of-the-field section now name `NeoPKPD`, Valderrama et al. 2024 and Elmokadem et al.
+  2024, carry a dated survey note explaining that the registry was enumerated rather than
+  searched, and the research-impact section is marked as JOSS gate 2 rather than as a
+  benchmark table. `paper/paper.bib` gains those references plus iNODE, and two entries the
+  second sweep had already verified (`janssen2022deep`, `hybridnode2024identifiability`)
+  were still carrying `TODO` authors and `[U]` markers, and are now filled in as far as
+  the sweeps actually confirmed. Where only surnames were confirmed, only surnames are
+  recorded and the given names stay marked `[U]`: a bibliography that guesses plausibly is
+  the same failure mode as the invented titles fixed above.
 - **Phase −0.5 complete: every reference physiology value is now verified against ICRP
   Publication 89 (2002) and cites the table it came from.** The reference individual is
   registered as `:icrp89_adult_male` (was `:human_adult_male_70kg`) and its body mass is
@@ -39,6 +94,27 @@ version is `0.x`, minor version bumps may contain breaking changes.
   `0000-0000-0000-0000` was commented out rather than left to resolve as a real identifier.
 
 ### Fixed
+- **Two `[compat]` bounds excluded the current release of their dependency:** `CUDA = "5"`
+  against a released CUDA.jl 6.3.1, and `SymbolicRegression = "1"` against a released 2.2.0.
+  Both are weak dependencies, so the base package installed and CI stayed green — the
+  failure would first have appeared in Phase 2 or Phase 3, when the extension was actually
+  needed. Now `"5, 6"` and `"1, 2"`. The remaining eleven bounds were checked and are
+  current. Re-checking every bound against upstream releases is added to the version-pinning
+  procedure, because CI cannot cover code it never loads.
+- **Two citations in §11.6.2 were recorded under titles that are not theirs.**
+  arXiv:2602.06837 is *Learning Deep Hybrid Models with Sharpness-Aware Minimization*
+  (Naoya Takeishi) — an **optimisation** paper, so it belongs in §06 as a mitigation for
+  R10, not as an identifiability diagnostic; arXiv:2510.22096 is *Dynamic Graph Neural
+  Networks for Physiological Based Pharmacokinetic Modeling: A Novel Data Driven Approach to
+  Drug Concentration Prediction*. Both entries were marked `[U]`, but carried a plausible
+  invented title, which is worse than a missing citation because it reads as verified. The
+  rule is now explicit: **a `[U]` entry carries an identifier and a one-line description
+  only.**
+- **The README still described the reference physiology as unverified.** The ICRP 89
+  verification landed in `5e34fb7`; the README paragraph written one commit earlier was
+  never updated, so the repository's most-read page contradicted its own code and changelog.
+- The §T.3 schedule still listed Phase −0.5 as pending work for months 0–1; it completed on
+  2026-08-16 and is now marked as such, as is the `CHANGELOG.md` item under Phase −1.
 - **Total hepatic blood flow was 28.5% of cardiac output instead of 25.5%, a 12%
   overestimate.** The gut was given ICRP 89's *portal total* of 19% while the spleen was
   also listed separately at 3%, so the spleen and pancreas were counted twice. The gut is

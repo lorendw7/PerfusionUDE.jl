@@ -10,11 +10,20 @@
 parameter inversion.*
 
 > **Status: pre-release, not yet usable.** The design documentation is complete and
-> authoritative; the implementation has just begun. The reference-physiology layer exists
-> and its invariants are tested; **its numerical values are the illustrative table from the
-> design docs and have not yet been verified against ICRP 89 / Brown et al. (1997)** — every
-> `source` field says so. Nothing else in the API is implemented. See the
-> [roadmap](docs/src/design/09-implementation-roadmap.md).
+> authoritative; the implementation has just begun. The reference-physiology layer exists,
+> its invariants are tested, and **its values are verified against ICRP Publication 89
+> (2002)**: the reference individual is `:icrp89_adult_male`, every `source` field cites the
+> table the number came from, and values ICRP does not itself state are marked `DERIVED`
+> with the assignment shown. Brown et al. (1997) was not obtainable and nothing is
+> attributed to it. Nothing else in the API is implemented. See the
+> [roadmap](docs/src/design/09-implementation-roadmap.md) and
+> [CHANGELOG.md](CHANGELOG.md).
+>
+> **Currency.** The positioning below rests on literature and ecosystem sweeps last run on
+> **2026-09-02** (design doc [§11.7](docs/src/design/11-literature-landscape.md)). Claims
+> established by absence have a shelf life; that sweep enumerated the Julia General
+> registry rather than searching it, and records which citations are verified and which
+> are not.
 
 ---
 
@@ -36,8 +45,11 @@ Three capabilities are simultaneously missing from the open-source ecosystem:
 
 1. **A differentiable PBPK layer.** No Julia package provides composable, tested
    transport-network construction with sourced reference physiology. What exists
-   (`bioPBPK`, `BayesPBPK-tutorial`) are model collections and tutorials; the closest
-   packaged work — hierarchical deep compartment modelling
+   (`bioPBPK`, `BayesPBPK-tutorial`) are model collections and tutorials; the registered
+   Julia pharmacometrics packages ([NoLimits.jl](https://github.com/manuhuth/NoLimits.jl),
+   [NeoPKPD](https://github.com/shramish2057/NeoPKPD)) are NLME and compartmental PK/PD
+   estimation packages with no organ-level transport layer, no GPU path and no neural
+   closure; and the closest packaged hybrid work — hierarchical deep compartment modelling
    ([Elmokadem et al. 2024](https://doi.org/10.1111/cts.70045)) — attaches the network to
    the covariate → parameter map rather than to the transport equations, and represents no
    organ physiology.
@@ -51,8 +63,12 @@ Three capabilities are simultaneously missing from the open-source ecosystem:
 3. **Identifiability tooling for hybrid models.** A neural closure can silently absorb
    misspecified physiology; [Loman & Baker (2025)](https://arxiv.org/abs/2510.14140) show
    that some universal differential equations are fitting-equivalent to plain neural ODEs
-   and contribute no mechanistic knowledge at all. Routine tests for this are not packaged
-   anywhere.
+   and contribute no mechanistic knowledge at all. Methods for the adjacent question of
+   *which* neural architecture is identifiable are now appearing — see iNODE
+   ([arXiv:2608.13044](https://arxiv.org/abs/2608.13044)) — but they address a single
+   system without a population hierarchy, and none of this is packaged. The question asked
+   here is the other one: not which network is best identified, but whether the mechanistic
+   skeleton contributes anything at all.
 
 Neural closures inside PK ODEs are not new — see
 [Valderrama et al. 2024](https://doi.org/10.1002/psp4.13054) for the nearest published
@@ -74,8 +90,10 @@ model from a disguised black box.
 
 Non-compartmental analysis, bioequivalence, trial simulation, NONMEM translation, GUI
 modelling, or a general NLME estimation engine. For general NLME in Julia see
-[NoLimits.jl](https://github.com/manuhuth/NoLimits.jl) or Pumas; for GUI-based PBPK see
-PK-Sim/MoBi; for R workflows see nlmixr2, mrgsolve, rxode2.
+[NoLimits.jl](https://github.com/manuhuth/NoLimits.jl) or Pumas; for compartmental PK/PD
+with NCA, trial simulation and NONMEM/Monolix import in Julia see
+[NeoPKPD](https://github.com/shramish2057/NeoPKPD); for GUI-based PBPK see PK-Sim/MoBi;
+for R workflows see nlmixr2, mrgsolve, rxode2.
 
 ## Installation
 
@@ -110,7 +128,7 @@ in English with bilingual (EN/中文) teaching annotations:
 | 08 | [CFD correspondence](docs/src/design/08-cfd-correspondence.md) | Formal mapping to closure modelling, adjoints, UQ, ROM |
 | 09 | [Implementation roadmap](docs/src/design/09-implementation-roadmap.md) | Phases, gates, risk register, interface contracts |
 | 10 | [References](docs/src/design/10-references.md) | Literature, software, public data sources |
-| 11 | [Literature landscape](docs/src/design/11-literature-landscape.md) | 2026 competitive analysis and plan amendments |
+| 11 | [Literature landscape](docs/src/design/11-literature-landscape.md) | Competitive analysis and plan amendments; three dated sweeps (2026-08-06, 08-07, 09-02) |
 | 12 | [Package design](docs/src/design/12-package-design.md) | Module layout, API, test strategy, JOSS checklist |
 | 13 | [Publication strategy](docs/src/design/13-publication-strategy.md) | JOSS + PLOS Comp Biol targeting and timeline |
 

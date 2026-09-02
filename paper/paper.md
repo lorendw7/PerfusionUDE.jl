@@ -59,9 +59,11 @@ PBPK modelling and population pharmacokinetics are mature fields with mature too
 three capabilities are missing from the open-source ecosystem simultaneously:
 
 1. **A differentiable PBPK layer.** Building a PBPK model in Julia today means writing the
-   right-hand side by hand, or lifting it from a model collection. There is no package
-   providing composable, tested transport-network construction with sourced reference
-   physiology.
+   right-hand side by hand, or lifting it from a model collection. The registered Julia
+   pharmacometrics packages [@huth2026nolimits; @neopkpd2026] provide nonlinear
+   mixed-effects and compartmental PK/PD estimation, not an organ-level transport layer;
+   no package provides composable, tested transport-network construction with sourced
+   reference physiology.
 2. **GPU-parallel population ensembles with gradients.** Population inverse problems
    require integrating and differentiating $10^3$–$10^4$ structurally identical ODE systems
    per optimizer iteration. This is an ideal GPU workload, but wiring it up correctly —
@@ -71,8 +73,11 @@ three capabilities are missing from the open-source ecosystem simultaneously:
    approximator and can silently absorb misspecified physiology. Recent work distinguishes
    *parametric* from *functional* identifiability for UDEs and shows that some hybrid
    models are equivalent to fully data-driven neural ODEs, contributing no mechanistic
-   knowledge [@loman2025functional]. Practitioners need routine tests for this; none are
-   packaged.
+   knowledge [@loman2025functional]. Methods that select a neural architecture for
+   identifiability are emerging [@inode2026identifiability], but they operate on a single
+   system without a population hierarchy, and none of this is packaged. The question here
+   is the complementary one: not which network is best identified, but whether the
+   mechanistic skeleton contributes anything at all.
 
 `PerfusionUDE.jl` targets pharmacometricians and systems-pharmacology modellers who want to
 learn missing mechanism from population data without discarding physiology, and
@@ -83,27 +88,41 @@ that also includes 0D hemodynamic models and reactor networks.
 
 Population PK and PBPK modelling are served by NONMEM, Monolix, PK-Sim/MoBi and the
 commercial `Pumas.jl` [@rackauckas2020pumas]; open-source options include `nlmixr2`,
-`mrgsolve`, `rxode2` and `PKPDsim` in R, and the recent `NoLimits.jl` [@huth2026nolimits]
-in Julia. Neural-network-augmented mixed-effects modelling is available commercially
-through DeepPumas/DeepNLME, and variational expectation maximization has been demonstrated
-for neural NLME models with over 15,000 population parameters [@tarek2026vem]. Hybrid and
-deep-learning PBPK approaches are an active area [@losada2024bridging].
+`mrgsolve`, `rxode2` and `PKPDsim` in R, and `NoLimits.jl` [@huth2026nolimits] and
+`NeoPKPD` [@neopkpd2026] in Julia. Neural-network-augmented mixed-effects modelling is
+available commercially through DeepPumas/DeepNLME, and variational expectation maximization
+has been demonstrated for neural NLME models with over 15,000 population parameters
+[@tarek2026vem]. Hybrid and deep-learning PBPK approaches are an active area
+[@losada2024bridging].
+
+Neural closures inside PK ODEs are established rather than novel: @valderrama2024sciml
+learn an unknown absorption process with a neural network while jointly estimating the
+remaining distribution and elimination parameters of a one-compartment model, and
+@elmokadem2024hdcm give a hierarchical, Julia-based workflow that places the network on the
+covariate-to-parameter map. What is absent is the organ-level transport network, the
+population scale, and the machinery to distinguish a genuine hybrid model from a disguised
+black box.
 
 None of these expose a composable, differentiable PBPK transport-network layer with
 GPU-parallel population ensembles. The Julia PBPK resources that exist — `bioPBPK` and the
 `BayesPBPK-tutorial` accompanying @elmokadem2023bayesian — are model collections and
-tutorials rather than packages, and PK-Sim is a GUI/XML modelling environment without a
+tutorials rather than packages; `NoLimits.jl` and `NeoPKPD` are general estimation packages
+with no organ-level transport layer, no GPU ensemble path and no neural closure inside the
+right-hand side; and PK-Sim is a GUI/XML modelling environment without a
 differentiable-programming path. `PerfusionUDE.jl` fills that gap. It deliberately does not
 reimplement general nonlinear mixed-effects estimation: it provides a joint-MAP estimator
 suited to GPU execution, and interoperates with `NoLimits.jl` where a
 marginal-likelihood-correct estimator is required.
 
 Where existing hybrid approaches place the neural network on the covariate-to-parameter map
-[@janssen2022deep], `PerfusionUDE.jl` places it inside the right-hand side. The two are
-complementary: the former learns unknown covariate relationships, the latter can learn an
-unknown *mechanism*.
+[@janssen2022deep; @elmokadem2024hdcm], `PerfusionUDE.jl` places it inside the right-hand
+side. The two are complementary: the former learns unknown covariate relationships, the
+latter can learn an unknown *mechanism*.
 
-*(State-of-the-field survey conducted TODO-DATE; re-verify before submission.)*
+*(State-of-the-field survey last conducted 2026-09-02 by enumerating the Julia General
+registry and sweeping the pharmacometrics literature; see
+`docs/src/design/11-literature-landscape.md` §11.7. Re-run and re-date before submission —
+JOSS reviewers check whether the gap still exists.)*
 
 # Software design
 
@@ -139,27 +158,51 @@ outputs.
 
 # Research impact
 
-<!-- TODO: replace every number below with a measured value from a committed script. -->
+<!-- BLOCKING, not cosmetic. Since 2026-03-15 this is JOSS pre-review gate 2: "there must
+     be evidence that the software is being used for research… aspirational statements
+     about future use are not sufficient", and failing any gate is a desk rejection.
+     A benchmark table is not evidence of use. The plan is to satisfy it with an arXiv
+     preprint of the method that USES and CITES this package — see
+     docs/src/design/13-publication-strategy.md §13.2 and risk R12.
+     Replace every number below with a measured value from a committed script. -->
 
 - TODO: measured speedup and breakeven population size, GPU versus multithreaded CPU, with
   hardware and software versions stated.
 - TODO: recoverability result — the population size, sampling density and noise level at
   which a known hidden clearance mechanism is recovered in a synthetic-twin study.
-- TODO: real-data case study and comparison against a published NLME analysis.
+- TODO: real-data case study and comparison against a published NLME analysis, **including
+  a classical estimator (NLS or FOCE) reported even where it wins** — @loman2025functional
+  and the PINN chemotherapy study both show mechanistic-ML methods matching rather than
+  beating classical estimators on identifiable problems, and a reviewer will ask.
+- TODO **(gate 2)**: the preprint or publication that uses and cites this package.
 - TODO: any external adoption.
 
 Reproduction scripts for all reported numbers are in `experiments/`.
 
 # AI usage disclosure
 
-Generative AI (Claude, Anthropic) was used to draft and edit portions of the project's
-design documentation and to assist with literature search. All software implementation,
-experimental design decisions, numerical results and scientific claims are the authors'
-own; all AI-assisted text was reviewed and revised by the authors, and all cited references
-were verified against their primary sources.
+<!-- The JOSS policy requires three elements: the tools/models AND VERSIONS, WHERE they
+     were used, the nature and scope of the assistance, and an explicit assertion that the
+     human authors made the CORE DESIGN DECISIONS. Keep a running record of model versions
+     as work proceeds; they cannot be reconstructed later.
+     See docs/src/design/13-publication-strategy.md §13.5. -->
 
-<!-- TODO: keep the final clause only if the reference verification has actually been
-     completed. See docs/src/design/13-publication-strategy.md §13.5. -->
+Generative AI (Claude, Anthropic; models TODO — list the models and versions used) was used
+in the preparation of this software and manuscript, as follows: **design documentation** —
+drafting and editing; **literature search** — candidate identification and metadata
+retrieval, with the verification status of every citation tracked explicitly in the
+repository; **source code** — TODO state the scope; **paper text** — TODO state the scope.
+The human authors reviewed, edited and validated all AI-assisted output and **made all core
+design decisions**, including the model formulation, the placement of the neural closure and
+its structural constraints, the identifiability tests and their acceptance criteria, and the
+validation protocol. All experimental design decisions, numerical results and scientific
+claims are the authors' own.
+
+<!-- Deliberately absent: "all cited references were verified against their primary
+     sources". That clause is not yet true. `paper.bib` still carries [S] and [U] entries
+     (see docs/src/design/11-literature-landscape.md §11.7.0), and JOSS treats an
+     inaccurate AI disclosure as an ethical breach rather than a slip. Add the clause only
+     once every entry is [V]. -->
 
 # Acknowledgements
 
