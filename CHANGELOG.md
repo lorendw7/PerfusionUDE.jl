@@ -30,6 +30,17 @@ version is `0.x`, minor version bumps may contain breaking changes.
 - Risks **R9′** (commit distribution fails JOSS gates 1 and 4), **R12** (gate 2, research
   impact, unmet at submission) and **R13** (a weak dependency's compat bound silently
   excludes its current release).
+- **Publication decisions recorded on 2026-09-02**, all in the roadmap's next-actions table
+  and §13: preprint v1 is the **structural-identifiability study** of §6.2 (closure families
+  on the 5-compartment topology, via the `StructuralIdentifiability` extension), the
+  cheapest genuine research on the critical path; the Phase-1 twin study becomes preprint
+  v2; **v1 goes to bioRxiv**, which has no endorsement system, because arXiv changed its
+  policy on 2026-01-21 so that an institutional e-mail alone no longer grants automatic
+  endorsement; arXiv is pursued in parallel for v2. §13.7 also lists the Kyushu University
+  laboratories that are the domain readers, notes that a CFD supervisor is the right
+  reviewer for §08 and a permitted substantive contributor, and tabulates Japanese (PAGJa,
+  JSSX, JSMB, JSCES, CMD, JSIAM) and international (PAGE, JuliaCon, ACoP, SIAM CSE) venues
+  with 2026–27 timing; PAGE 2027 and JuliaCon 2027 are the targets that yield citable output.
 - **§13.7 Authorship for a solo project**, verified against the JOSS authorship rule and
   reviewer guidelines: single authorship is permitted with no affiliation requirement;
   *"general supervision of a research group"* is explicitly insufficient for
