@@ -494,39 +494,16 @@ and it answers the "short author list" question honestly. A CFD supervisor's arX
 is in the physics domain and does not endorse q-bio; do not choose a category to fit an
 endorser.
 
-**Conferences: not pursued (author's decision, 2026-09-02).** The tables below are kept
-for reference only; no abstract is submitted and no meeting is attended. Every gate-2 and
-priority signal therefore comes from **bioRxiv preprints alone**: v1 (structural
-identifiability) and v2 (the Phase-1 twin study), both using and citing the package. This
-is sufficient for JOSS, whose reviewer guidance names *"publications using the software"*
-as the primary single-author signal, and it removes travel, membership fees and abstract
-deadlines from the schedule. What it gives up is the in-person route to a domain reviewer
-or an arXiv endorser; the CFD supervisor's review of [08](08-cfd-correspondence.md) is
-then the only external reading the plan relies on, so it should actually happen.
-
-*Japanese venues (reference only).*
-
-| Venue | Fit | 2026–27 timing (checked 2026-09-02; re-check) |
-|---|---|---|
-| **PAGJa** (Population Approach Group in Japan, ファーマコメトリクス研究会) | The Japanese pharmacometrics community itself; one-day meeting; **the most likely place to find a domain reviewer and a JSSX/PAGE contact** | 42nd: **2026-11-13**, Keio University, Yokohama; check whether late abstracts or attendance are open |
-| 日本薬物動態学会 (JSSX) 年会 | The pharmacometrics audience; PBPK sessions | 41st: 2026-11-16 → 19, Tsukuba; abstracts closed 2026-07-17. Attend to meet people; present at the 42nd (2027, abstracts ≈ July 2027) |
-| 日本数理生物学会 (JSMB) 年会 | Identifiability and ODE modelling; the natural home for preprint v1's content | 2026: 09-08 → 10, Matsue, closed. Next: 2027, abstracts ≈ July |
-| 日本計算工学会 計算工学講演会 (JSCES) | The CFD-correspondence angle ([08](08-cfd-correspondence.md)); the supervisor's community; proceedings are published | 32nd: 2027-06-07 → 09, Saitama; abstracts ≈ January 2027 |
-| 日本機械学会 計算力学講演会 (CMD) | Same angle, mechanical-engineering audience; presenters must be JSME members | CMD2026: 09-14 → 16, Osaka, closed; CMD2027 abstracts ≈ mid-2027 |
-| 日本応用数理学会 (JSIAM) 年会 | Applied-mathematics audience; SciML sessions | 2026 annual meeting is in **Fukuoka**; check dates, likely September |
-
-*International venues (reference only; checked 2026-09-02).*
-
-| Venue | Fit | Output | Timing |
-|---|---|---|---|
-| **PAGE** (Population Approach Group Europe) | *The* pharmacometrics meeting; where Valderrama, Janssen and the NoLimits.jl group present | Abstracts are published online and routinely cited | Annual, June; abstracts open mid-January, close ≈ 1 March. **PAGE 2027 is the target for preprint v2's content** |
-| **ACoP** (ISoP, American Conference on Pharmacometrics) | North-American counterpart; hackathon track since 2026 | Abstracts published | ACoP 2026: 10-11 → 14, Maryland, abstracts closed; ACoP 2027 abstracts ≈ February |
-| **JuliaCon** | The package's own community; NoLimits.jl and DiffEqGPU.jl authors attend | **JuliaCon Proceedings has DOIs** and is the software venue named in §13.6 | 2026: Mainz, August, passed. 2027: host not yet announced; CFP usually February–March |
-| **SIAM CSE** | SciML and UQ minisymposia; the audience for the CFD-correspondence and mixed-mode-AD material | Abstracts only | CSE27: 2027-02-22, Pittsburgh; deadline was 2026-08-25, passed. CSE29 next |
-
-If the decision is ever revisited, the order that would matter is PAGE (citable
-abstracts, the pharmacometrics community) then JuliaCon (Proceedings with DOIs). Until
-then, the publication plan is: **bioRxiv v1 → bioRxiv v2 → JOSS**.
+**Conferences (decided 2026-09-02, revised the same day).** Not attended as a matter of
+course. **Peer-reviewed venues with DOI-bearing proceedings are pursued as a quality
+signal**, one paper per preprint, no travel unless a paper is accepted. The primary target
+is **IFAC SYSID 2027** (deadline 2027-01-15) for the preprint-v1 result; CMSB, PAGE and
+JuliaCon Proceedings follow. **The venue list, quality criteria, deadlines and the
+look-alike venues to avoid live in the research repository**
+(`lorendw7/PerfusionUDE`, `notes/venues.md`), not here: that repository holds everything
+paper-specific, and the two repositories keep disjoint contents so that neither carries a
+stale copy of the other. The publication route is **bioRxiv v1 → bioRxiv v2 → JOSS**, with
+the conference papers alongside.
 
 > **中文讲解｜CN**
 > **背书问题最简单的解法是 bioRxiv。** 它没有背书制度：注册、填单位、通过范围筛查即可，
@@ -545,17 +522,12 @@ then, the publication plan is: **bioRxiv v1 → bioRxiv v2 → JOSS**.
 > "具体的非代码贡献"，也是对"作者名单太短"最诚实的回答。但导师的 arXiv 资历在物理领域，
 > **不能给 q-bio 背书，也不要为了凑背书人去改分类。**
 >
-> **会议：不参加（作者 2026-09-02 决定）。** 上面两张表只作备查，不投摘要、不出席。
-> 门槛 2 的证据全部来自 **bioRxiv 预印本**：v1（结构可辨识性）和 v2（Phase 1 孪生实验），
-> 都要用这个包、引这个包。这对 JOSS 够用，它的评审指南把"使用该软件的论文"列为单作者项目的主要信号；
-> 同时省掉了差旅、会费和摘要截止。
-> 放弃的是当面认识审读者和背书人的渠道，所以**导师审 [08](08-cfd-correspondence.md) 这件事
-> 就成了计划里唯一的外部审读，要真的做。**
-> 发表路线就是：**bioRxiv v1 → bioRxiv v2 → JOSS**。
->
-> 备查：日本国内会议里内容最合的本来是 2027 年 6 月的計算工学講演会（导师的圈子，
-> [08](08-cfd-correspondence.md) 就是为那个听众写的）；国际会议里是 PAGE（摘要可引用）和
-> JuliaCon（Proceedings 带 DOI）。将来改主意先看这三个。
+> **会议（2026-09-02 决定，当天修订）**：不作为常规去参加，但**有同行评审、论文集带 DOI 的会议
+> 作为质量信号来投**，每篇预印本对应一篇，录用了才考虑差旅。首要目标是 **IFAC SYSID 2027**
+> （截止 2027-01-15），投预印本 v1 的结果；之后是 CMSB、PAGE、JuliaCon Proceedings。
+> **会议清单、筛选标准、截止日期和要避开的山寨会议，都在研究仓库**（`lorendw7/PerfusionUDE` 的
+> `notes/venues.md`），不在这里：论文相关的东西归那边，两个仓库内容不重叠，谁也不会拿着对方的过期副本。
+> 发表路线：**bioRxiv v1 → bioRxiv v2 → JOSS**，会议论文并行。
 
 > **中文讲解｜CN**
 > **结论先说：JOSS 这篇可以一个人署名，不需要挂名，而且纯挂名是违规的。**
