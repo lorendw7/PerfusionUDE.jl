@@ -465,6 +465,71 @@ submissions in the last three months to five years; standing in another domain d
 transfer. An endorser is not a co-author and takes on no responsibility. Set up the
 account and secure the endorsement **before** the preprint is written, not on the day.
 
+**The endorsement-free route: bioRxiv.** bioRxiv has no endorsement system **[S]**: an
+author registers, supplies an affiliation, and the manuscript is screened by volunteer
+affiliates for scope and non-scientific content, not for quality. Preprint v1 (structural
+identifiability of PBPK closure families) is squarely within its Systems Biology /
+Pharmacology and Toxicology scope, and the closest precedent in this plan, the AML
+DeepNLME + symbolic-regression paper of [11 §11.2](11-literature-landscape.md), is itself a
+bioRxiv preprint. JOSS gate 2 says *"published papers or preprints"* without naming a
+server. **Decision (2026-09-02): post preprint v1 to bioRxiv unless an arXiv endorser is
+already in hand; pursue arXiv endorsement in parallel for the later, more methods-heavy
+preprint v2, where stat.ME / q-bio.QM readership matters more.**
+
+**Who at Kyushu University could review or endorse (checked 2026-09-02, names to be
+confirmed on the laboratory pages, which this network could not open).** The Faculty of
+Pharmaceutical Sciences has a 薬物動態学分野 (pharmacokinetics) and a 薬剤学分野
+(pharmaceutics) laboratory; these are the domain readers for the PBPK physiology and the
+clearance closure, but Japanese pharmaceutical-sciences groups rarely post to arXiv, so they
+are unlikely to be *eligible arXiv endorsers* even when they are the right reviewers. The
+Department of Biology's mathematical-biology laboratory (Satake; Iwasa, emeritus) and the
+Institute of Mathematics for Industry are likelier arXiv authors, but eligibility is
+per-domain and must be checked on an abstract page's "Which of these authors are
+endorsers?" link. **A CFD supervisor is the right reviewer for [08](08-cfd-correspondence.md)**
+and for the closure-modelling framing of [01](01-background.md) and [03](03-ude-formulation.md);
+that is a substantive, specific contribution of the kind JOSS's authorship rule permits,
+and it answers the "short author list" question honestly. A CFD supervisor's arXiv standing
+is in the physics domain and does not endorse q-bio; do not choose a category to fit an
+endorser.
+
+**Japanese venues.** None of these substitute for a preprint (gate 2 wants a citable,
+public document), but each puts the work in front of the people who would review it,
+endorse it or adopt it:
+
+| Venue | Fit | 2026–27 timing (checked 2026-09-02; re-check) |
+|---|---|---|
+| 日本薬物動態学会 (JSSX) 年会 | The pharmacometrics audience; PBPK sessions | 41st: 2026-11-16 → 19, Tsukuba; abstracts closed 2026-07-17. Attend to meet people; present at the 42nd (2027, abstracts ≈ July 2027) |
+| 日本数理生物学会 (JSMB) 年会 | Identifiability and ODE modelling; the natural home for preprint v1's content | 2026: 09-08 → 10, Matsue, closed. Next: 2027, abstracts ≈ July |
+| 日本計算工学会 計算工学講演会 (JSCES) | The CFD-correspondence angle ([08](08-cfd-correspondence.md)); the supervisor's community; proceedings are published | 32nd: 2027-06-07 → 09, Saitama; abstracts ≈ January 2027 |
+| 日本機械学会 計算力学講演会 (CMD) | Same angle, mechanical-engineering audience; presenters must be JSME members | CMD2026: 09-14 → 16, Osaka, closed; CMD2027 abstracts ≈ mid-2027 |
+| 日本応用数理学会 (JSIAM) 年会 | Applied-mathematics audience; SciML sessions | 2026 annual meeting is in **Fukuoka**; check dates, likely September |
+
+The one that fits both the content and the calendar is **JSCES June 2027**: its abstract
+deadline falls right after preprint v1 should exist, it is the supervisor's community, and
+[08](08-cfd-correspondence.md) was written for exactly that audience.
+
+> **中文讲解｜CN**
+> **背书问题最简单的解法是 bioRxiv。** 它没有背书制度：注册、填单位、通过范围筛查即可，
+> 不审质量。预印本 v1（PBPK 闭合项家族的结构可辨识性）完全在它的范围内，
+> 而且计划里引用的 AML DeepNLME 那篇本来就是 bioRxiv 预印本。JOSS 门槛 2 只说"论文或预印本"，
+> 不限定服务器。**决定：v1 挂 bioRxiv，除非手上已经有 arXiv 背书人；arXiv 背书并行去办，
+> 留给更偏方法学的 v2。**
+>
+> **九州大学校内**：薬学研究院有薬物動態学分野和薬剤学分野，是 PBPK 生理和清除率闭合的对口审读者，
+> 但日本药学口的组几乎不上 arXiv，所以他们大概率**不是合格的 arXiv 背书人**，即使是对的审读者。
+> 理学部数理生物学研究室（佐竹；巌佐名誉教授）和 IMI 更可能有 arXiv 记录，但要按领域逐个查。
+> 名字这边的网络打不开研究室页面，请你自己核对。
+>
+> **导师审 CFD 部分完全可以，而且正合适**：[08](08-cfd-correspondence.md) 和 [01](01-background.md)、
+> [03](03-ude-formulation.md) 的闭合建模类比就是写给 CFD 读者的。这是 JOSS 允许的那种
+> "具体的非代码贡献"，也是对"作者名单太短"最诚实的回答。但导师的 arXiv 资历在物理领域，
+> **不能给 q-bio 背书，也不要为了凑背书人去改分类。**
+>
+> **日本国内会议**：都不能替代预印本（门槛 2 要的是可引用的公开文档），
+> 但都是认识审读者、背书人和潜在用户的地方。2026 年的截止基本都过了；
+> **日程和内容都合的是 2027 年 6 月的計算工学講演会**：摘要截止约 2027 年 1 月，
+> 正好在预印本 v1 之后，又是导师所在的圈子，[08](08-cfd-correspondence.md) 就是为这个听众写的。
+
 > **中文讲解｜CN**
 > **结论先说：JOSS 这篇可以一个人署名，不需要挂名，而且纯挂名是违规的。**
 >
