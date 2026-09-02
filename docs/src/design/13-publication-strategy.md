@@ -411,4 +411,69 @@ appreciated more by that readership.
 
 ---
 
+## 13.7 Authorship for a solo project
+
+Verified 2026-09-02 against `openjournals/joss` (`docs/submitting.md` § Authorship,
+`docs/review_criteria.md` § Authorship and § Community engagement). **[V]**
+
+**What JOSS requires.** One rule only: *"You must be a major contributor to the software
+you are submitting."* There is no minimum author count and no affiliation requirement;
+`Independent researcher` is accepted.
+
+**What JOSS forbids.** *"Purely financial (such as being named on an award) and
+organizational (such as general supervision of a research group) contributions are not
+considered sufficient for co-authorship of JOSS submissions, but active project direction
+and other forms of non-code contributions are."* A supervisor listed for the name alone is
+therefore not a safeguard; it is a question a reviewer is told to raise. Co-authors must
+agree to be listed and accept accountability for the whole work.
+
+**What reviewers are told to look for.** Two passages matter for a single-author
+submission:
+
+1. *"If the author list seems unexpectedly short given the scope of the work, it is
+   appropriate to raise this."* The same paragraph contrasts *"a single developer working
+   closely with a research group — where advisors, collaborators, or domain experts are
+   co-authors"* with *"a solo project with no broader community"*.
+2. *"For single-author projects, community engagement evidence in the paper is acceptable
+   and may be the primary signal"* — publications using the software, adoption, or
+   modification in response to use.
+
+**Decision, recorded here so it is not re-litigated.**
+
+| Question | Answer | Basis |
+|---|---|---|
+| Can the JOSS paper be single-authored? | **Yes.** | Rule 1; §12.6 maturity indicators; gates 1–4 in §13.2 |
+| Should a supervisor be added for the name? | **No.** It violates the authorship rule and invites the exact question reviewers are primed to ask. | Forbidden-contributions clause |
+| When would a second author help? | When they do something specific: review the identifiability methodology of [06](06-identifiability.md) or the pharmacometrics, or co-author the preprint that serves gate 2. That is a real author, and it directly answers reviewer passage 1. | Permitted-contributions clause; review passage 1 |
+| Where is a collaborator actually required? | **Paper 2 (PLOS CB) and Phase 4**, not this paper: real clinical data, an nlmixr2/NONMEM comparison, and pharmacometric peer reading cannot be self-supplied. | §T.1, §13.3 |
+
+**One practical item that is not authorship.** arXiv requires *endorsement* for first
+submissions to some categories, and the requirement is more likely to trigger without an
+institutional e-mail address. An endorser is not a co-author. If the gate-2 preprint is the
+author's first arXiv submission, check the endorsement status of the target category
+(q-bio.QM or stat.ME, §13.6) **before** the preprint is ready, not on the day.
+
+> **中文讲解｜CN**
+> **结论先说：JOSS 这篇可以一个人署名，不需要挂名，而且纯挂名是违规的。**
+>
+> JOSS 唯一的作者要求是"提交者必须是软件的主要贡献者"。它明文规定：
+> 纯经费贡献和"对课题组的一般性指导"**不足以**成为共同作者；
+> "积极的项目指导和其他非代码贡献"**可以**。区别在于有没有做事，不在于身份。
+>
+> 但审稿人被提前提醒了两件事：一是作者名单相对工作规模"显得意外地短"时应当提出来，
+> 二是单作者项目的"社区使用证据"可以是主要信号。所以单作者是允许的，但会被多看一眼。
+>
+> 最有用的回应不是加名字，而是**让一位老师做一件具体的事**：
+> 审阅 [06](06-identifiability.md) 的可辨识性方法，或在门槛 2 的预印本上共同署名。
+> 那是真作者，也正好回答审稿人的那个问题。
+>
+> 真正需要合作者的是**第二篇论文和 Phase 4**：真实临床数据、nlmixr2/NONMEM 对比、
+> 药代同行审读，这三样一个人补不上。但它们不属于 JOSS 这一篇。
+>
+> 还有一件和署名无关的实际事：arXiv 对某些分类的首次投稿要求**背书人**（endorser），
+> 没有机构邮箱时更容易触发。背书不是署名。**预印本写好之前就去查**目标分类的背书状态，
+> 别等到要挂的那天。
+
+---
+
 **Back to:** [index](../index.md) · [11 — Literature Landscape](11-literature-landscape.md)

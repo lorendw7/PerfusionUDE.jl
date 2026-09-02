@@ -284,6 +284,12 @@ pull-request record to demonstrate process:
 A solo project that is otherwise open and well-maintained is **not** rejected merely for
 lacking a PR workflow.
 
+Since 2026-03-15 these indicators are **gate 3 of four pre-review gates**, and reviewers are
+explicitly told to question an author list that *"seems unexpectedly short given the scope
+of the work"*. What JOSS permits and forbids in co-authorship, and why a supervisor added
+for the name alone is a liability rather than a safeguard, is recorded in
+[13 §13.7](13-publication-strategy.md).
+
 > **中文讲解｜CN**
 > **JOSS 完全免费**（diamond open access，志愿者运营，Open Journals / NumFOCUS），
 > **不要求任何机构隶属**，单人投稿完全正常，没有单位就写 `Independent researcher`。

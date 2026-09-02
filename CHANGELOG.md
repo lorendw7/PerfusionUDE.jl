@@ -30,6 +30,15 @@ version is `0.x`, minor version bumps may contain breaking changes.
 - Risks **R9′** (commit distribution fails JOSS gates 1 and 4), **R12** (gate 2, research
   impact, unmet at submission) and **R13** (a weak dependency's compat bound silently
   excludes its current release).
+- **§13.7 Authorship for a solo project**, verified against the JOSS authorship rule and
+  reviewer guidelines: single authorship is permitted with no affiliation requirement;
+  *"general supervision of a research group"* is explicitly insufficient for
+  co-authorship, so a supervisor listed for the name alone violates the rule and invites
+  the question reviewers are told to raise about short author lists; a second author helps
+  only by doing something specific (methodology review, co-authoring the gate-2 preprint);
+  a collaborator is genuinely required for Paper 2 and Phase 4, not for the JOSS paper.
+  Also notes that arXiv endorsement is not authorship and should be checked before the
+  preprint is ready.
 - A dated **currency statement** in the README: positioning claims established by absence
   have a shelf life, and the reader should know when they were last checked.
 
