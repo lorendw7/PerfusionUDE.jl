@@ -40,7 +40,9 @@ version is `0.x`, minor version bumps may contain breaking changes.
   laboratories that are the domain readers, notes that a CFD supervisor is the right
   reviewer for §08 and a permitted substantive contributor, and tabulates Japanese (PAGJa,
   JSSX, JSMB, JSCES, CMD, JSIAM) and international (PAGE, JuliaCon, ACoP, SIAM CSE) venues
-  with 2026–27 timing; PAGE 2027 and JuliaCon 2027 are the targets that yield citable output.
+  with 2026–27 timing. **Conferences are not pursued (author's decision): the venue tables
+  are kept for reference only, and the publication route is bioRxiv v1 → bioRxiv v2 →
+  JOSS.** The CFD supervisor's review of §08 is then the plan's only external reading.
 - **§13.7 Authorship for a solo project**, verified against the JOSS authorship rule and
   reviewer guidelines: single authorship is permitted with no affiliation requirement;
   *"general supervision of a research group"* is explicitly insufficient for

@@ -494,9 +494,17 @@ and it answers the "short author list" question honestly. A CFD supervisor's arX
 is in the physics domain and does not endorse q-bio; do not choose a category to fit an
 endorser.
 
-**Japanese venues.** None of these substitute for a preprint (gate 2 wants a citable,
-public document), but each puts the work in front of the people who would review it,
-endorse it or adopt it:
+**Conferences: not pursued (author's decision, 2026-09-02).** The tables below are kept
+for reference only; no abstract is submitted and no meeting is attended. Every gate-2 and
+priority signal therefore comes from **bioRxiv preprints alone**: v1 (structural
+identifiability) and v2 (the Phase-1 twin study), both using and citing the package. This
+is sufficient for JOSS, whose reviewer guidance names *"publications using the software"*
+as the primary single-author signal, and it removes travel, membership fees and abstract
+deadlines from the schedule. What it gives up is the in-person route to a domain reviewer
+or an arXiv endorser; the CFD supervisor's review of [08](08-cfd-correspondence.md) is
+then the only external reading the plan relies on, so it should actually happen.
+
+*Japanese venues (reference only).*
 
 | Venue | Fit | 2026–27 timing (checked 2026-09-02; re-check) |
 |---|---|---|
@@ -507,13 +515,7 @@ endorse it or adopt it:
 | 日本機械学会 計算力学講演会 (CMD) | Same angle, mechanical-engineering audience; presenters must be JSME members | CMD2026: 09-14 → 16, Osaka, closed; CMD2027 abstracts ≈ mid-2027 |
 | 日本応用数理学会 (JSIAM) 年会 | Applied-mathematics audience; SciML sessions | 2026 annual meeting is in **Fukuoka**; check dates, likely September |
 
-The one that fits both the content and the calendar is **JSCES June 2027**: its abstract
-deadline falls right after preprint v1 should exist, it is the supervisor's community, and
-[08](08-cfd-correspondence.md) was written for exactly that audience.
-
-**International venues (checked 2026-09-02; re-check deadlines).** Same rule: none replaces
-the preprint, but two of them produce citable, DOI-bearing output that JOSS gate 2 can
-point to.
+*International venues (reference only; checked 2026-09-02).*
 
 | Venue | Fit | Output | Timing |
 |---|---|---|---|
@@ -522,11 +524,9 @@ point to.
 | **JuliaCon** | The package's own community; NoLimits.jl and DiffEqGPU.jl authors attend | **JuliaCon Proceedings has DOIs** and is the software venue named in §13.6 | 2026: Mainz, August, passed. 2027: host not yet announced; CFP usually February–March |
 | **SIAM CSE** | SciML and UQ minisymposia; the audience for the CFD-correspondence and mixed-mode-AD material | Abstracts only | CSE27: 2027-02-22, Pittsburgh; deadline was 2026-08-25, passed. CSE29 next |
 
-Priority order for gate 2 and for the network the project lacks: **PAGE 2027 (abstract by
-≈ March 2027, using the bioRxiv preprint) → JuliaCon 2027 (talk plus a Proceedings paper)
-→ ACoP 2027**. PAGJa in November 2026 is worth attending even without presenting, because
-it is the cheapest way to meet the Japanese pharmacometrics people who would later review
-or endorse.
+If the decision is ever revisited, the order that would matter is PAGE (citable
+abstracts, the pharmacometrics community) then JuliaCon (Proceedings with DOIs). Until
+then, the publication plan is: **bioRxiv v1 → bioRxiv v2 → JOSS**.
 
 > **中文讲解｜CN**
 > **背书问题最简单的解法是 bioRxiv。** 它没有背书制度：注册、填单位、通过范围筛查即可，
@@ -545,18 +545,17 @@ or endorse.
 > "具体的非代码贡献"，也是对"作者名单太短"最诚实的回答。但导师的 arXiv 资历在物理领域，
 > **不能给 q-bio 背书，也不要为了凑背书人去改分类。**
 >
-> **国际会议**：PAGE（欧洲群体药代年会，6 月，摘要约 1 到 3 月）是这个领域**的**会议，
-> Valderrama、Janssen、NoLimits.jl 那些人都在那里；摘要在线发表、可引用，
-> **PAGE 2027 是预印本 v2 内容的目标**。JuliaCon 有带 DOI 的 Proceedings，2027 年主办地还没公布，
-> CFP 通常 2 到 3 月。ACoP 是美国对应的会。SIAM CSE27 截止已过。
-> 优先顺序：**PAGE 2027 → JuliaCon 2027 → ACoP 2027**。
+> **会议：不参加（作者 2026-09-02 决定）。** 上面两张表只作备查，不投摘要、不出席。
+> 门槛 2 的证据全部来自 **bioRxiv 预印本**：v1（结构可辨识性）和 v2（Phase 1 孪生实验），
+> 都要用这个包、引这个包。这对 JOSS 够用，它的评审指南把"使用该软件的论文"列为单作者项目的主要信号；
+> 同时省掉了差旅、会费和摘要截止。
+> 放弃的是当面认识审读者和背书人的渠道，所以**导师审 [08](08-cfd-correspondence.md) 这件事
+> 就成了计划里唯一的外部审读，要真的做。**
+> 发表路线就是：**bioRxiv v1 → bioRxiv v2 → JOSS**。
 >
-> **日本国内会议**：都不能替代预印本（门槛 2 要的是可引用的公开文档），
-> 但都是认识审读者、背书人和潜在用户的地方。新增 **PAGJa**（日本群体药代研究会，
-> 2026-11-13，横滨庆应）：一天的会，是最容易碰到日本药代圈里能审稿、能背书的人的地方，
-> 不发表也值得去。2026 年其他会的截止基本都过了；
-> **日程和内容都合的是 2027 年 6 月的計算工学講演会**：摘要截止约 2027 年 1 月，
-> 正好在预印本 v1 之后，又是导师所在的圈子，[08](08-cfd-correspondence.md) 就是为这个听众写的。
+> 备查：日本国内会议里内容最合的本来是 2027 年 6 月的計算工学講演会（导师的圈子，
+> [08](08-cfd-correspondence.md) 就是为那个听众写的）；国际会议里是 PAGE（摘要可引用）和
+> JuliaCon（Proceedings 带 DOI）。将来改主意先看这三个。
 
 > **中文讲解｜CN**
 > **结论先说：JOSS 这篇可以一个人署名，不需要挂名，而且纯挂名是违规的。**
