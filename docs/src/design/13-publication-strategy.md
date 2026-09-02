@@ -452,11 +452,18 @@ submission:
 [06 §6.2](06-identifiability.md)**, because it is the cheapest piece of genuine research on
 the critical path that exercises the package. The Phase-1 twin study becomes preprint v2.
 
-**One practical item that is not authorship.** arXiv requires *endorsement* for first
-submissions to some categories, and the requirement is more likely to trigger without an
-institutional e-mail address. An endorser is not a co-author. If the gate-2 preprint is the
-author's first arXiv submission, check the endorsement status of the target category
-(q-bio.QM or stat.ME, §13.6) **before** the preprint is ready, not on the day.
+**One practical item that is not authorship: arXiv endorsement, and the rule changed in
+January 2026.** arXiv requires *endorsement* before a first submission to an endorsement
+domain. Until 2026-01-21 an e-mail address from a known academic institution was usually
+enough on its own. **It no longer is** **[S]** (arXiv blog, *"Attention Authors: updated
+endorsement policy"*, 2026-01-21, following a similar change for mathematics on
+2025-12-10): automatic endorsement now needs an institutional address **and** prior
+authorship on a paper already accepted in that domain. A first-time author therefore needs
+the second path regardless of e-mail: a **personal endorsement from an established arXiv
+author in the same domain** — for q-bio.QM that means someone with several q-bio
+submissions in the last three months to five years; standing in another domain does not
+transfer. An endorser is not a co-author and takes on no responsibility. Set up the
+account and secure the endorsement **before** the preprint is written, not on the day.
 
 > **中文讲解｜CN**
 > **结论先说：JOSS 这篇可以一个人署名，不需要挂名，而且纯挂名是违规的。**
@@ -475,9 +482,12 @@ author's first arXiv submission, check the endorsement status of the target cate
 > 真正需要合作者的是**第二篇论文和 Phase 4**：真实临床数据、nlmixr2/NONMEM 对比、
 > 药代同行审读，这三样一个人补不上。但它们不属于 JOSS 这一篇。
 >
-> 还有一件和署名无关的实际事：arXiv 对某些分类的首次投稿要求**背书人**（endorser），
-> 没有机构邮箱时更容易触发。背书不是署名。**预印本写好之前就去查**目标分类的背书状态，
-> 别等到要挂的那天。
+> 还有一件和署名无关的实际事：**arXiv 的背书规则 2026 年 1 月改了。**
+> 以前用学校邮箱注册基本就自动过；**从 2026-01-21 起不行了**，自动背书要求
+> "机构邮箱 **加上** 已经在该领域有被接收的论文"。首次投稿的人不管用什么邮箱，
+> 都要走第二条路：**找一位在同一领域（如 q-bio）近五年内发过若干篇 arXiv 论文的人做背书人**，
+> 别的领域的资历不算。背书不是署名，对方不承担任何责任。
+> **账号和背书要在预印本写完之前办好**，别等到要挂的那天。
 
 ---
 
